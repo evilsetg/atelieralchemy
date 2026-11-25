@@ -121,6 +121,7 @@ namespace game
 		ResolveEffects();
 		BuildIngredientProfiles();
 		MarkObtainable();
+		AuditRecipes();
 		BuildTemplates();
 		Validate();
 
@@ -211,6 +212,9 @@ namespace game
 				trait.weightPct = Value<float>(def, "weight", 0.0f);
 				trait.qualityBonus = Value<int>(def, "quality", 0);
 				trait.ringWidthDeg = Value<float>(def, "ringWidth", 0.0f);
+				if (const auto e = def.find("elements"); e != def.end()) {
+					trait.elements = ParseElements(*e);
+				}
 				trait.potionsOnly = Value<bool>(def, "potionsOnly", false);
 				trait.poisonsOnly = Value<bool>(def, "poisonsOnly", false);
 				_catalog.traits[trait.id] = std::move(trait);
@@ -783,6 +787,123 @@ namespace game
 		for (const auto& [plugin, count] : hidden) {
 			logger::info("{} ingredient(s) from {} are not carried, grown, crafted or looted anywhere; hidden in the category list", count, plugin);
 		}
+	}
+
+	bool Database::CategoryHasIngredients(std::string_view a_category) const
+	{
+		if (a_category == "Potions" || a_category == "Poisons") {
+			return true;  // any brew of that kind; nothing to learn
+		}
+		return std::ranges::any_of(_ingredients, [&](const auto& a_entry) {
+			return std::ranges::find(a_entry.second.categories, a_category) != a_entry.second.categories.end();
+		});
+	}
+
+	void Database::AuditRecipes() const
+	{
+		// Best case per element for every slot: the strongest obtainable ingredient of a
+		// category (plus an element trait its pool can roll), or a material's base elements
+		// plus every element tier it can reach, conversions included. A line whose top effect
+		// tier stays out of reach even with the strongest catalyst is logged.
+		using atelier::ElementValues;
+		const auto add = [](ElementValues& a_into, const ElementValues& a_from) {
+			for (std::size_t i = 0; i < atelier::kElementCount; ++i) {
+				a_into[i] += a_from[i];
+			}
+		};
+		const auto best = [](ElementValues& a_into, const ElementValues& a_from) {
+			for (std::size_t i = 0; i < atelier::kElementCount; ++i) {
+				a_into[i] = std::max(a_into[i], a_from[i]);
+			}
+		};
+		const auto materialPotential = [&](const atelier::RecipeDef& a_material) {
+			ElementValues total = a_material.outputElements;
+			for (const auto& line : a_material.lines) {
+				for (const auto& tier : line.tiers) {
+					if (tier.kind == atelier::EffectTier::Kind::kElement) {
+						atelier::At(total, tier.element) += tier.amount;
+					}
+				}
+			}
+			return total;
+		};
+		const auto traitBonus = [&](const std::vector<std::string>& a_pool) {
+			ElementValues bonus{};
+			for (const auto& id : a_pool) {
+				if (const auto trait = _catalog.FindTrait(id)) {
+					best(bonus, trait->elements);
+				}
+			}
+			return bonus;
+		};
+
+		std::map<std::string, ElementValues, std::less<>> categoryBest;  // ingredients and materials
+		for (const auto& [formID, profile] : _ingredients) {
+			if (!profile.obtainable) {
+				continue;
+			}
+			for (const auto& category : profile.categories) {
+				auto values = profile.elements;
+				add(values, traitBonus(CategoryTraitPool(category)));
+				best(categoryBest[category], values);
+			}
+		}
+		for (const auto& [id, recipe] : _catalog.recipes) {
+			if (recipe.kind == atelier::OutputKind::kMaterial) {
+				for (const auto& category : recipe.outputCategories) {
+					best(categoryBest[category], materialPotential(recipe));
+				}
+			}
+		}
+		ElementValues catalystBest{};
+		for (const auto& [key, catalyst] : _catalog.catalysts) {
+			best(catalystBest, catalyst.addElements);
+		}
+		const auto itemBest = [&](std::string_view a_key) {
+			if (const auto recipe = _catalog.FindRecipe(a_key); recipe && recipe->kind == atelier::OutputKind::kMaterial) {
+				return materialPotential(*recipe);
+			}
+			if (const auto it = _ingredientsByKey.find(a_key); it != _ingredientsByKey.end()) {
+				if (const auto profile = _ingredients.find(it->second); profile != _ingredients.end()) {
+					return profile->second.elements;
+				}
+			}
+			return ElementValues{};
+		};
+
+		int flagged = 0;
+		for (const auto& [id, recipe] : _catalog.recipes) {
+			ElementValues reach{};
+			for (const auto& req : recipe.requirements) {
+				ElementValues slot{};
+				if (req.isCategory) {
+					if (const auto it = categoryBest.find(req.key); it != categoryBest.end()) {
+						slot = it->second;
+					}
+				} else {
+					slot = itemBest(req.key);
+				}
+				for (int n = 0; n < req.count; ++n) {
+					add(reach, slot);
+				}
+			}
+			add(reach, catalystBest);
+			for (const auto& line : recipe.lines) {
+				int top = 0;
+				for (const auto& tier : line.tiers) {
+					if (tier.kind == atelier::EffectTier::Kind::kEffect) {
+						top = std::max(top, tier.threshold);
+					}
+				}
+				const int value = atelier::At(reach, line.element);
+				if (top > 0 && value < top) {
+					++flagged;
+					logger::warn("Recipe '{}' line '{}' ({}): at most {} with the best ingredients and catalyst, top tier needs {}", id, line.name,
+						atelier::ElementName(line.element), value, top);
+				}
+			}
+		}
+		logger::info("Recipe audit: {} effect line(s) can't reach their top tier with this load order's ingredients", flagged);
 	}
 
 	void Database::BuildTemplates()

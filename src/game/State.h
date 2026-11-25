@@ -64,7 +64,10 @@ namespace game
 
 		// --- recipe knowledge ---------------------------------------------------------
 		[[nodiscard]] bool                  Knows(std::string_view a_recipe) const;
-		bool                                Learn(const std::string& a_recipe);
+		// Learns a recipe plus any material recipe it can't be made without (a required item, or
+		// a category no ingredient belongs to). Returns everything newly learned, recipe first.
+		std::vector<std::string>            Learn(const std::string& a_recipe);
+		bool                                IsKnown(const std::string& a_recipe) const;
 		[[nodiscard]] std::set<std::string> Known() const;
 		// Grants starting recipes and skill unlocks. Returns newly learned ids.
 		std::vector<std::string> RefreshKnowledge(float a_alchemySkill);

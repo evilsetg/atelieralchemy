@@ -106,6 +106,22 @@ static void TestEvaluate()
 	CHECK(!Evaluate(bad, catalog, nullptr).valid);
 }
 
+static void TestElementTraits()
+{
+	std::puts("element traits");
+	auto catalog = MakeCatalog();
+	catalog.traits["charged"] = TraitDef{ .id = "charged", .name = "Charged", .elements = { 0, 0, 2, 0 } };
+	SynthesisInput input;
+	input.recipe = catalog.FindRecipe("healing");
+	input.materials = { Plant(50, { 1, 0, 0, 1 }, { "charged" }), Plant(50, { 1, 0, 0, 1 }),
+		MaterialInput{ "salt", "Salt", { "Minerals" }, { 0, 0, 0, 1 }, 50, {} } };
+	// The trait counts whether or not the product inherits it.
+	const auto out = Evaluate(input, catalog, nullptr);
+	CHECK(out.elements[2] == 2);
+	CHECK(EffectiveElements(input.materials[0], catalog)[2] == 2);
+	CHECK(EffectiveElements(input.materials[1], catalog)[2] == 0);
+}
+
 static void TestQualityCurves()
 {
 	std::puts("quality curves");
@@ -276,6 +292,7 @@ int main()
 {
 	TestFusion();
 	TestEvaluate();
+	TestElementTraits();
 	TestQualityCurves();
 	TestVanillaReferences();
 	TestRingModifiers();

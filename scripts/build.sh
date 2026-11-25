@@ -8,6 +8,7 @@ cd "$(dirname "$0")/.."
 
 python3 tools/build_assets.py
 python3 tools/validate_data.py
+python3 tools/audit_lines.py
 ./scripts/test-core.sh
 cmake --preset linux-clangcl
 cmake --build --preset linux-clangcl

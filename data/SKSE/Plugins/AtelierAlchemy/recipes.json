@@ -15,10 +15,130 @@
 {
 	"recipes": [
 		{
+			"id": "alchemist_ash",
+			"name": "Alchemist's Ash",
+			"kind": "material",
+			"level": 15,
+			"known": true,
+			"description": "Calcined remains, ground fine. A stable, fiery base that binds strong ingredients together.",
+			"ingredients": [
+				{
+					"category": "Remains",
+					"count": 1
+				},
+				{
+					"category": "Minerals",
+					"count": 1
+				}
+			],
+			"yield": 2,
+			"value": 6,
+			"weight": 0.2,
+			"template": "INGR:Bone Meal",
+			"categories": [
+				"Minerals",
+				"Ash"
+			],
+			"elements": {
+				"fire": 2
+			},
+			"lines": [
+				{
+					"name": "Embers",
+					"element": "Fire",
+					"tiers": [
+						{
+							"at": 3,
+							"element": "Fire",
+							"amount": 1
+						},
+						{
+							"at": 6,
+							"quality": 8
+						},
+						{
+							"at": 9,
+							"element": "Fire",
+							"amount": 2
+						}
+					]
+				},
+				{
+					"name": "Charge",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 3,
+							"element": "Lightning",
+							"amount": 1
+						},
+						{
+							"at": 6,
+							"traitSlot": 1
+						},
+						{
+							"at": 9,
+							"element": "Lightning",
+							"amount": 2
+						}
+					]
+				},
+				{
+					"name": "Smoke",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 2,
+							"element": "Wind",
+							"amount": 1
+						},
+						{
+							"at": 5,
+							"element": "Wind",
+							"amount": 1
+						},
+						{
+							"at": 8,
+							"element": "Wind",
+							"amount": 1
+						}
+					]
+				},
+				{
+					"name": "Cold Cinders",
+					"element": "Ice",
+					"tiers": [
+						{
+							"at": 2,
+							"element": "Ice",
+							"amount": 1
+						},
+						{
+							"at": 5,
+							"element": "Ice",
+							"amount": 1
+						},
+						{
+							"at": 8,
+							"element": "Ice",
+							"amount": 1
+						}
+					]
+				}
+			],
+			"unlocks": [
+				{
+					"recipe": "philosopher_salt",
+					"minQuality": 60,
+					"hint": "An Alchemist's Ash of quality 60 or more might crystallize into something greater."
+				}
+			]
+		},
+		{
 			"id": "distilled_water",
 			"name": "Distilled Water",
 			"kind": "material",
-			"level": 1,
+			"level": 15,
 			"known": true,
 			"description": "The foundation of nearly every brew. Boil any plant matter with salt and keep what condenses.",
 			"ingredients": [
@@ -89,13 +209,40 @@
 					"element": "Fire",
 					"tiers": [
 						{
-							"at": 4,
+							"at": 2,
+							"element": "Fire",
+							"amount": 1
+						},
+						{
+							"at": 5,
 							"element": "Fire",
 							"amount": 1
 						},
 						{
 							"at": 8,
-							"traitSlot": 1
+							"element": "Fire",
+							"amount": 1
+						}
+					]
+				},
+				{
+					"name": "Ionized",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 2,
+							"element": "Lightning",
+							"amount": 1
+						},
+						{
+							"at": 5,
+							"element": "Lightning",
+							"amount": 1
+						},
+						{
+							"at": 8,
+							"element": "Lightning",
+							"amount": 1
 						}
 					]
 				}
@@ -115,36 +262,151 @@
 			]
 		},
 		{
-			"id": "alchemist_ash",
-			"name": "Alchemist's Ash",
+			"id": "herbal_extract",
+			"name": "Herbal Extract",
 			"kind": "material",
-			"level": 3,
+			"level": 15,
 			"known": true,
-			"description": "Calcined remains, ground fine. A stable, fiery base that binds strong ingredients together.",
+			"description": "Leaves and roots steeped until the water turns green and bitter. The backbone of restorative brews.",
 			"ingredients": [
 				{
-					"category": "Remains",
-					"count": 1
+					"category": "Plants",
+					"count": 2
 				},
 				{
-					"category": "Minerals",
+					"category": "Water",
 					"count": 1
 				}
 			],
 			"yield": 2,
-			"value": 6,
+			"value": 8,
 			"weight": 0.2,
-			"template": "INGR:Bone Meal",
+			"template": "INGR:Mora Tapinella",
 			"categories": [
-				"Minerals",
-				"Ash"
+				"Extract",
+				"Plants"
 			],
 			"elements": {
-				"fire": 2
+				"fire": 1,
+				"wind": 1
 			},
 			"lines": [
 				{
-					"name": "Embers",
+					"name": "Potency",
+					"element": "Fire",
+					"tiers": [
+						{
+							"at": 3,
+							"element": "Fire",
+							"amount": 1
+						},
+						{
+							"at": 6,
+							"quality": 10
+						},
+						{
+							"at": 9,
+							"element": "Fire",
+							"amount": 2
+						}
+					]
+				},
+				{
+					"name": "Freshness",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 3,
+							"element": "Wind",
+							"amount": 1
+						},
+						{
+							"at": 7,
+							"traitSlot": 1
+						},
+						{
+							"at": 10,
+							"element": "Wind",
+							"amount": 2
+						}
+					]
+				},
+				{
+					"name": "Dew",
+					"element": "Ice",
+					"tiers": [
+						{
+							"at": 2,
+							"element": "Ice",
+							"amount": 1
+						},
+						{
+							"at": 5,
+							"element": "Ice",
+							"amount": 1
+						},
+						{
+							"at": 8,
+							"element": "Ice",
+							"amount": 1
+						}
+					]
+				},
+				{
+					"name": "Vigor",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 2,
+							"element": "Lightning",
+							"amount": 1
+						},
+						{
+							"at": 5,
+							"element": "Lightning",
+							"amount": 1
+						},
+						{
+							"at": 8,
+							"element": "Lightning",
+							"amount": 1
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "beast_tallow",
+			"name": "Beast Tallow",
+			"kind": "material",
+			"level": 20,
+			"unlockSkill": 20,
+			"description": "Animal fat rendered over embers with a little ash. Binds strong ingredients and carries them into the blood.",
+			"ingredients": [
+				{
+					"category": "Animal Parts",
+					"count": 1
+				},
+				{
+					"category": "Ash",
+					"count": 1
+				}
+			],
+			"yield": 2,
+			"value": 10,
+			"weight": 0.3,
+			"template": "INGR:Troll Fat",
+			"categories": [
+				"Oil",
+				"Binder"
+			],
+			"elements": {
+				"fire": 1,
+				"lightning": 1
+			},
+			"lines": [
+				{
+					"name": "Render",
 					"element": "Fire",
 					"tiers": [
 						{
@@ -164,7 +426,7 @@
 					]
 				},
 				{
-					"name": "Charge",
+					"name": "Grip",
 					"element": "Lightning",
 					"tiers": [
 						{
@@ -184,26 +446,391 @@
 					]
 				},
 				{
-					"name": "Smoke",
+					"name": "Musk",
 					"element": "Wind",
 					"tiers": [
 						{
-							"at": 4,
+							"at": 2,
+							"element": "Wind",
+							"amount": 1
+						},
+						{
+							"at": 5,
 							"element": "Wind",
 							"amount": 1
 						},
 						{
 							"at": 8,
-							"yield": 1
+							"element": "Wind",
+							"amount": 1
+						}
+					]
+				},
+				{
+					"name": "Congeal",
+					"element": "Ice",
+					"tiers": [
+						{
+							"at": 2,
+							"element": "Ice",
+							"amount": 1
+						},
+						{
+							"at": 5,
+							"element": "Ice",
+							"amount": 1
+						},
+						{
+							"at": 8,
+							"element": "Ice",
+							"amount": 1
 						}
 					]
 				}
-			],
-			"unlocks": [
+			]
+		},
+		{
+			"id": "fungal_paste",
+			"name": "Fungal Paste",
+			"kind": "material",
+			"level": 20,
+			"unlockSkill": 20,
+			"description": "Mushrooms ground with salt into a pale, cold paste. Draws out the mind's virtues - and its poisons.",
+			"ingredients": [
 				{
-					"recipe": "philosopher_salt",
-					"minQuality": 60,
-					"hint": "An Alchemist's Ash of quality 60 or more might crystallize into something greater."
+					"category": "Fungus",
+					"count": 2
+				},
+				{
+					"category": "Salts",
+					"count": 1
+				}
+			],
+			"yield": 2,
+			"value": 10,
+			"weight": 0.2,
+			"template": "INGR:Imp Stool",
+			"categories": [
+				"Paste",
+				"Fungus"
+			],
+			"elements": {
+				"ice": 1,
+				"lightning": 1
+			},
+			"lines": [
+				{
+					"name": "Spore",
+					"element": "Ice",
+					"tiers": [
+						{
+							"at": 3,
+							"element": "Ice",
+							"amount": 1
+						},
+						{
+							"at": 6,
+							"quality": 10
+						},
+						{
+							"at": 9,
+							"element": "Ice",
+							"amount": 2
+						}
+					]
+				},
+				{
+					"name": "Ferment",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 3,
+							"element": "Lightning",
+							"amount": 1
+						},
+						{
+							"at": 7,
+							"yield": 1
+						},
+						{
+							"at": 10,
+							"element": "Lightning",
+							"amount": 2
+						}
+					]
+				},
+				{
+					"name": "Mycelium",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 2,
+							"element": "Wind",
+							"amount": 1
+						},
+						{
+							"at": 5,
+							"element": "Wind",
+							"amount": 1
+						},
+						{
+							"at": 8,
+							"element": "Wind",
+							"amount": 1
+						}
+					]
+				},
+				{
+					"name": "Rot Heat",
+					"element": "Fire",
+					"tiers": [
+						{
+							"at": 2,
+							"element": "Fire",
+							"amount": 1
+						},
+						{
+							"at": 5,
+							"element": "Fire",
+							"amount": 1
+						},
+						{
+							"at": 8,
+							"element": "Fire",
+							"amount": 1
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "floral_tincture",
+			"name": "Floral Tincture",
+			"kind": "material",
+			"level": 22,
+			"unlockSkill": 22,
+			"description": "Blossoms macerated in a clear solvent. Light, fragrant and quick to carry an effect to the senses.",
+			"ingredients": [
+				{
+					"category": "Flowers",
+					"count": 2
+				},
+				{
+					"category": "Solvent",
+					"count": 1
+				}
+			],
+			"yield": 2,
+			"value": 14,
+			"weight": 0.2,
+			"template": "INGR:Lavender",
+			"categories": [
+				"Tincture",
+				"Flowers"
+			],
+			"elements": {
+				"wind": 1,
+				"ice": 1
+			},
+			"lines": [
+				{
+					"name": "Bouquet",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 3,
+							"element": "Wind",
+							"amount": 1
+						},
+						{
+							"at": 6,
+							"quality": 10
+						},
+						{
+							"at": 9,
+							"element": "Wind",
+							"amount": 2
+						}
+					]
+				},
+				{
+					"name": "Clarity",
+					"element": "Ice",
+					"tiers": [
+						{
+							"at": 3,
+							"element": "Ice",
+							"amount": 1
+						},
+						{
+							"at": 7,
+							"traitSlot": 1
+						},
+						{
+							"at": 10,
+							"element": "Ice",
+							"amount": 2
+						}
+					]
+				},
+				{
+					"name": "Nectar",
+					"element": "Fire",
+					"tiers": [
+						{
+							"at": 2,
+							"element": "Fire",
+							"amount": 1
+						},
+						{
+							"at": 5,
+							"element": "Fire",
+							"amount": 1
+						},
+						{
+							"at": 8,
+							"element": "Fire",
+							"amount": 1
+						}
+					]
+				},
+				{
+					"name": "Pollen Charge",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 2,
+							"element": "Lightning",
+							"amount": 1
+						},
+						{
+							"at": 5,
+							"element": "Lightning",
+							"amount": 1
+						},
+						{
+							"at": 8,
+							"element": "Lightning",
+							"amount": 1
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "concentrated_venom",
+			"name": "Concentrated Venom",
+			"kind": "material",
+			"level": 25,
+			"unlockSkill": 25,
+			"description": "Venom glands and spores reduced in a solvent until a single drop is enough. Handle with gloves.",
+			"ingredients": [
+				{
+					"category": "Insects",
+					"count": 1
+				},
+				{
+					"category": "Fungus",
+					"count": 1
+				},
+				{
+					"category": "Solvent",
+					"count": 1
+				}
+			],
+			"yield": 2,
+			"value": 20,
+			"weight": 0.1,
+			"template": "INGR:Chaurus Eggs",
+			"categories": [
+				"Toxin"
+			],
+			"elements": {
+				"fire": 1,
+				"lightning": 1
+			},
+			"lines": [
+				{
+					"name": "Bite",
+					"element": "Fire",
+					"tiers": [
+						{
+							"at": 3,
+							"element": "Fire",
+							"amount": 1
+						},
+						{
+							"at": 6,
+							"quality": 10
+						},
+						{
+							"at": 9,
+							"element": "Fire",
+							"amount": 2
+						}
+					]
+				},
+				{
+					"name": "Numbing",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 3,
+							"element": "Lightning",
+							"amount": 1
+						},
+						{
+							"at": 7,
+							"traitSlot": 1
+						},
+						{
+							"at": 10,
+							"element": "Lightning",
+							"amount": 2
+						}
+					]
+				},
+				{
+					"name": "Chill",
+					"element": "Ice",
+					"tiers": [
+						{
+							"at": 2,
+							"element": "Ice",
+							"amount": 1
+						},
+						{
+							"at": 5,
+							"element": "Ice",
+							"amount": 1
+						},
+						{
+							"at": 8,
+							"element": "Ice",
+							"amount": 1
+						}
+					]
+				},
+				{
+					"name": "Miasma",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 2,
+							"element": "Wind",
+							"amount": 1
+						},
+						{
+							"at": 5,
+							"element": "Wind",
+							"amount": 1
+						},
+						{
+							"at": 8,
+							"element": "Wind",
+							"amount": 1
+						}
+					]
 				}
 			]
 		},
@@ -211,7 +838,7 @@
 			"id": "spirit_essence",
 			"name": "Spirit Essence",
 			"kind": "material",
-			"level": 20,
+			"level": 35,
 			"unlockSkill": 35,
 			"description": "A shimmering liquid that clings to the glass. Carries the virtues of other ingredients across.",
 			"ingredients": [
@@ -286,13 +913,19 @@
 					"element": "Fire",
 					"tiers": [
 						{
-							"at": 4,
+							"at": 2,
 							"element": "Fire",
 							"amount": 1
 						},
 						{
-							"at": 9,
-							"quality": 10
+							"at": 5,
+							"element": "Fire",
+							"amount": 1
+						},
+						{
+							"at": 8,
+							"element": "Fire",
+							"amount": 1
 						}
 					]
 				},
@@ -301,13 +934,19 @@
 					"element": "Lightning",
 					"tiers": [
 						{
+							"at": 2,
+							"element": "Lightning",
+							"amount": 1
+						},
+						{
 							"at": 5,
 							"element": "Lightning",
 							"amount": 1
 						},
 						{
-							"at": 10,
-							"yield": 1
+							"at": 8,
+							"element": "Lightning",
+							"amount": 1
 						}
 					]
 				}
@@ -329,7 +968,7 @@
 			"id": "philosopher_salt",
 			"name": "Philosopher's Salt",
 			"kind": "material",
-			"level": 35,
+			"level": 50,
 			"unlockSkill": 50,
 			"description": "Salt that remembers every element it has touched. Prized as a catalyst.",
 			"ingredients": [
@@ -443,8 +1082,8 @@
 			"id": "aether_crystal",
 			"name": "Aether Crystal",
 			"kind": "material",
-			"level": 65,
-			"unlockSkill": 75,
+			"level": 70,
+			"unlockSkill": 70,
 			"description": "A fragment of solidified Magicka. As a catalyst, it lets the Judgement Ring sing.",
 			"ingredients": [
 				{
@@ -554,449 +1193,10 @@
 			"unlocks": []
 		},
 		{
-			"id": "herbal_extract",
-			"name": "Herbal Extract",
-			"kind": "material",
-			"level": 4,
-			"known": true,
-			"description": "Leaves and roots steeped until the water turns green and bitter. The backbone of restorative brews.",
-			"ingredients": [
-				{
-					"category": "Plants",
-					"count": 2
-				},
-				{
-					"category": "Water",
-					"count": 1
-				}
-			],
-			"yield": 2,
-			"value": 8,
-			"weight": 0.2,
-			"template": "INGR:Mora Tapinella",
-			"categories": [
-				"Extract",
-				"Plants"
-			],
-			"elements": {
-				"fire": 1,
-				"wind": 1
-			},
-			"lines": [
-				{
-					"name": "Potency",
-					"element": "Fire",
-					"tiers": [
-						{
-							"at": 3,
-							"element": "Fire",
-							"amount": 1
-						},
-						{
-							"at": 6,
-							"quality": 10
-						},
-						{
-							"at": 9,
-							"element": "Fire",
-							"amount": 2
-						}
-					]
-				},
-				{
-					"name": "Freshness",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 3,
-							"element": "Wind",
-							"amount": 1
-						},
-						{
-							"at": 7,
-							"traitSlot": 1
-						},
-						{
-							"at": 10,
-							"element": "Wind",
-							"amount": 2
-						}
-					]
-				},
-				{
-					"name": "Dew",
-					"element": "Ice",
-					"tiers": [
-						{
-							"at": 4,
-							"element": "Ice",
-							"amount": 1
-						},
-						{
-							"at": 8,
-							"yield": 1
-						}
-					]
-				}
-			]
-		},
-		{
-			"id": "beast_tallow",
-			"name": "Beast Tallow",
-			"kind": "material",
-			"level": 8,
-			"unlockSkill": 12,
-			"description": "Animal fat rendered over embers with a little ash. Binds strong ingredients and carries them into the blood.",
-			"ingredients": [
-				{
-					"category": "Animal Parts",
-					"count": 1
-				},
-				{
-					"category": "Ash",
-					"count": 1
-				}
-			],
-			"yield": 2,
-			"value": 10,
-			"weight": 0.3,
-			"template": "INGR:Troll Fat",
-			"categories": [
-				"Oil",
-				"Binder"
-			],
-			"elements": {
-				"fire": 1,
-				"lightning": 1
-			},
-			"lines": [
-				{
-					"name": "Render",
-					"element": "Fire",
-					"tiers": [
-						{
-							"at": 3,
-							"element": "Fire",
-							"amount": 1
-						},
-						{
-							"at": 6,
-							"quality": 8
-						},
-						{
-							"at": 9,
-							"element": "Fire",
-							"amount": 2
-						}
-					]
-				},
-				{
-					"name": "Grip",
-					"element": "Lightning",
-					"tiers": [
-						{
-							"at": 3,
-							"element": "Lightning",
-							"amount": 1
-						},
-						{
-							"at": 6,
-							"traitSlot": 1
-						},
-						{
-							"at": 9,
-							"element": "Lightning",
-							"amount": 2
-						}
-					]
-				},
-				{
-					"name": "Musk",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 4,
-							"element": "Wind",
-							"amount": 1
-						},
-						{
-							"at": 8,
-							"yield": 1
-						}
-					]
-				}
-			]
-		},
-		{
-			"id": "fungal_paste",
-			"name": "Fungal Paste",
-			"kind": "material",
-			"level": 8,
-			"unlockSkill": 12,
-			"description": "Mushrooms ground with salt into a pale, cold paste. Draws out the mind's virtues - and its poisons.",
-			"ingredients": [
-				{
-					"category": "Fungus",
-					"count": 2
-				},
-				{
-					"category": "Salts",
-					"count": 1
-				}
-			],
-			"yield": 2,
-			"value": 10,
-			"weight": 0.2,
-			"template": "INGR:Imp Stool",
-			"categories": [
-				"Paste",
-				"Fungus"
-			],
-			"elements": {
-				"ice": 1,
-				"lightning": 1
-			},
-			"lines": [
-				{
-					"name": "Spore",
-					"element": "Ice",
-					"tiers": [
-						{
-							"at": 3,
-							"element": "Ice",
-							"amount": 1
-						},
-						{
-							"at": 6,
-							"quality": 10
-						},
-						{
-							"at": 9,
-							"element": "Ice",
-							"amount": 2
-						}
-					]
-				},
-				{
-					"name": "Ferment",
-					"element": "Lightning",
-					"tiers": [
-						{
-							"at": 3,
-							"element": "Lightning",
-							"amount": 1
-						},
-						{
-							"at": 7,
-							"yield": 1
-						},
-						{
-							"at": 10,
-							"element": "Lightning",
-							"amount": 2
-						}
-					]
-				},
-				{
-					"name": "Mycelium",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 4,
-							"element": "Wind",
-							"amount": 1
-						},
-						{
-							"at": 8,
-							"traitSlot": 1
-						}
-					]
-				}
-			]
-		},
-		{
-			"id": "floral_tincture",
-			"name": "Floral Tincture",
-			"kind": "material",
-			"level": 14,
-			"unlockSkill": 15,
-			"description": "Blossoms macerated in a clear solvent. Light, fragrant and quick to carry an effect to the senses.",
-			"ingredients": [
-				{
-					"category": "Flowers",
-					"count": 2
-				},
-				{
-					"category": "Solvent",
-					"count": 1
-				}
-			],
-			"yield": 2,
-			"value": 14,
-			"weight": 0.2,
-			"template": "INGR:Lavender",
-			"categories": [
-				"Tincture",
-				"Flowers"
-			],
-			"elements": {
-				"wind": 1,
-				"ice": 1
-			},
-			"lines": [
-				{
-					"name": "Bouquet",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 3,
-							"element": "Wind",
-							"amount": 1
-						},
-						{
-							"at": 6,
-							"quality": 10
-						},
-						{
-							"at": 9,
-							"element": "Wind",
-							"amount": 2
-						}
-					]
-				},
-				{
-					"name": "Clarity",
-					"element": "Ice",
-					"tiers": [
-						{
-							"at": 3,
-							"element": "Ice",
-							"amount": 1
-						},
-						{
-							"at": 7,
-							"traitSlot": 1
-						},
-						{
-							"at": 10,
-							"element": "Ice",
-							"amount": 2
-						}
-					]
-				},
-				{
-					"name": "Nectar",
-					"element": "Fire",
-					"tiers": [
-						{
-							"at": 4,
-							"element": "Fire",
-							"amount": 1
-						},
-						{
-							"at": 8,
-							"yield": 1
-						}
-					]
-				}
-			]
-		},
-		{
-			"id": "concentrated_venom",
-			"name": "Concentrated Venom",
-			"kind": "material",
-			"level": 18,
-			"unlockSkill": 20,
-			"description": "Venom glands and spores reduced in a solvent until a single drop is enough. Handle with gloves.",
-			"ingredients": [
-				{
-					"category": "Insects",
-					"count": 1
-				},
-				{
-					"category": "Fungus",
-					"count": 1
-				},
-				{
-					"category": "Solvent",
-					"count": 1
-				}
-			],
-			"yield": 2,
-			"value": 20,
-			"weight": 0.1,
-			"template": "INGR:Chaurus Eggs",
-			"categories": [
-				"Toxin"
-			],
-			"elements": {
-				"fire": 1,
-				"lightning": 1
-			},
-			"lines": [
-				{
-					"name": "Bite",
-					"element": "Fire",
-					"tiers": [
-						{
-							"at": 3,
-							"element": "Fire",
-							"amount": 1
-						},
-						{
-							"at": 6,
-							"quality": 10
-						},
-						{
-							"at": 9,
-							"element": "Fire",
-							"amount": 2
-						}
-					]
-				},
-				{
-					"name": "Numbing",
-					"element": "Lightning",
-					"tiers": [
-						{
-							"at": 3,
-							"element": "Lightning",
-							"amount": 1
-						},
-						{
-							"at": 7,
-							"traitSlot": 1
-						},
-						{
-							"at": 10,
-							"element": "Lightning",
-							"amount": 2
-						}
-					]
-				},
-				{
-					"name": "Chill",
-					"element": "Ice",
-					"tiers": [
-						{
-							"at": 4,
-							"element": "Ice",
-							"amount": 1
-						},
-						{
-							"at": 8,
-							"element": "Ice",
-							"amount": 2
-						}
-					]
-				}
-			]
-		},
-		{
 			"id": "quintessence",
 			"name": "Quintessence",
 			"kind": "material",
-			"level": 60,
+			"level": 75,
 			"unlockSkill": 75,
 			"description": "The fifth essence: every virtue of a brew drawn together into one shining drop.",
 			"ingredients": [
@@ -1105,7 +1305,7 @@
 			"id": "healing_salve",
 			"name": "Healing Salve",
 			"kind": "potion",
-			"level": 1,
+			"level": 15,
 			"known": true,
 			"description": "Every alchemist's first lesson. Herbs steeped in distilled water.",
 			"ingredients": [
@@ -1186,7 +1386,7 @@
 			"id": "mana_tonic",
 			"name": "Mana Tonic",
 			"kind": "potion",
-			"level": 5,
+			"level": 15,
 			"known": true,
 			"description": "A cool, bitter tonic favoured by the College of Winterhold.",
 			"ingredients": [
@@ -1276,7 +1476,7 @@
 			"id": "stamina_draught",
 			"name": "Stamina Draught",
 			"kind": "potion",
-			"level": 5,
+			"level": 15,
 			"known": true,
 			"description": "A hearty draught for long marches and longer fights.",
 			"ingredients": [
@@ -1364,11 +1564,376 @@
 			]
 		},
 		{
+			"id": "mariners_draught",
+			"name": "Mariner's Draught",
+			"kind": "potion",
+			"level": 20,
+			"unlockSkill": 20,
+			"description": "Sailors swear by it: a briny draught that lets the lungs forget they need air.",
+			"ingredients": [
+				{
+					"category": "Fish",
+					"count": 1
+				},
+				{
+					"category": "Aquatic",
+					"count": 1
+				},
+				{
+					"category": "Water",
+					"count": 1
+				}
+			],
+			"yield": 1,
+			"value": 30,
+			"weight": 0.5,
+			"lines": [
+				{
+					"name": "Gills",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "WaterBreathing"
+						},
+						{
+							"at": 7,
+							"effect": "WaterBreathing"
+						},
+						{
+							"at": 12,
+							"effect": "WaterBreathing"
+						}
+					]
+				},
+				{
+					"name": "Cold Current",
+					"element": "Fire",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "ResistFrost"
+						},
+						{
+							"at": 8,
+							"effect": "ResistFrost"
+						}
+					]
+				},
+				{
+					"name": "Long Strokes",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 4,
+							"effect": "RegenStamina"
+						},
+						{
+							"at": 9,
+							"effect": "RegenStamina"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "purifying_draught",
+			"name": "Purifying Draught",
+			"kind": "potion",
+			"level": 20,
+			"unlockSkill": 20,
+			"description": "Salted herb water, boiled twice. Plain, bitter and reliable against sickness.",
+			"ingredients": [
+				{
+					"category": "Extract",
+					"count": 1
+				},
+				{
+					"category": "Salts",
+					"count": 1
+				},
+				{
+					"category": "Water",
+					"count": 1
+				}
+			],
+			"yield": 1,
+			"value": 35,
+			"weight": 0.5,
+			"lines": [
+				{
+					"name": "Cleanse",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 2,
+							"effect": "CureDisease"
+						},
+						{
+							"at": 6,
+							"effect": "ResistPoison"
+						},
+						{
+							"at": 11,
+							"effect": "ResistPoison"
+						}
+					]
+				},
+				{
+					"name": "Balm",
+					"element": "Fire",
+					"tiers": [
+						{
+							"at": 4,
+							"effect": "RegenHealth"
+						},
+						{
+							"at": 9,
+							"effect": "RegenHealth"
+						}
+					]
+				},
+				{
+					"name": "Clear Brew",
+					"element": "Ice",
+					"tiers": [
+						{
+							"at": 5,
+							"quality": 10
+						},
+						{
+							"at": 10,
+							"traitSlot": 1
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "couriers_tonic",
+			"name": "Courier's Tonic",
+			"kind": "potion",
+			"level": 22,
+			"unlockSkill": 22,
+			"description": "Fruit-sweet and quick to act. Couriers drink it before the long road between holds.",
+			"ingredients": [
+				{
+					"category": "Extract",
+					"count": 1
+				},
+				{
+					"category": "Fruit",
+					"count": 1
+				},
+				{
+					"category": "Water",
+					"count": 1
+				}
+			],
+			"yield": 1,
+			"value": 30,
+			"weight": 0.5,
+			"lines": [
+				{
+					"name": "Stride",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 2,
+							"effect": "RegenStamina"
+						},
+						{
+							"at": 6,
+							"effect": "RegenStamina"
+						},
+						{
+							"at": 11,
+							"effect": "RegenStamina"
+						}
+					]
+				},
+				{
+					"name": "Light Load",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 4,
+							"effect": "FortifyCarryWeight"
+						},
+						{
+							"at": 9,
+							"effect": "FortifyCarryWeight"
+						}
+					]
+				},
+				{
+					"name": "Steady Pace",
+					"element": "Fire",
+					"tiers": [
+						{
+							"at": 5,
+							"effect": "FortifyStamina"
+						},
+						{
+							"at": 10,
+							"effect": "FortifyStamina"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "bards_honeywine",
+			"name": "Bard's Honeywine",
+			"kind": "potion",
+			"level": 25,
+			"unlockSkill": 25,
+			"description": "Mulled fruit and blossoms. Loosens the tongue and charms the listener.",
+			"ingredients": [
+				{
+					"category": "Fruit",
+					"count": 1
+				},
+				{
+					"category": "Tincture",
+					"count": 1
+				},
+				{
+					"category": "Water",
+					"count": 1
+				}
+			],
+			"yield": 1,
+			"value": 40,
+			"weight": 0.5,
+			"lines": [
+				{
+					"name": "Silver Tongue",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "FortifyBarter"
+						},
+						{
+							"at": 7,
+							"effect": "FortifyBarter"
+						},
+						{
+							"at": 12,
+							"effect": "FortifyBarter"
+						}
+					]
+				},
+				{
+					"name": "Captivate",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 4,
+							"effect": "FortifyIllusion"
+						},
+						{
+							"at": 9,
+							"effect": "FortifyIllusion"
+						}
+					]
+				},
+				{
+					"name": "Sweet Rest",
+					"element": "Ice",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "RestoreMagicka"
+						},
+						{
+							"at": 8,
+							"effect": "RestoreMagicka"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "hunters_draught",
+			"name": "Hunter's Draught",
+			"kind": "potion",
+			"level": 25,
+			"unlockSkill": 25,
+			"description": "Brewed in the field from what the hunt provides. Sharpens the eye and quiets the step.",
+			"ingredients": [
+				{
+					"category": "Extract",
+					"count": 1
+				},
+				{
+					"category": "Oil",
+					"count": 1
+				},
+				{
+					"category": "Insects",
+					"count": 1
+				}
+			],
+			"yield": 1,
+			"value": 50,
+			"weight": 0.5,
+			"lines": [
+				{
+					"name": "Eagle Eye",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "FortifyArchery"
+						},
+						{
+							"at": 7,
+							"effect": "FortifyArchery"
+						},
+						{
+							"at": 12,
+							"effect": "FortifyArchery"
+						}
+					]
+				},
+				{
+					"name": "Stalker",
+					"element": "Ice",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "FortifySneak"
+						},
+						{
+							"at": 8,
+							"effect": "FortifySneak"
+						}
+					]
+				},
+				{
+					"name": "Hide and Leather",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 4,
+							"effect": "FortifyLightArmor"
+						},
+						{
+							"at": 9,
+							"effect": "FortifyLightArmor"
+						}
+					]
+				}
+			]
+		},
+		{
 			"id": "elemental_ward",
 			"name": "Elemental Ward",
 			"kind": "potion",
-			"level": 15,
-			"unlockSkill": 25,
+			"level": 28,
+			"unlockSkill": 28,
 			"description": "Coats the skin against fire, frost and lightning. Which, depends on the elements you feed it.",
 			"ingredients": [
 				{
@@ -1474,8 +2039,8 @@
 			"id": "shadow_draught",
 			"name": "Shadow Draught",
 			"kind": "potion",
-			"level": 25,
-			"unlockSkill": 30,
+			"level": 32,
+			"unlockSkill": 32,
 			"description": "Thieves' Guild favourite. Smells of nothing at all, which is the point.",
 			"ingredients": [
 				{
@@ -1554,8 +2119,8 @@
 			"id": "warriors_brew",
 			"name": "Warrior's Brew",
 			"kind": "potion",
-			"level": 20,
-			"unlockSkill": 40,
+			"level": 35,
+			"unlockSkill": 35,
 			"description": "Sharpens the eye and steadies the arm. Companions swear by it.",
 			"ingredients": [
 				{
@@ -1653,10 +2218,279 @@
 			]
 		},
 		{
+			"id": "artisans_draught",
+			"name": "Artisan's Draught",
+			"kind": "potion",
+			"level": 40,
+			"unlockSkill": 40,
+			"description": "For the smith, the enchanter and the merchant. Steady hands, sharp eyes, silver tongue.",
+			"ingredients": [
+				{
+					"category": "Minerals",
+					"count": 1
+				},
+				{
+					"category": "Paste",
+					"count": 1
+				},
+				{
+					"category": "Salts",
+					"count": 1
+				}
+			],
+			"yield": 1,
+			"value": 90,
+			"weight": 0.4,
+			"lines": [
+				{
+					"name": "Forge",
+					"element": "Fire",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "FortifySmithing"
+						},
+						{
+							"at": 8,
+							"effect": "FortifySmithing"
+						},
+						{
+							"at": 13,
+							"effect": "FortifySmithing"
+						}
+					]
+				},
+				{
+					"name": "Rune",
+					"element": "Ice",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "FortifyEnchanting"
+						},
+						{
+							"at": 8,
+							"effect": "FortifyEnchanting"
+						},
+						{
+							"at": 13,
+							"effect": "FortifyEnchanting"
+						}
+					]
+				},
+				{
+					"name": "Haggle",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "FortifyBarter"
+						},
+						{
+							"at": 8,
+							"effect": "FortifyBarter"
+						}
+					]
+				},
+				{
+					"name": "Lightfoot",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 5,
+							"effect": "FortifyLightArmor"
+						},
+						{
+							"at": 10,
+							"effect": "FortifyHeavyArmor"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "ironhide_tonic",
+			"name": "Ironhide Tonic",
+			"kind": "potion",
+			"level": 42,
+			"unlockSkill": 42,
+			"description": "Ground stone and monster hide bound with ash. Heavy on the tongue, heavier on the skin.",
+			"ingredients": [
+				{
+					"category": "Oil",
+					"count": 1
+				},
+				{
+					"category": "Monster Parts",
+					"count": 1
+				},
+				{
+					"item": "alchemist_ash",
+					"count": 1
+				}
+			],
+			"yield": 1,
+			"value": 70,
+			"weight": 0.6,
+			"lines": [
+				{
+					"name": "Ironhide",
+					"element": "Fire",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "FortifyHeavyArmor"
+						},
+						{
+							"at": 7,
+							"effect": "FortifyHeavyArmor"
+						},
+						{
+							"at": 12,
+							"effect": "FortifyHeavyArmor"
+						}
+					]
+				},
+				{
+					"name": "Bulwark",
+					"element": "Ice",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "FortifyBlock"
+						},
+						{
+							"at": 8,
+							"effect": "FortifyBlock"
+						}
+					]
+				},
+				{
+					"name": "Bedrock",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 4,
+							"effect": "FortifyHealth"
+						},
+						{
+							"at": 9,
+							"effect": "FortifyHealth"
+						}
+					]
+				},
+				{
+					"name": "Grounded",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 5,
+							"effect": "ResistShock"
+						},
+						{
+							"at": 10,
+							"effect": "ResistShock"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "conjurers_ink",
+			"name": "Conjurer's Ink",
+			"kind": "potion",
+			"level": 45,
+			"unlockSkill": 45,
+			"description": "Bone black dissolved in spirit water. Drawn on the palm, it steadies binding and shaping spells.",
+			"ingredients": [
+				{
+					"category": "Remains",
+					"count": 1
+				},
+				{
+					"category": "Spirit",
+					"count": 1
+				},
+				{
+					"category": "Paste",
+					"count": 1
+				}
+			],
+			"yield": 1,
+			"value": 80,
+			"weight": 0.4,
+			"lines": [
+				{
+					"name": "Binding",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "FortifyConjuration"
+						},
+						{
+							"at": 7,
+							"effect": "FortifyConjuration"
+						},
+						{
+							"at": 12,
+							"effect": "FortifyConjuration"
+						}
+					]
+				},
+				{
+					"name": "Shaping",
+					"element": "Ice",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "FortifyAlteration"
+						},
+						{
+							"at": 7,
+							"effect": "FortifyAlteration"
+						},
+						{
+							"at": 12,
+							"effect": "FortifyAlteration"
+						}
+					]
+				},
+				{
+					"name": "Ward Lattice",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 6,
+							"effect": "ResistMagic"
+						},
+						{
+							"at": 11,
+							"effect": "ResistMagic"
+						}
+					]
+				},
+				{
+					"name": "Fine Ink",
+					"element": "Fire",
+					"tiers": [
+						{
+							"at": 4,
+							"quality": 10
+						},
+						{
+							"at": 9,
+							"yield": 1
+						}
+					]
+				}
+			]
+		},
+		{
 			"id": "scholars_tea",
 			"name": "Scholar's Tea",
 			"kind": "potion",
-			"level": 30,
+			"level": 45,
 			"unlockSkill": 45,
 			"description": "Steeped slowly; drunk while the candle burns low over a spell tome.",
 			"ingredients": [
@@ -1748,91 +2582,174 @@
 			]
 		},
 		{
-			"id": "artisans_draught",
-			"name": "Artisan's Draught",
+			"id": "battlemage_draught",
+			"name": "Battlemage's Draught",
 			"kind": "potion",
-			"level": 35,
-			"unlockSkill": 45,
-			"description": "For the smith, the enchanter and the merchant. Steady hands, sharp eyes, silver tongue.",
+			"level": 52,
+			"unlockSkill": 52,
+			"description": "For those who fight with fire in one hand and a ward in the other.",
 			"ingredients": [
-				{
-					"category": "Minerals",
-					"count": 1
-				},
 				{
 					"category": "Paste",
 					"count": 1
 				},
 				{
-					"category": "Salts",
+					"category": "Minerals",
+					"count": 1
+				},
+				{
+					"item": "spirit_essence",
 					"count": 1
 				}
 			],
 			"yield": 1,
-			"value": 90,
-			"weight": 0.4,
+			"value": 110,
+			"weight": 0.5,
 			"lines": [
 				{
-					"name": "Forge",
+					"name": "Firebrand",
 					"element": "Fire",
 					"tiers": [
 						{
 							"at": 3,
-							"effect": "FortifySmithing"
+							"effect": "FortifyDestruction"
 						},
 						{
-							"at": 8,
-							"effect": "FortifySmithing"
+							"at": 7,
+							"effect": "FortifyDestruction"
 						},
 						{
-							"at": 13,
-							"effect": "FortifySmithing"
+							"at": 12,
+							"effect": "FortifyDestruction"
 						}
 					]
 				},
 				{
-					"name": "Rune",
+					"name": "Deep Well",
 					"element": "Ice",
 					"tiers": [
 						{
 							"at": 3,
-							"effect": "FortifyEnchanting"
+							"effect": "FortifyMagicka"
 						},
 						{
 							"at": 8,
-							"effect": "FortifyEnchanting"
-						},
-						{
-							"at": 13,
-							"effect": "FortifyEnchanting"
+							"effect": "FortifyMagicka"
 						}
 					]
 				},
 				{
-					"name": "Haggle",
+					"name": "Surge",
 					"element": "Lightning",
 					"tiers": [
 						{
-							"at": 3,
-							"effect": "FortifyBarter"
+							"at": 4,
+							"effect": "RegenMagicka"
 						},
 						{
-							"at": 8,
-							"effect": "FortifyBarter"
+							"at": 9,
+							"effect": "RegenMagicka"
 						}
 					]
 				},
 				{
-					"name": "Lightfoot",
+					"name": "Spellward",
 					"element": "Wind",
 					"tiers": [
 						{
 							"at": 5,
-							"effect": "FortifyLightArmor"
+							"effect": "ResistMagic"
 						},
 						{
-							"at": 10,
-							"effect": "FortifyHeavyArmor"
+							"at": 11,
+							"effect": "ResistMagic"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "panacea",
+			"name": "Panacea",
+			"kind": "potion",
+			"level": 58,
+			"unlockSkill": 58,
+			"description": "Cures what ails you, whatever it is. Mostly.",
+			"ingredients": [
+				{
+					"category": "Extract",
+					"count": 1
+				},
+				{
+					"category": "Tincture",
+					"count": 1
+				},
+				{
+					"item": "philosopher_salt",
+					"count": 1
+				}
+			],
+			"yield": 1,
+			"value": 140,
+			"weight": 0.5,
+			"lines": [
+				{
+					"name": "Purge",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "CureDisease"
+						},
+						{
+							"at": 7,
+							"effect": "ResistPoison"
+						},
+						{
+							"at": 12,
+							"effect": "ResistPoison"
+						}
+					]
+				},
+				{
+					"name": "Body",
+					"element": "Fire",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "RestoreHealth"
+						},
+						{
+							"at": 8,
+							"effect": "RestoreHealth"
+						}
+					]
+				},
+				{
+					"name": "Breath",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "RestoreStamina"
+						},
+						{
+							"at": 8,
+							"effect": "RestoreStamina"
+						}
+					]
+				},
+				{
+					"name": "Mind",
+					"element": "Ice",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "RestoreMagicka"
+						},
+						{
+							"at": 8,
+							"effect": "RestoreMagicka"
 						}
 					]
 				}
@@ -1842,7 +2759,7 @@
 			"id": "elixir_of_vitality",
 			"name": "Elixir of Vitality",
 			"kind": "potion",
-			"level": 40,
+			"level": 60,
 			"unlockSkill": 60,
 			"description": "Brewed around a single chiming root. Mends wounds that should have been fatal.",
 			"ingredients": [
@@ -1933,19 +2850,19 @@
 			]
 		},
 		{
-			"id": "panacea",
-			"name": "Panacea",
+			"id": "dragonblood_tonic",
+			"name": "Dragonblood Tonic",
 			"kind": "potion",
-			"level": 50,
-			"unlockSkill": 55,
-			"description": "Cures what ails you, whatever it is. Mostly.",
+			"level": 62,
+			"unlockSkill": 62,
+			"description": "Said to be the drink of those who hunt dragons. It burns going down and leaves you unafraid of the fire.",
 			"ingredients": [
 				{
-					"category": "Extract",
+					"category": "Monster Parts",
 					"count": 1
 				},
 				{
-					"category": "Tincture",
+					"category": "Oil",
 					"count": 1
 				},
 				{
@@ -1954,66 +2871,240 @@
 				}
 			],
 			"yield": 1,
-			"value": 140,
+			"value": 180,
 			"weight": 0.5,
 			"lines": [
 				{
-					"name": "Purge",
-					"element": "Wind",
+					"name": "Scales",
+					"element": "Ice",
 					"tiers": [
 						{
 							"at": 3,
-							"effect": "CureDisease"
+							"effect": "ResistFire"
 						},
 						{
-							"at": 7,
-							"effect": "ResistPoison"
+							"at": 8,
+							"effect": "ResistFire"
 						},
 						{
-							"at": 12,
-							"effect": "ResistPoison"
+							"at": 13,
+							"effect": "ResistFire"
 						}
 					]
 				},
 				{
-					"name": "Body",
+					"name": "Heart",
 					"element": "Fire",
 					"tiers": [
 						{
 							"at": 3,
-							"effect": "RestoreHealth"
+							"effect": "FortifyHealth"
 						},
 						{
-							"at": 8,
-							"effect": "RestoreHealth"
+							"at": 9,
+							"effect": "FortifyHealth"
+						}
+					]
+				},
+				{
+					"name": "Fury",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 4,
+							"effect": "FortifyOneHanded"
+						},
+						{
+							"at": 9,
+							"effect": "FortifyOneHanded"
 						}
 					]
 				},
 				{
 					"name": "Breath",
-					"element": "Lightning",
+					"element": "Wind",
 					"tiers": [
 						{
-							"at": 3,
-							"effect": "RestoreStamina"
+							"at": 5,
+							"effect": "RegenStamina"
 						},
 						{
-							"at": 8,
-							"effect": "RestoreStamina"
+							"at": 10,
+							"effect": "RegenStamina"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "ghostwalk_elixir",
+			"name": "Ghostwalk Elixir",
+			"kind": "potion",
+			"level": 65,
+			"unlockSkill": 65,
+			"description": "The drinker thins like mist. Thieves pay a fortune for a single vial.",
+			"ingredients": [
+				{
+					"category": "Tincture",
+					"count": 1
+				},
+				{
+					"category": "Insects",
+					"count": 1
+				},
+				{
+					"item": "spirit_essence",
+					"count": 1
+				}
+			],
+			"yield": 1,
+			"value": 200,
+			"weight": 0.4,
+			"lines": [
+				{
+					"name": "Unseen",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 4,
+							"effect": "Invisibility"
+						},
+						{
+							"at": 9,
+							"effect": "Invisibility"
+						},
+						{
+							"at": 14,
+							"effect": "Invisibility"
 						}
 					]
 				},
 				{
-					"name": "Mind",
+					"name": "Silent Step",
 					"element": "Ice",
 					"tiers": [
 						{
 							"at": 3,
-							"effect": "RestoreMagicka"
+							"effect": "FortifySneak"
+						},
+						{
+							"at": 9,
+							"effect": "FortifySneak"
+						}
+					]
+				},
+				{
+					"name": "Light Fingers",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 4,
+							"effect": "FortifyPickpocket"
+						},
+						{
+							"at": 9,
+							"effect": "FortifyPickpocket"
+						}
+					]
+				},
+				{
+					"name": "Phantasm",
+					"element": "Fire",
+					"tiers": [
+						{
+							"at": 6,
+							"effect": "FortifyIllusion"
+						},
+						{
+							"at": 12,
+							"effect": "FortifyIllusion"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "titans_draught",
+			"name": "Titan's Draught",
+			"kind": "potion",
+			"level": 70,
+			"unlockSkill": 70,
+			"description": "A crystalline brew that makes every burden feel like a feather and every blow land like a hammer.",
+			"ingredients": [
+				{
+					"category": "Oil",
+					"count": 1
+				},
+				{
+					"category": "Monster Parts",
+					"count": 1
+				},
+				{
+					"item": "philosopher_salt",
+					"count": 1
+				}
+			],
+			"yield": 1,
+			"value": 220,
+			"weight": 0.6,
+			"lines": [
+				{
+					"name": "Titan's Back",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "FortifyCarryWeight"
+						},
+						{
+							"at": 9,
+							"effect": "FortifyCarryWeight"
+						}
+					]
+				},
+				{
+					"name": "Titan's Arm",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "FortifyTwoHanded"
 						},
 						{
 							"at": 8,
-							"effect": "RestoreMagicka"
+							"effect": "FortifyTwoHanded"
+						},
+						{
+							"at": 13,
+							"effect": "FortifyTwoHanded"
+						}
+					]
+				},
+				{
+					"name": "Titan's Lungs",
+					"element": "Fire",
+					"tiers": [
+						{
+							"at": 4,
+							"effect": "FortifyStamina"
+						},
+						{
+							"at": 10,
+							"effect": "FortifyStamina"
+						}
+					]
+				},
+				{
+					"name": "Second Breath",
+					"element": "Ice",
+					"tiers": [
+						{
+							"at": 5,
+							"effect": "RegenStamina"
+						},
+						{
+							"at": 11,
+							"quality": 20
 						}
 					]
 				}
@@ -2023,7 +3114,7 @@
 			"id": "grand_elixir",
 			"name": "Grand Elixir",
 			"kind": "potion",
-			"level": 80,
+			"level": 90,
 			"unlockSkill": 90,
 			"description": "The masterwork of an Atelier. Built upon another potion, refined until it glows.",
 			"ingredients": [
@@ -2122,7 +3213,7 @@
 			"id": "viper_venom",
 			"name": "Viper Venom",
 			"kind": "poison",
-			"level": 8,
+			"level": 15,
 			"known": true,
 			"description": "A simple, honest poison. Coat a blade and strike first.",
 			"ingredients": [
@@ -2148,11 +3239,11 @@
 							"effect": "DamageHealth"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "DamageHealth"
 						},
 						{
-							"at": 14,
+							"at": 12,
 							"effect": "DamageHealth"
 						}
 					]
@@ -2210,1137 +3301,10 @@
 			]
 		},
 		{
-			"id": "paralytic_toxin",
-			"name": "Paralytic Toxin",
-			"kind": "poison",
-			"level": 35,
-			"unlockSkill": 50,
-			"description": "Locks every muscle. Short, but long enough.",
-			"ingredients": [
-				{
-					"category": "Toxin",
-					"count": 1
-				},
-				{
-					"category": "Monster Parts",
-					"count": 1
-				},
-				{
-					"category": "Remains",
-					"count": 1
-				}
-			],
-			"yield": 1,
-			"value": 120,
-			"weight": 0.25,
-			"lines": [
-				{
-					"name": "Stillness",
-					"element": "Lightning",
-					"tiers": [
-						{
-							"at": 4,
-							"effect": "Paralysis"
-						},
-						{
-							"at": 8,
-							"effect": "Paralysis"
-						},
-						{
-							"at": 13,
-							"effect": "Paralysis"
-						}
-					]
-				},
-				{
-					"name": "Sting",
-					"element": "Fire",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "DamageHealth"
-						},
-						{
-							"at": 8,
-							"effect": "DamageHealth"
-						}
-					]
-				},
-				{
-					"name": "Molasses",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 4,
-							"effect": "Slow"
-						},
-						{
-							"at": 9,
-							"effect": "Slow"
-						}
-					]
-				}
-			]
-		},
-		{
-			"id": "hexing_oil",
-			"name": "Hexing Oil",
-			"kind": "poison",
-			"level": 25,
-			"unlockSkill": 40,
-			"description": "Strips away a target's protections. Pair it with your favourite spell.",
-			"ingredients": [
-				{
-					"category": "Toxin",
-					"count": 1
-				},
-				{
-					"category": "Salts",
-					"count": 1
-				},
-				{
-					"category": "Oil",
-					"count": 1
-				}
-			],
-			"yield": 1,
-			"value": 70,
-			"weight": 0.25,
-			"lines": [
-				{
-					"name": "Kindling",
-					"element": "Fire",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "WeaknessFire"
-						},
-						{
-							"at": 8,
-							"effect": "WeaknessFire"
-						}
-					]
-				},
-				{
-					"name": "Brittle",
-					"element": "Ice",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "WeaknessFrost"
-						},
-						{
-							"at": 8,
-							"effect": "WeaknessFrost"
-						}
-					]
-				},
-				{
-					"name": "Conductor",
-					"element": "Lightning",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "WeaknessShock"
-						},
-						{
-							"at": 8,
-							"effect": "WeaknessShock"
-						}
-					]
-				},
-				{
-					"name": "Unravel",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 5,
-							"effect": "WeaknessMagic"
-						},
-						{
-							"at": 10,
-							"effect": "WeaknessPoison"
-						}
-					]
-				}
-			]
-		},
-		{
-			"id": "draught_of_madness",
-			"name": "Draught of Madness",
-			"kind": "poison",
-			"level": 30,
-			"unlockSkill": 45,
-			"description": "Whoever drinks - or bleeds - it sees enemies everywhere. Or monsters.",
-			"ingredients": [
-				{
-					"category": "Paste",
-					"count": 1
-				},
-				{
-					"category": "Spirit",
-					"count": 1
-				},
-				{
-					"category": "Tincture",
-					"count": 1
-				}
-			],
-			"yield": 1,
-			"value": 90,
-			"weight": 0.25,
-			"lines": [
-				{
-					"name": "Rage",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "Frenzy"
-						},
-						{
-							"at": 8,
-							"effect": "Frenzy"
-						},
-						{
-							"at": 13,
-							"effect": "Frenzy"
-						}
-					]
-				},
-				{
-					"name": "Dread",
-					"element": "Ice",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "Fear"
-						},
-						{
-							"at": 8,
-							"effect": "Fear"
-						}
-					]
-				},
-				{
-					"name": "Fever",
-					"element": "Fire",
-					"tiers": [
-						{
-							"at": 4,
-							"effect": "RavageHealth"
-						},
-						{
-							"at": 9,
-							"effect": "RavageHealth"
-						}
-					]
-				}
-			],
-			"unlocks": [
-				{
-					"recipe": "cowards_dust",
-					"category": "Remains",
-					"hint": "Dry a Draught of Madness with grave dust and the rage turns to terror..."
-				}
-			]
-		},
-		{
-			"id": "mariners_draught",
-			"name": "Mariner's Draught",
-			"kind": "potion",
-			"level": 8,
-			"unlockSkill": 15,
-			"description": "Sailors swear by it: a briny draught that lets the lungs forget they need air.",
-			"ingredients": [
-				{
-					"category": "Fish",
-					"count": 1
-				},
-				{
-					"category": "Aquatic",
-					"count": 1
-				},
-				{
-					"category": "Water",
-					"count": 1
-				}
-			],
-			"yield": 1,
-			"value": 30,
-			"weight": 0.5,
-			"lines": [
-				{
-					"name": "Gills",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "WaterBreathing"
-						},
-						{
-							"at": 7,
-							"effect": "WaterBreathing"
-						},
-						{
-							"at": 12,
-							"effect": "WaterBreathing"
-						}
-					]
-				},
-				{
-					"name": "Cold Current",
-					"element": "Fire",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "ResistFrost"
-						},
-						{
-							"at": 8,
-							"effect": "ResistFrost"
-						}
-					]
-				},
-				{
-					"name": "Long Strokes",
-					"element": "Lightning",
-					"tiers": [
-						{
-							"at": 4,
-							"effect": "RegenStamina"
-						},
-						{
-							"at": 9,
-							"effect": "RegenStamina"
-						}
-					]
-				}
-			]
-		},
-		{
-			"id": "couriers_tonic",
-			"name": "Courier's Tonic",
-			"kind": "potion",
-			"level": 10,
-			"unlockSkill": 20,
-			"description": "Fruit-sweet and quick to act. Couriers drink it before the long road between holds.",
-			"ingredients": [
-				{
-					"category": "Extract",
-					"count": 1
-				},
-				{
-					"category": "Fruit",
-					"count": 1
-				},
-				{
-					"category": "Water",
-					"count": 1
-				}
-			],
-			"yield": 1,
-			"value": 30,
-			"weight": 0.5,
-			"lines": [
-				{
-					"name": "Stride",
-					"element": "Lightning",
-					"tiers": [
-						{
-							"at": 2,
-							"effect": "RegenStamina"
-						},
-						{
-							"at": 6,
-							"effect": "RegenStamina"
-						},
-						{
-							"at": 11,
-							"effect": "RegenStamina"
-						}
-					]
-				},
-				{
-					"name": "Light Load",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 4,
-							"effect": "FortifyCarryWeight"
-						},
-						{
-							"at": 9,
-							"effect": "FortifyCarryWeight"
-						}
-					]
-				},
-				{
-					"name": "Steady Pace",
-					"element": "Fire",
-					"tiers": [
-						{
-							"at": 5,
-							"effect": "FortifyStamina"
-						},
-						{
-							"at": 10,
-							"effect": "FortifyStamina"
-						}
-					]
-				}
-			]
-		},
-		{
-			"id": "purifying_draught",
-			"name": "Purifying Draught",
-			"kind": "potion",
-			"level": 10,
-			"unlockSkill": 15,
-			"description": "Salted herb water, boiled twice. Plain, bitter and reliable against sickness.",
-			"ingredients": [
-				{
-					"category": "Extract",
-					"count": 1
-				},
-				{
-					"category": "Salts",
-					"count": 1
-				},
-				{
-					"category": "Water",
-					"count": 1
-				}
-			],
-			"yield": 1,
-			"value": 35,
-			"weight": 0.5,
-			"lines": [
-				{
-					"name": "Cleanse",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 2,
-							"effect": "CureDisease"
-						},
-						{
-							"at": 6,
-							"effect": "ResistPoison"
-						},
-						{
-							"at": 11,
-							"effect": "ResistPoison"
-						}
-					]
-				},
-				{
-					"name": "Balm",
-					"element": "Fire",
-					"tiers": [
-						{
-							"at": 4,
-							"effect": "RegenHealth"
-						},
-						{
-							"at": 9,
-							"effect": "RegenHealth"
-						}
-					]
-				},
-				{
-					"name": "Clear Brew",
-					"element": "Ice",
-					"tiers": [
-						{
-							"at": 5,
-							"quality": 10
-						},
-						{
-							"at": 10,
-							"traitSlot": 1
-						}
-					]
-				}
-			]
-		},
-		{
-			"id": "bards_honeywine",
-			"name": "Bard's Honeywine",
-			"kind": "potion",
-			"level": 12,
-			"unlockSkill": 20,
-			"description": "Mulled fruit and blossoms. Loosens the tongue and charms the listener.",
-			"ingredients": [
-				{
-					"category": "Fruit",
-					"count": 1
-				},
-				{
-					"category": "Tincture",
-					"count": 1
-				},
-				{
-					"category": "Water",
-					"count": 1
-				}
-			],
-			"yield": 1,
-			"value": 40,
-			"weight": 0.5,
-			"lines": [
-				{
-					"name": "Silver Tongue",
-					"element": "Lightning",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "FortifyBarter"
-						},
-						{
-							"at": 7,
-							"effect": "FortifyBarter"
-						},
-						{
-							"at": 12,
-							"effect": "FortifyBarter"
-						}
-					]
-				},
-				{
-					"name": "Captivate",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 4,
-							"effect": "FortifyIllusion"
-						},
-						{
-							"at": 9,
-							"effect": "FortifyIllusion"
-						}
-					]
-				},
-				{
-					"name": "Sweet Rest",
-					"element": "Ice",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "RestoreMagicka"
-						},
-						{
-							"at": 8,
-							"effect": "RestoreMagicka"
-						}
-					]
-				}
-			]
-		},
-		{
-			"id": "hunters_draught",
-			"name": "Hunter's Draught",
-			"kind": "potion",
-			"level": 18,
-			"unlockSkill": 25,
-			"description": "Brewed in the field from what the hunt provides. Sharpens the eye and quiets the step.",
-			"ingredients": [
-				{
-					"category": "Extract",
-					"count": 1
-				},
-				{
-					"category": "Oil",
-					"count": 1
-				},
-				{
-					"category": "Insects",
-					"count": 1
-				}
-			],
-			"yield": 1,
-			"value": 50,
-			"weight": 0.5,
-			"lines": [
-				{
-					"name": "Eagle Eye",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "FortifyArchery"
-						},
-						{
-							"at": 7,
-							"effect": "FortifyArchery"
-						},
-						{
-							"at": 12,
-							"effect": "FortifyArchery"
-						}
-					]
-				},
-				{
-					"name": "Stalker",
-					"element": "Ice",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "FortifySneak"
-						},
-						{
-							"at": 8,
-							"effect": "FortifySneak"
-						}
-					]
-				},
-				{
-					"name": "Hide and Leather",
-					"element": "Lightning",
-					"tiers": [
-						{
-							"at": 4,
-							"effect": "FortifyLightArmor"
-						},
-						{
-							"at": 9,
-							"effect": "FortifyLightArmor"
-						}
-					]
-				}
-			]
-		},
-		{
-			"id": "ironhide_tonic",
-			"name": "Ironhide Tonic",
-			"kind": "potion",
-			"level": 28,
-			"unlockSkill": 40,
-			"description": "Ground stone and monster hide bound with ash. Heavy on the tongue, heavier on the skin.",
-			"ingredients": [
-				{
-					"category": "Oil",
-					"count": 1
-				},
-				{
-					"category": "Monster Parts",
-					"count": 1
-				},
-				{
-					"item": "alchemist_ash",
-					"count": 1
-				}
-			],
-			"yield": 1,
-			"value": 70,
-			"weight": 0.6,
-			"lines": [
-				{
-					"name": "Ironhide",
-					"element": "Fire",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "FortifyHeavyArmor"
-						},
-						{
-							"at": 7,
-							"effect": "FortifyHeavyArmor"
-						},
-						{
-							"at": 12,
-							"effect": "FortifyHeavyArmor"
-						}
-					]
-				},
-				{
-					"name": "Bulwark",
-					"element": "Ice",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "FortifyBlock"
-						},
-						{
-							"at": 8,
-							"effect": "FortifyBlock"
-						}
-					]
-				},
-				{
-					"name": "Bedrock",
-					"element": "Lightning",
-					"tiers": [
-						{
-							"at": 4,
-							"effect": "FortifyHealth"
-						},
-						{
-							"at": 9,
-							"effect": "FortifyHealth"
-						}
-					]
-				},
-				{
-					"name": "Grounded",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 5,
-							"effect": "ResistShock"
-						},
-						{
-							"at": 10,
-							"effect": "ResistShock"
-						}
-					]
-				}
-			]
-		},
-		{
-			"id": "conjurers_ink",
-			"name": "Conjurer's Ink",
-			"kind": "potion",
-			"level": 32,
-			"unlockSkill": 45,
-			"description": "Bone black dissolved in spirit water. Drawn on the palm, it steadies binding and shaping spells.",
-			"ingredients": [
-				{
-					"category": "Remains",
-					"count": 1
-				},
-				{
-					"category": "Spirit",
-					"count": 1
-				},
-				{
-					"category": "Paste",
-					"count": 1
-				}
-			],
-			"yield": 1,
-			"value": 80,
-			"weight": 0.4,
-			"lines": [
-				{
-					"name": "Binding",
-					"element": "Lightning",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "FortifyConjuration"
-						},
-						{
-							"at": 7,
-							"effect": "FortifyConjuration"
-						},
-						{
-							"at": 12,
-							"effect": "FortifyConjuration"
-						}
-					]
-				},
-				{
-					"name": "Shaping",
-					"element": "Ice",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "FortifyAlteration"
-						},
-						{
-							"at": 7,
-							"effect": "FortifyAlteration"
-						},
-						{
-							"at": 12,
-							"effect": "FortifyAlteration"
-						}
-					]
-				},
-				{
-					"name": "Ward Lattice",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 6,
-							"effect": "ResistMagic"
-						},
-						{
-							"at": 11,
-							"effect": "ResistMagic"
-						}
-					]
-				},
-				{
-					"name": "Fine Ink",
-					"element": "Fire",
-					"tiers": [
-						{
-							"at": 4,
-							"quality": 10
-						},
-						{
-							"at": 9,
-							"yield": 1
-						}
-					]
-				}
-			]
-		},
-		{
-			"id": "battlemage_draught",
-			"name": "Battlemage's Draught",
-			"kind": "potion",
-			"level": 38,
-			"unlockSkill": 50,
-			"description": "For those who fight with fire in one hand and a ward in the other.",
-			"ingredients": [
-				{
-					"category": "Paste",
-					"count": 1
-				},
-				{
-					"category": "Minerals",
-					"count": 1
-				},
-				{
-					"item": "spirit_essence",
-					"count": 1
-				}
-			],
-			"yield": 1,
-			"value": 110,
-			"weight": 0.5,
-			"lines": [
-				{
-					"name": "Firebrand",
-					"element": "Fire",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "FortifyDestruction"
-						},
-						{
-							"at": 7,
-							"effect": "FortifyDestruction"
-						},
-						{
-							"at": 12,
-							"effect": "FortifyDestruction"
-						}
-					]
-				},
-				{
-					"name": "Deep Well",
-					"element": "Ice",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "FortifyMagicka"
-						},
-						{
-							"at": 8,
-							"effect": "FortifyMagicka"
-						}
-					]
-				},
-				{
-					"name": "Surge",
-					"element": "Lightning",
-					"tiers": [
-						{
-							"at": 4,
-							"effect": "RegenMagicka"
-						},
-						{
-							"at": 9,
-							"effect": "RegenMagicka"
-						}
-					]
-				},
-				{
-					"name": "Spellward",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 5,
-							"effect": "ResistMagic"
-						},
-						{
-							"at": 11,
-							"effect": "ResistMagic"
-						}
-					]
-				}
-			]
-		},
-		{
-			"id": "dragonblood_tonic",
-			"name": "Dragonblood Tonic",
-			"kind": "potion",
-			"level": 45,
-			"unlockSkill": 60,
-			"description": "Said to be the drink of those who hunt dragons. It burns going down and leaves you unafraid of the fire.",
-			"ingredients": [
-				{
-					"category": "Monster Parts",
-					"count": 1
-				},
-				{
-					"category": "Oil",
-					"count": 1
-				},
-				{
-					"item": "philosopher_salt",
-					"count": 1
-				}
-			],
-			"yield": 1,
-			"value": 180,
-			"weight": 0.5,
-			"lines": [
-				{
-					"name": "Scales",
-					"element": "Ice",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "ResistFire"
-						},
-						{
-							"at": 8,
-							"effect": "ResistFire"
-						},
-						{
-							"at": 13,
-							"effect": "ResistFire"
-						}
-					]
-				},
-				{
-					"name": "Heart",
-					"element": "Fire",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "FortifyHealth"
-						},
-						{
-							"at": 9,
-							"effect": "FortifyHealth"
-						}
-					]
-				},
-				{
-					"name": "Fury",
-					"element": "Lightning",
-					"tiers": [
-						{
-							"at": 4,
-							"effect": "FortifyOneHanded"
-						},
-						{
-							"at": 9,
-							"effect": "FortifyOneHanded"
-						}
-					]
-				},
-				{
-					"name": "Breath",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 5,
-							"effect": "RegenStamina"
-						},
-						{
-							"at": 10,
-							"effect": "RegenStamina"
-						}
-					]
-				}
-			]
-		},
-		{
-			"id": "ghostwalk_elixir",
-			"name": "Ghostwalk Elixir",
-			"kind": "potion",
-			"level": 50,
-			"unlockSkill": 65,
-			"description": "The drinker thins like mist. Thieves pay a fortune for a single vial.",
-			"ingredients": [
-				{
-					"category": "Tincture",
-					"count": 1
-				},
-				{
-					"category": "Insects",
-					"count": 1
-				},
-				{
-					"item": "spirit_essence",
-					"count": 1
-				}
-			],
-			"yield": 1,
-			"value": 200,
-			"weight": 0.4,
-			"lines": [
-				{
-					"name": "Unseen",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 4,
-							"effect": "Invisibility"
-						},
-						{
-							"at": 9,
-							"effect": "Invisibility"
-						},
-						{
-							"at": 14,
-							"effect": "Invisibility"
-						}
-					]
-				},
-				{
-					"name": "Silent Step",
-					"element": "Ice",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "FortifySneak"
-						},
-						{
-							"at": 9,
-							"effect": "FortifySneak"
-						}
-					]
-				},
-				{
-					"name": "Light Fingers",
-					"element": "Lightning",
-					"tiers": [
-						{
-							"at": 4,
-							"effect": "FortifyPickpocket"
-						},
-						{
-							"at": 9,
-							"effect": "FortifyPickpocket"
-						}
-					]
-				},
-				{
-					"name": "Phantasm",
-					"element": "Fire",
-					"tiers": [
-						{
-							"at": 6,
-							"effect": "FortifyIllusion"
-						},
-						{
-							"at": 12,
-							"effect": "FortifyIllusion"
-						}
-					]
-				}
-			]
-		},
-		{
-			"id": "titans_draught",
-			"name": "Titan's Draught",
-			"kind": "potion",
-			"level": 55,
-			"unlockSkill": 70,
-			"description": "A crystalline brew that makes every burden feel like a feather and every blow land like a hammer.",
-			"ingredients": [
-				{
-					"category": "Oil",
-					"count": 1
-				},
-				{
-					"category": "Monster Parts",
-					"count": 1
-				},
-				{
-					"item": "philosopher_salt",
-					"count": 1
-				}
-			],
-			"yield": 1,
-			"value": 220,
-			"weight": 0.6,
-			"lines": [
-				{
-					"name": "Titan's Back",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "FortifyCarryWeight"
-						},
-						{
-							"at": 9,
-							"effect": "FortifyCarryWeight"
-						}
-					]
-				},
-				{
-					"name": "Titan's Arm",
-					"element": "Lightning",
-					"tiers": [
-						{
-							"at": 3,
-							"effect": "FortifyTwoHanded"
-						},
-						{
-							"at": 8,
-							"effect": "FortifyTwoHanded"
-						},
-						{
-							"at": 13,
-							"effect": "FortifyTwoHanded"
-						}
-					]
-				},
-				{
-					"name": "Titan's Lungs",
-					"element": "Fire",
-					"tiers": [
-						{
-							"at": 4,
-							"effect": "FortifyStamina"
-						},
-						{
-							"at": 10,
-							"effect": "FortifyStamina"
-						}
-					]
-				},
-				{
-					"name": "Second Breath",
-					"element": "Ice",
-					"tiers": [
-						{
-							"at": 5,
-							"effect": "RegenStamina"
-						},
-						{
-							"at": 11,
-							"quality": 20
-						}
-					]
-				}
-			]
-		},
-		{
 			"id": "leaden_draught",
 			"name": "Leaden Draught",
 			"kind": "poison",
-			"level": 15,
+			"level": 25,
 			"unlockSkill": 25,
 			"description": "Makes the limbs heavy and the breath short. A favourite of bandits who prefer their marks slow.",
 			"ingredients": [
@@ -3430,8 +3394,8 @@
 			"id": "cowards_dust",
 			"name": "Coward's Dust",
 			"kind": "poison",
-			"level": 18,
-			"unlockSkill": 25,
+			"level": 28,
+			"unlockSkill": 28,
 			"description": "Grave dust and pressed petals. One breath and the bravest warrior remembers somewhere else to be.",
 			"ingredients": [
 				{
@@ -3495,7 +3459,7 @@
 			"id": "mages_bane",
 			"name": "Mage's Bane",
 			"kind": "poison",
-			"level": 20,
+			"level": 30,
 			"unlockSkill": 30,
 			"description": "Tasteless and odourless. A mage who drinks it reaches for a spell and finds nothing there.",
 			"ingredients": [
@@ -3575,10 +3539,93 @@
 			]
 		},
 		{
+			"id": "hexing_oil",
+			"name": "Hexing Oil",
+			"kind": "poison",
+			"level": 40,
+			"unlockSkill": 40,
+			"description": "Strips away a target's protections. Pair it with your favourite spell.",
+			"ingredients": [
+				{
+					"category": "Toxin",
+					"count": 1
+				},
+				{
+					"category": "Salts",
+					"count": 1
+				},
+				{
+					"category": "Oil",
+					"count": 1
+				}
+			],
+			"yield": 1,
+			"value": 70,
+			"weight": 0.25,
+			"lines": [
+				{
+					"name": "Kindling",
+					"element": "Fire",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "WeaknessFire"
+						},
+						{
+							"at": 8,
+							"effect": "WeaknessFire"
+						}
+					]
+				},
+				{
+					"name": "Brittle",
+					"element": "Ice",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "WeaknessFrost"
+						},
+						{
+							"at": 8,
+							"effect": "WeaknessFrost"
+						}
+					]
+				},
+				{
+					"name": "Conductor",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "WeaknessShock"
+						},
+						{
+							"at": 8,
+							"effect": "WeaknessShock"
+						}
+					]
+				},
+				{
+					"name": "Unravel",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 5,
+							"effect": "WeaknessMagic"
+						},
+						{
+							"at": 10,
+							"effect": "WeaknessPoison"
+						}
+					]
+				}
+			]
+		},
+		{
 			"id": "lingering_rot",
 			"name": "Lingering Rot",
 			"kind": "poison",
-			"level": 28,
+			"level": 40,
 			"unlockSkill": 40,
 			"description": "Fermented in the dark for weeks. It doesn't kill quickly, and that is the point.",
 			"ingredients": [
@@ -3662,10 +3709,163 @@
 			]
 		},
 		{
+			"id": "draught_of_madness",
+			"name": "Draught of Madness",
+			"kind": "poison",
+			"level": 45,
+			"unlockSkill": 45,
+			"description": "Whoever drinks - or bleeds - it sees enemies everywhere. Or monsters.",
+			"ingredients": [
+				{
+					"category": "Paste",
+					"count": 1
+				},
+				{
+					"category": "Spirit",
+					"count": 1
+				},
+				{
+					"category": "Tincture",
+					"count": 1
+				}
+			],
+			"yield": 1,
+			"value": 90,
+			"weight": 0.25,
+			"lines": [
+				{
+					"name": "Rage",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "Frenzy"
+						},
+						{
+							"at": 8,
+							"effect": "Frenzy"
+						},
+						{
+							"at": 13,
+							"effect": "Frenzy"
+						}
+					]
+				},
+				{
+					"name": "Dread",
+					"element": "Ice",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "Fear"
+						},
+						{
+							"at": 8,
+							"effect": "Fear"
+						}
+					]
+				},
+				{
+					"name": "Fever",
+					"element": "Fire",
+					"tiers": [
+						{
+							"at": 4,
+							"effect": "RavageHealth"
+						},
+						{
+							"at": 9,
+							"effect": "RavageHealth"
+						}
+					]
+				}
+			],
+			"unlocks": [
+				{
+					"recipe": "cowards_dust",
+					"category": "Remains",
+					"hint": "Dry a Draught of Madness with grave dust and the rage turns to terror..."
+				}
+			]
+		},
+		{
+			"id": "paralytic_toxin",
+			"name": "Paralytic Toxin",
+			"kind": "poison",
+			"level": 50,
+			"unlockSkill": 50,
+			"description": "Locks every muscle. Short, but long enough.",
+			"ingredients": [
+				{
+					"category": "Toxin",
+					"count": 1
+				},
+				{
+					"category": "Monster Parts",
+					"count": 1
+				},
+				{
+					"category": "Remains",
+					"count": 1
+				}
+			],
+			"yield": 1,
+			"value": 120,
+			"weight": 0.25,
+			"lines": [
+				{
+					"name": "Stillness",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 4,
+							"effect": "Paralysis"
+						},
+						{
+							"at": 8,
+							"effect": "Paralysis"
+						},
+						{
+							"at": 13,
+							"effect": "Paralysis"
+						}
+					]
+				},
+				{
+					"name": "Sting",
+					"element": "Fire",
+					"tiers": [
+						{
+							"at": 3,
+							"effect": "DamageHealth"
+						},
+						{
+							"at": 8,
+							"effect": "DamageHealth"
+						}
+					]
+				},
+				{
+					"name": "Molasses",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 4,
+							"effect": "Slow"
+						},
+						{
+							"at": 9,
+							"effect": "Slow"
+						}
+					]
+				}
+			]
+		},
+		{
 			"id": "deathbell_draught",
 			"name": "Deathbell Draught",
 			"kind": "poison",
-			"level": 65,
+			"level": 80,
 			"unlockSkill": 80,
 			"description": "The last poison an alchemist learns, and the last thing its victim tastes.",
 			"ingredients": [

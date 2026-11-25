@@ -39,6 +39,8 @@ namespace ui::Menu
 			std::vector<std::string> traits;
 			Screen                   screen{ Screen::kWorkshop };
 			std::string              notice;
+			// Element the player is trying to raise: pickers sort by it and highlight it.
+			std::optional<atelier::Element> focus;
 
 			atelier::JudgementRing ring;
 			atelier::RingParams    ringParams;
@@ -268,6 +270,13 @@ namespace ui::Menu
 			if (trait->ringWidthDeg != 0.0f) {
 				ImGui::BulletText("Judgement Ring hit areas %+.0f deg", trait->ringWidthDeg);
 			}
+			for (std::size_t i = 0; i < atelier::kElementCount; ++i) {
+				if (trait->elements[i] != 0) {
+					const auto element = static_cast<atelier::Element>(i);
+					ImGui::Bullet();
+					ImGui::TextColored(ToVec4(ElementColor(element)), "%s %+d in every synthesis it is used in", atelier::ElementName(element), trait->elements[i]);
+				}
+			}
 			if (trait->potionsOnly) {
 				ImGui::TextDisabled("Only inherited by potions.");
 			}
@@ -276,18 +285,25 @@ namespace ui::Menu
 			}
 		}
 
-		void ElementChips(const atelier::ElementValues& a_values)
+		void ElementChips(const atelier::ElementValues& a_values, std::optional<atelier::Element> a_focus = std::nullopt)
 		{
 			static constexpr std::array<const char*, 4> kShort{ "Fi", "Ic", "Li", "Wi" };
 			bool                                         any = false;
 			for (std::size_t i = 0; i < atelier::kElementCount; ++i) {
-				if (a_values[i] <= 0) {
+				const auto element = static_cast<atelier::Element>(i);
+				const bool focused = a_focus == element;
+				if (a_values[i] <= 0 && !focused) {
 					continue;
 				}
 				if (any) {
 					ImGui::SameLine(0.0f, 6.0f);
 				}
-				ImGui::TextColored(ToVec4(ElementColor(static_cast<atelier::Element>(i))), "%s%d", kShort[i], a_values[i]);
+				if (focused) {
+					// The element being raised: bracketed, and greyed when the item has none.
+					ImGui::TextColored(ToVec4(a_values[i] > 0 ? ElementColor(element) : Colors::kMuted), "[%s%d]", kShort[i], a_values[i]);
+				} else {
+					ImGui::TextColored(ToVec4(ElementColor(element)), "%s%d", kShort[i], a_values[i]);
+				}
 				any = true;
 			}
 			if (!any) {
@@ -353,7 +369,7 @@ namespace ui::Menu
 			ImGui::TextColored(ToVec4(Colors::kGold), "%s", m.displayName.c_str());
 			ImGui::Text("Quality %d (%s)   x%d available", m.quality, atelier::QualityRank(m.quality), a_candidate.available);
 			FillsText(a_session, m.itemKey, m.categories);
-			ElementChips(m.elements);
+			ElementChips(atelier::EffectiveElements(m, Cat()), a_session.focus);
 			if (const auto catalyst = Cat().FindCatalyst(m.itemKey)) {
 				ImGui::Separator();
 				ImGui::TextColored(ToVec4(Colors::kMaterial), "Catalyst");
@@ -547,16 +563,42 @@ namespace ui::Menu
 		{
 			bool changed = false;
 			if (ImGui::BeginPopup(a_popupId)) {
+				// Sort by an element: what the player is trying to raise for an effect line.
+				ImGui::TextDisabled("Sort:");
+				ImGui::SameLine();
+				if (ImGui::SmallButton(a_session.focus ? "Name" : "[Name]")) {
+					a_session.focus.reset();
+				}
+				for (std::size_t e = 0; e < atelier::kElementCount; ++e) {
+					const auto element = static_cast<atelier::Element>(e);
+					ImGui::SameLine();
+					ImGui::PushStyleColor(ImGuiCol_Text, ToVec4(ElementColor(element)));
+					const auto label = a_session.focus == element ? std::format("[{}]", atelier::ElementName(element)) : std::string(atelier::ElementName(element));
+					if (ImGui::SmallButton(label.c_str())) {
+						a_session.focus = element;
+					}
+					ImGui::PopStyleColor();
+				}
+				ImGui::Separator();
+
+				std::vector<int> order;
+				for (int i = 0; i < static_cast<int>(a_session.snapshot.candidates.size()); ++i) {
+					if (a_filter(a_session.snapshot.candidates[static_cast<std::size_t>(i)])) {
+						order.push_back(i);
+					}
+				}
+				if (a_session.focus) {
+					const auto value = [&](int i) { return atelier::At(atelier::EffectiveElements(a_session.snapshot.candidates[static_cast<std::size_t>(i)].material, Cat()), *a_session.focus); };
+					std::ranges::stable_sort(order, std::greater{}, value);
+				}
+
 				int shown = 0;
 				if (ImGui::Selectable("(empty)", a_choice < 0)) {
 					a_choice = -1;
 					changed = true;
 				}
-				for (int i = 0; i < static_cast<int>(a_session.snapshot.candidates.size()); ++i) {
+				for (const int i : order) {
 					const auto& c = a_session.snapshot.candidates[static_cast<std::size_t>(i)];
-					if (!a_filter(c)) {
-						continue;
-					}
 					++shown;
 					const bool usable = CanUse(a_session, i, a_choice);
 					ImGui::PushID(i);
@@ -572,7 +614,7 @@ namespace ui::Menu
 						ImGui::EndTooltip();
 					}
 					ImGui::SameLine();
-					ElementChips(c.material.elements);
+					ElementChips(atelier::EffectiveElements(c.material, Cat()), a_session.focus);
 					ImGui::SameLine();
 					ImGui::TextDisabled("x%d", c.available - UsedCount(a_session, i) + (a_choice == i ? 1 : 0));
 					ImGui::PopID();
@@ -618,9 +660,9 @@ namespace ui::Menu
 			}
 		}
 
-		void DrawEffectLines(const atelier::RecipeDef& a_recipe, const atelier::SynthesisOutcome& a_outcome, const game::WorkshopSnapshot& a_snapshot)
+		void DrawEffectLines(Session& a_session, const atelier::RecipeDef& a_recipe, const atelier::SynthesisOutcome& a_outcome)
 		{
-			const auto refs = game::EffectReferences(a_snapshot, a_recipe);
+			const auto refs = game::EffectReferences(a_session.snapshot, a_recipe);
 			for (std::size_t i = 0; i < a_recipe.lines.size(); ++i) {
 				const auto& line = a_recipe.lines[i];
 				const auto& state = a_outcome.lines[i];
@@ -628,6 +670,18 @@ namespace ui::Menu
 				ImGui::TextColored(ToVec4(ElementColor(line.element)), "%s", line.name.empty() ? atelier::ElementName(line.element) : line.name.c_str());
 				ImGui::SameLine();
 				ImGui::TextDisabled("(%s %d)", atelier::ElementName(line.element), state.value);
+				ImGui::SameLine();
+				const bool focused = a_session.focus == line.element;
+				if (ImGui::SmallButton(focused ? "[Find]" : "Find")) {
+					if (focused) {
+						a_session.focus.reset();
+					} else {
+						a_session.focus = line.element;
+					}
+				}
+				if (ImGui::IsItemHovered()) {
+					ImGui::SetTooltip("Sort ingredient choices by %s and highlight it, to raise this line.", atelier::ElementName(line.element));
+				}
 
 				const int maxThreshold = line.tiers.empty() ? 1 : std::max(line.tiers.back().threshold, 1);
 				ImGui::PushStyleColor(ImGuiCol_PlotHistogram, ToVec4(ElementColor(line.element)));
@@ -763,7 +817,7 @@ namespace ui::Menu
 				DrawElementBars(outcome.elements);
 				ImGui::Spacing();
 				ImGui::TextColored(ToVec4(Colors::kGold), "Effect Lines");
-				DrawEffectLines(*recipe, outcome, a_session.snapshot);
+				DrawEffectLines(a_session, *recipe, outcome);
 				ImGui::EndTable();
 			}
 

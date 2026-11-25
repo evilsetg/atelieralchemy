@@ -350,8 +350,8 @@ namespace game
 		player->AddObjectToContainer(state.SlotForm(*slot), nullptr, yield, nullptr);
 
 		for (const auto& id : atelier::CheckUnlocks(*recipe, input, outcome)) {
-			if (state.Learn(id)) {
-				result.unlocked.push_back(id);
+			for (auto& newId : state.Learn(id)) {
+				result.unlocked.push_back(std::move(newId));
 			}
 		}
 

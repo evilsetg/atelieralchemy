@@ -54,6 +54,7 @@ namespace atelier
 		float       weightPct{ 0.0f };
 		int         qualityBonus{ 0 };
 		float       ringWidthDeg{ 0.0f };  // widens Judgement Ring hit areas when the material is used
+		ElementValues elements{};           // added to every synthesis the carrier is used in
 		bool        potionsOnly{ false };
 		bool        poisonsOnly{ false };
 	};

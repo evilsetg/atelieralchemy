@@ -52,6 +52,9 @@ namespace atelier
 		BrewData                 brew;
 	};
 
+	// A material's own elements plus those of its element traits ("Charged" +2 Lightning, ...).
+	ElementValues EffectiveElements(const MaterialInput& a_material, const Catalog& a_catalog);
+
 	// Total element values (materials + catalyst). Exposed for UI previews.
 	ElementValues SumElements(const SynthesisInput& a_input, const Catalog& a_catalog);
 

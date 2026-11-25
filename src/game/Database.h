@@ -53,6 +53,9 @@ namespace game
 
 		[[nodiscard]] const IngredientProfile* FindIngredient(RE::FormID a_formID) const;
 		[[nodiscard]] const auto&              IngredientProfiles() const { return _ingredients; }
+		// Whether any ingredient in the load order belongs to the category (otherwise only
+		// synthesized materials, potions or poisons can fill it).
+		[[nodiscard]] bool                     CategoryHasIngredients(std::string_view a_category) const;
 		[[nodiscard]] const IngredientProfile* FindIngredientByKey(std::string_view a_key) const;
 		[[nodiscard]] const std::vector<std::string>& CategoryTraitPool(std::string_view a_category) const;
 
@@ -71,6 +74,7 @@ namespace game
 		void LoadEffects(const nlohmann::json& a_doc, const std::string& a_file);
 		void LoadIngredients(const nlohmann::json& a_doc, const std::string& a_file);
 		void MarkObtainable();
+		void AuditRecipes() const;
 		void ResolveEffects();
 		void BuildIngredientProfiles();
 		void BuildTemplates();

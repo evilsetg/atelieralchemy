@@ -44,7 +44,17 @@
 
 		{ "id": "enduring",      "name": "Enduring Potency", "grade": 2, "magnitude": 15, "duration": 25, "description": "Strong and long-lasting." },
 		{ "id": "fine_crafted",  "name": "Fine Craftsmanship","grade": 2, "value": 40, "weight": -30, "description": "Elegant, light and valuable." },
-		{ "id": "twilight",      "name": "Twilight Essence", "grade": 3, "magnitude": 25, "duration": 25, "quality": 10, "description": "Where Aetherius and Oblivion meet." }
+		{ "id": "twilight",      "name": "Twilight Essence", "grade": 3, "magnitude": 25, "duration": 25, "quality": 10, "description": "Where Aetherius and Oblivion meet." },
+
+		{ "id": "kindled",       "name": "Kindled",          "grade": 1, "elements": { "fire": 2 },      "description": "Still warm to the touch. Adds Fire to every synthesis it is used in." },
+		{ "id": "frosted",       "name": "Frosted",          "grade": 1, "elements": { "ice": 2 },       "description": "Rimed with frost. Adds Ice to every synthesis it is used in." },
+		{ "id": "charged",       "name": "Charged",          "grade": 1, "elements": { "lightning": 2 }, "description": "Crackles faintly. Adds Lightning to every synthesis it is used in." },
+		{ "id": "windborne",     "name": "Windborne",        "grade": 1, "elements": { "wind": 2 },      "description": "Light as a breath. Adds Wind to every synthesis it is used in." },
+		{ "id": "steamborn",     "name": "Steamborn",        "grade": 2, "elements": { "fire": 2, "ice": 2 },       "description": "Fire and frost in balance." },
+		{ "id": "storm_forged",  "name": "Storm-forged",     "grade": 2, "elements": { "fire": 2, "lightning": 2 }, "description": "Struck by lightning in the forge." },
+		{ "id": "rimewind",      "name": "Rimewind",         "grade": 2, "elements": { "ice": 2, "wind": 2 },       "description": "Carries the cold of the high peaks." },
+		{ "id": "thunderhead",   "name": "Thunderhead",      "grade": 2, "elements": { "lightning": 2, "wind": 2 }, "description": "The air before a storm." },
+		{ "id": "prismatic",     "name": "Prismatic",        "grade": 3, "elements": { "fire": 2, "ice": 2, "lightning": 2, "wind": 2 }, "quality": 5, "description": "Every element, perfectly balanced." }
 	],
 
 	// [first, second, result]
@@ -62,24 +72,30 @@
 		["blessed",      "daedric",      "twilight"],
 		["fresh",        "quality_up",   "quality_up_2"],
 		["dense",        "potent",       "potent_2"],
-		["spirit_touched","lingering",   "lingering_2"]
+		["spirit_touched","lingering",   "lingering_2"],
+		["kindled",      "frosted",      "steamborn"],
+		["kindled",      "charged",      "storm_forged"],
+		["frosted",      "windborne",    "rimewind"],
+		["charged",      "windborne",    "thunderhead"],
+		["storm_forged", "rimewind",     "prismatic"],
+		["steamborn",    "thunderhead",  "prismatic"]
 	],
 
 	// Traits an ingredient of a category can be found with (rolled when you pick it up).
 	"categoryTraitPools": {
-		"Plants":        ["fresh", "potent", "light", "soothing"],
-		"Flowers":       ["fresh", "precious", "soothing", "lingering"],
-		"Fungus":        ["potent", "volatile", "venomous", "lingering"],
-		"Fruit":         ["fresh", "soothing", "precious"],
-		"Insects":       ["light", "volatile", "venomous", "steady"],
-		"Animal Parts":  ["dense", "potent", "lingering"],
-		"Fish":          ["fresh", "dense", "lingering"],
-		"Aquatic":       ["precious", "blessed", "light", "precious_2"],
-		"Minerals":      ["quality_up", "dense", "steady", "precious"],
-		"Salts":         ["quality_up", "steady", "potent"],
-		"Monster Parts": ["potent", "dense", "volatile", "venomous", "potent_2"],
-		"Spirit":        ["spirit_touched", "blessed", "lingering", "steady", "lingering_2"],
-		"Remains":       ["lingering", "venomous", "dense"],
-		"Daedric":       ["daedric", "potent", "volatile", "quality_up_2"]
+		"Plants":        ["fresh", "potent", "light", "soothing", "kindled"],
+		"Flowers":       ["fresh", "precious", "soothing", "lingering", "windborne"],
+		"Fungus":        ["potent", "volatile", "venomous", "lingering", "frosted"],
+		"Fruit":         ["fresh", "soothing", "precious", "charged"],
+		"Insects":       ["light", "volatile", "venomous", "steady", "charged", "windborne"],
+		"Animal Parts":  ["dense", "potent", "lingering", "kindled", "charged"],
+		"Fish":          ["fresh", "dense", "lingering", "frosted"],
+		"Aquatic":       ["precious", "blessed", "light", "precious_2", "frosted", "windborne"],
+		"Minerals":      ["quality_up", "dense", "steady", "precious", "kindled"],
+		"Salts":         ["quality_up", "steady", "potent", "kindled", "frosted"],
+		"Monster Parts": ["potent", "dense", "volatile", "venomous", "potent_2", "charged", "kindled"],
+		"Spirit":        ["spirit_touched", "blessed", "lingering", "steady", "lingering_2", "windborne", "frosted"],
+		"Remains":       ["lingering", "venomous", "dense", "frosted"],
+		"Daedric":       ["daedric", "potent", "volatile", "quality_up_2", "storm_forged"]
 	}
 }

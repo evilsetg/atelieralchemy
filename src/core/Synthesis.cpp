@@ -41,6 +41,19 @@ namespace atelier
 		}
 	}
 
+	ElementValues EffectiveElements(const MaterialInput& a_material, const Catalog& a_catalog)
+	{
+		ElementValues total = a_material.elements;
+		for (const auto& id : a_material.traits) {
+			if (const auto def = a_catalog.FindTrait(id)) {
+				for (std::size_t i = 0; i < kElementCount; ++i) {
+					total[i] += def->elements[i];
+				}
+			}
+		}
+		return total;
+	}
+
 	ElementValues SumElements(const SynthesisInput& a_input, const Catalog& a_catalog)
 	{
 		ElementValues total{};
@@ -50,10 +63,10 @@ namespace atelier
             }
 		};
 		for (const auto& material : a_input.materials) {
-			add(material.elements);
+			add(EffectiveElements(material, a_catalog));
 		}
 		if (a_input.catalyst) {
-			add(a_input.catalyst->elements);
+			add(EffectiveElements(*a_input.catalyst, a_catalog));
 			if (const auto def = a_catalog.FindCatalyst(a_input.catalyst->itemKey)) {
 				add(def->addElements);
 			}

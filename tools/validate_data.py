@@ -57,6 +57,11 @@ def main() -> int:
         if form is not None and not re.fullmatch(r"[^|]+\.(esm|esp|esl)\|0x[0-9A-Fa-f]{1,8}", form):
             errors.append(f"effect {key}: form '{form}' must look like 'Skyrim.esm|0x03EB15'")
 
+    for trait in merged.get("traits", []):
+        for element in trait.get("elements", {}):
+            if element.lower() not in ELEMENTS:
+                errors.append(f"trait {trait['id']}: unknown element '{element}'")
+
     for combo in merged.get("traitCombos", []):
         for t in combo:
             if t not in traits:

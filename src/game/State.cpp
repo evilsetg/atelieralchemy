@@ -499,10 +499,48 @@ namespace game
 		return _known.contains(std::string(a_recipe));
 	}
 
-	bool State::Learn(const std::string& a_recipe)
+	std::vector<std::string> State::Learn(const std::string& a_recipe)
+	{
+		const auto& db = Database::Get();
+		const auto& catalog = db.Catalog();
+		std::vector<std::string> learned;
+		std::vector<std::string> pending{ a_recipe };
+		std::scoped_lock         lock(_lock);
+		while (!pending.empty()) {
+			const auto id = pending.back();
+			pending.pop_back();
+			// An already known recipe still has its dependencies checked (saves made before a
+			// recipe gained a material requirement); already known dependencies stop the walk.
+			if (_known.insert(id).second) {
+				learned.push_back(id);
+			} else if (id != a_recipe) {
+				continue;
+			}
+			const auto recipe = catalog.FindRecipe(id);
+			if (!recipe) {
+				continue;
+			}
+			for (const auto& req : recipe->requirements) {
+				if (!req.isCategory) {
+					if (const auto dep = catalog.FindRecipe(req.key); dep && dep->kind == atelier::OutputKind::kMaterial) {
+						pending.push_back(dep->id);
+					}
+				} else if (!db.CategoryHasIngredients(req.key)) {
+					for (const auto& [depId, dep] : catalog.recipes) {
+						if (dep.kind == atelier::OutputKind::kMaterial && std::ranges::find(dep.outputCategories, req.key) != dep.outputCategories.end()) {
+							pending.push_back(depId);
+						}
+					}
+				}
+			}
+		}
+		return learned;
+	}
+
+	bool State::IsKnown(const std::string& a_recipe) const
 	{
 		std::scoped_lock lock(_lock);
-		return _known.insert(a_recipe).second;
+		return _known.contains(a_recipe);
 	}
 
 	std::set<std::string> State::Known() const
@@ -516,8 +554,10 @@ namespace game
 		std::vector<std::string> learned;
 		for (const auto& [id, recipe] : Database::Get().Catalog().recipes) {
 			const bool bySkill = recipe.unlockSkill >= 0 && a_alchemySkill >= static_cast<float>(recipe.unlockSkill);
-			if ((recipe.knownAtStart || bySkill) && Learn(id)) {
-				learned.push_back(id);
+			if (recipe.knownAtStart || bySkill || IsKnown(id)) {
+				for (auto& newId : Learn(id)) {
+					learned.push_back(std::move(newId));
+				}
 			}
 		}
 		return learned;

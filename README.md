@@ -31,13 +31,24 @@ synthesis systems of the *Atelier* series. Every synthesis ends with a *Shadow H
   The starter recipes take raw ingredients. Mid- and high-level potions and poisons need
   these intermediates, for example a Hunter's Draught takes an Extract, an Oil and an insect,
   and a Grand Elixir needs Quintessence.
+- **Minor elements and element traits.** Every basic material also has two lines for the
+  elements it lacks (Floral Tincture's *Pollen Charge* for Lightning, Distilled Water's
+  *Warm Spring* for Fire...). Like every line, they need that element to progress, so feed
+  in an ingredient, catalyst or trait that carries it and the material amplifies it for the
+  next step. Element traits such as
+  *Kindled*, *Frosted*, *Charged* and *Windborne* add +2 of their element to every synthesis
+  they're used in; pairs fuse into dual-element traits and finally *Prismatic*.
+- **Finding the right ingredient.** Press *Find* on an effect line (or a sort button in the
+  ingredient picker) to sort every choice by that line's element and highlight it.
 - **Catalysts.** An optional extra slot that adds elements, adds quality or bends the ring.
   For example, Frost Salts slow the needle and a Daedra Heart adds an extra hit area.
 - **Trait inheritance and fusion.** You pick which traits the product inherits (3 slots by
   default). Some pairs fuse into stronger traits, for example *Potent* + *Lingering* →
   *Enduring Potency*.
-- **Ideas (recipe discovery).** New recipes unlock as your Alchemy skill rises, or when you
-  synthesize a recipe with a particular ingredient. The recipe book shows hints.
+- **Ideas (recipe discovery).** New recipes unlock as your Alchemy skill rises (from 20 up
+  to 90; a recipe's level is the skill it unlocks at), or when you synthesize a recipe with a
+  particular ingredient. Learning a recipe also teaches any intermediate material it needs.
+  The recipe book shows hints.
 - **Judgement Ring.** A needle sweeps once around a ring. Press when it crosses each orange
   hit area; the red strike area at its end is a critical. Each hit raises quality by 2% and
   each strike by 6%. Striking every area is a **Perfect** synthesis: another +10% and +1 item.
@@ -127,7 +138,10 @@ tier. A longer one: Distilled Water → *Herbal Extract* (two plants + the water
   - `ingredients.json`: ingredient categories and signature traits, matched by English name
     or by `"form": "Plugin.esp|0x123456"`. Unlisted ingredients are categorized by keywords
     in their name and model path.
-- Check your edits offline with `python3 tools/validate_data.py`. In game, data errors are
+- Check your edits offline with `python3 tools/validate_data.py`, and
+  `python3 tools/audit_lines.py` for effect lines whose top tier looks out of reach. The
+  plugin repeats that audit with your load order's real ingredients at startup
+  (`Recipe audit:` in the SKSE log). In game, data errors are
   listed at the top of the synthesis window and in the SKSE log.
 
 ## Building (NixOS / Linux, cross-compiled to Windows)
