@@ -26,6 +26,7 @@ namespace game
 
 		// [Balance]
 		float magnitudeMult{ 1.0f };
+		float valueMult{ 1.0f };
 		float xpMult{ 1.0f };
 		int   baseTraitSlots{ 3 };
 		bool  usePerks{ true };

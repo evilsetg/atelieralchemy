@@ -98,6 +98,8 @@ namespace game
 				} else if (section == "balance") {
 					if (key == "magnitudemultiplier") {
 						magnitudeMult = std::max(std::stof(value), 0.0f);
+					} else if (key == "valuemultiplier") {
+						valueMult = std::max(std::stof(value), 0.0f);
 					} else if (key == "xpmultiplier") {
 						xpMult = std::max(std::stof(value), 0.0f);
 					} else if (key == "basetraitslots") {

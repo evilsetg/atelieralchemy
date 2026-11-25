@@ -176,6 +176,24 @@ static void TestVanillaReferences()
 	CHECK(std::abs(capped.brew.effects[0].magnitude - 9.1f) < 0.01f);  // 8.256 * 0.8 * 1.1 * 1.25
 	CHECK(!capped.brew.effects[0].breakdown.empty());
 
+	// Value: the sum of the effects' costs like a vanilla potion, floored by the recipe value.
+	const int floorValue = Evaluate(input, catalog, nullptr).brew.value;
+	auto priced = input;
+	priced.costs["RestoreHealth"] = EffectCostInfo{ .baseCost = 2.0f, .usesMagnitude = true, .usesDuration = false };
+	priced.costs["RestoreStamina"] = EffectCostInfo{ .baseCost = 5.0f, .usesMagnitude = false, .usesDuration = true };
+	const auto pricedOut = Evaluate(priced, catalog, nullptr);
+	const float costA = EffectCost(priced.costs["RestoreHealth"], pricedOut.brew.effects[0].magnitude, pricedOut.brew.effects[0].duration);
+	const float costB = EffectCost(priced.costs["RestoreStamina"], pricedOut.brew.effects[1].magnitude, pricedOut.brew.effects[1].duration);
+	const float expected = std::max(costA, costB) + 0.5f * std::min(costA, costB);  // diminishing returns
+	CHECK(std::abs(EffectCost(EffectCostInfo{ .baseCost = 2.0f }, 10.0f, 100) - 2.0f * std::pow(10.0f, 1.1f) * std::pow(10.0f, 1.1f)) < 0.01f);
+	CHECK(pricedOut.brew.value == std::max(floorValue, static_cast<int>(std::lround(expected))));
+	auto doubled = priced;
+	doubled.stats.valueMult = 2.0f;
+	CHECK(std::abs(Evaluate(doubled, catalog, nullptr).brew.value - 2 * pricedOut.brew.value) <= 1);
+	priced.costs["RestoreHealth"].baseCost = 0.0f;
+	priced.costs["RestoreStamina"].baseCost = 0.0f;
+	CHECK(Evaluate(priced, catalog, nullptr).brew.value == floorValue);
+
 	// No reference (e.g. an add-on effect): absolute values with perks.
 	input.references.clear();
 	CHECK(std::abs(Evaluate(input, catalog, nullptr).brew.effects[0].magnitude - 20.0f * 1.1f * 9.0f) < 0.51f);

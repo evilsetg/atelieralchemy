@@ -13,6 +13,8 @@
 // "ring": a Judgement Ring pattern from ring_patterns.json (or a list of areas, same format).
 // "potency": multiplies every effect tier's share of vanilla (1.5 = 120% / 150% / 165%), for
 // recipes whose effects should outclass simpler ones.
+// "value": potions and poisons are priced from their effects' costs like a vanilla
+// brew; "value" (x quality) is only their minimum. Materials use it as their value.
 // Discovery: "known" (from the start), "unlockSkill" (Alchemy level) and "unlocks" rules
 // ("ideas"): synthesizing this recipe with an item / category / quality unlocks another.
 {

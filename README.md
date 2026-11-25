@@ -75,7 +75,7 @@ synthesis systems of the *Atelier* series. Every synthesis ends with a *Shadow H
   created" perks add more.
 - **Quality matters.** On top of that, magnitude scales linearly with quality: Q1 = 0.6×,
   Q80 = 1.0× (a typical mid-game brew), Q200 = 1.6×, capped at 2.0× from Q280. Duration gets
-  half the slope (Q200 = 1.3×, capped at 1.5×). Value grows with quality too. Traits add at
+  half the slope (Q200 = 1.3×, capped at 1.5×). Traits add at
   most +25% magnitude and +50% duration in total. Hover an effect in the synthesis window to
   see how its value was calculated.
 - **Vanilla integration.** Products are real potions and poisons with real magic effects.
@@ -84,6 +84,11 @@ synthesis systems of the *Atelier* series. Every synthesis ends with a *Shadow H
   Opus...) and potency perks from other mods work without a patch. "Potions created" perks
   such as Double Toil and Trouble multiply the batch of a potion or poison, synthesis grants
   Alchemy XP, and merchants buy your brews.
+- **Gold value like vanilla.** A brew is priced from its effects' costs, as the game prices a
+  potion you mix yourself, so stronger and longer brews sell for more. Extra effects have
+  diminishing returns: the most valuable effect counts in full, the next at 50%, then 25%...
+  A recipe's own `value` (scaled by quality) is the minimum; value traits and the INI's
+  `ValueMultiplier` apply on top.
 
 ## Requirements
 

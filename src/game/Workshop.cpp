@@ -140,6 +140,7 @@ namespace game
 		atelier::AlchemistStats stats;
 		stats.skill = a_snapshot.skill;
 		stats.globalMagnitudeMult = Config::Current().magnitudeMult;
+		stats.valueMult = Config::Current().valueMult;
 
 		// Only used by tiers with absolute values (add-ons): the perk potency of the recipe's
 		// first effect. Vanilla-relative tiers get theirs per effect via EffectReferences.
@@ -200,6 +201,15 @@ namespace game
 		input.recipe = &a_recipe;
 		input.stats = StatsFor(a_snapshot, a_recipe);
 		input.references = EffectReferences(a_snapshot, a_recipe);
+		for (const auto& line : a_recipe.lines) {
+			for (const auto& tier : line.tiers) {
+				if (tier.kind == atelier::EffectTier::Kind::kEffect) {
+					if (const auto* info = Database::Get().FindEffect(tier.effectKey)) {
+						input.costs.emplace(tier.effectKey, info->CostInfo());
+					}
+				}
+			}
+		}
 		input.chosenTraits = a_traits;
 		for (const auto index : a_materials) {
 			if (index >= 0 && index < static_cast<int>(a_snapshot.candidates.size())) {

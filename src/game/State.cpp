@@ -139,19 +139,6 @@ namespace game
 			return brew;
 		}
 
-		float EffectCost(const RE::EffectSetting* a_effect, float a_magnitude, int a_duration)
-		{
-			using Flag = RE::EffectSetting::EffectSettingData::Flag;
-			float cost = a_effect->data.baseCost;
-			if (!a_effect->data.flags.all(Flag::kNoMagnitude)) {
-				cost *= std::pow(std::max(a_magnitude, 1.0f), 1.1f);
-			}
-			if (!a_effect->data.flags.all(Flag::kNoDuration) && a_duration > 0) {
-				cost *= std::pow(static_cast<float>(std::max(a_duration, 10)) / 10.0f, 1.1f);
-			}
-			return cost;
-		}
-
 		// Vendor keywords decide which merchants buy an item. Looked up by editor ID
 		// (keywords keep theirs at runtime) so the ESP needs no hard-coded form IDs.
 		void SetVendorKeyword(RE::BGSKeywordForm* a_form, atelier::OutputKind a_kind)
@@ -438,7 +425,7 @@ namespace game
 			entry->effectItem.magnitude = effect.magnitude;
 			entry->effectItem.duration = static_cast<std::uint32_t>(std::max(effect.duration, 0));
 			entry->effectItem.area = 0;
-			entry->cost = EffectCost(info->form, effect.magnitude, effect.duration);
+			entry->cost = atelier::EffectCost(info->CostInfo(), effect.magnitude, effect.duration);
 			potion->effects.push_back(entry);
 			if (info->form->IsHostile()) {
 				++potion->hostileCount;

@@ -12,6 +12,7 @@ namespace atelier
 		float skill{ 15.0f };
 		float magnitudeMult{ 1.0f };  // perks such as Alchemist / Physician / Benefactor / Poisoner
 		float globalMagnitudeMult{ 1.0f };
+		float valueMult{ 1.0f };  // INI ValueMultiplier
 	};
 
 	// What vanilla alchemy can make of an effect right now: the strongest ingredient's
@@ -23,6 +24,22 @@ namespace atelier
 		bool  scalesDuration{ false };  // potency lengthens the effect instead (Invisibility, Paralysis...)
 	};
 
+	// What a magic effect costs, as the game prices it: base cost x magnitude^1.1 x
+	// (duration / 10)^1.1, for the parts the effect uses. A potion is worth the sum of its
+	// effects' costs, so value follows strength, duration and the number of effects.
+	struct EffectCostInfo
+	{
+		float baseCost{ 0.0f };
+		bool  usesMagnitude{ true };
+		bool  usesDuration{ true };
+	};
+
+	float EffectCost(const EffectCostInfo& a_info, float a_magnitude, int a_duration);
+
+	// Each further effect, by descending cost, adds this share of the previous one's weight
+	// to a brew's value: 100%, 50%, 25%...
+	inline constexpr float kExtraEffectValueShare = 0.5f;
+
 	struct SynthesisInput
 	{
 		const RecipeDef*           recipe{ nullptr };
@@ -31,6 +48,7 @@ namespace atelier
 		std::vector<std::string>     chosenTraits;  // trait ids picked from the materials
 		AlchemistStats               stats;
 		std::unordered_map<std::string, EffectReference> references;  // by effect key
+		std::unordered_map<std::string, EffectCostInfo>  costs;       // by effect key
 	};
 
 	struct LineState

@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cmath>
 #include <format>
+#include <functional>
 
 namespace atelier
 {
@@ -39,6 +40,18 @@ namespace atelier
 			}
 			return std::max(std::round(a_value * 10.0f) / 10.0f, 0.1f);
 		}
+	}
+
+	float EffectCost(const EffectCostInfo& a_info, float a_magnitude, int a_duration)
+	{
+		float cost = a_info.baseCost;
+		if (a_info.usesMagnitude) {
+			cost *= std::pow(std::max(a_magnitude, 1.0f), 1.1f);
+		}
+		if (a_info.usesDuration && a_duration > 0) {
+			cost *= std::pow(static_cast<float>(std::max(a_duration, 10)) / 10.0f, 1.1f);
+		}
+		return cost;
 	}
 
 	ElementValues EffectiveElements(const MaterialInput& a_material, const Catalog& a_catalog)
@@ -327,8 +340,25 @@ namespace atelier
 			}
 		}
 
-		const float value = static_cast<float>(recipe.baseValue) * (0.5f + static_cast<float>(outcome.quality) / 100.0f) *
-		                    std::max(0.1f, 1.0f + valuePct / 100.0f);
+		// Priced like a vanilla potion from its effects' costs (quality already shows in their
+		// magnitude and duration), with diminishing returns: the most valuable effect counts in
+		// full, the next at 50%, then 25%... so many-effect brews stay near vanilla prices.
+		// The recipe's base value, scaled by quality, is the floor.
+		std::vector<float> costs;
+		for (const auto& effect : brew.effects) {
+			if (const auto cost = a_input.costs.find(effect.effectKey); cost != a_input.costs.end()) {
+				costs.push_back(EffectCost(cost->second, effect.magnitude, effect.duration));
+			}
+		}
+		std::ranges::sort(costs, std::greater{});
+		float effectValue = 0.0f;
+		float share = 1.0f;
+		for (const float cost : costs) {
+			effectValue += cost * share;
+			share *= kExtraEffectValueShare;
+		}
+		const float floor = static_cast<float>(recipe.baseValue) * (0.5f + static_cast<float>(outcome.quality) / 100.0f);
+		const float value = std::max(effectValue, floor) * std::max(0.1f, 1.0f + valuePct / 100.0f) * a_input.stats.valueMult;
 		brew.value = std::max(1, static_cast<int>(std::lround(value)));
 		brew.weight = std::max(0.01f, recipe.baseWeight * std::max(0.1f, 1.0f + weightPct / 100.0f));
 

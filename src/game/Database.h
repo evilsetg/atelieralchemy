@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/Catalog.h"
+#include "core/Synthesis.h"
 
 #include <nlohmann/json_fwd.hpp>
 
@@ -34,6 +35,14 @@ namespace game
 		bool        powerAffectsDuration{ false };
 		std::string baseSource;
 		[[nodiscard]] bool HasBase() const { return !baseSource.empty(); }
+
+		[[nodiscard]] atelier::EffectCostInfo CostInfo() const
+		{
+			using Flag = RE::EffectSetting::EffectSettingData::Flag;
+			return { .baseCost = form->data.baseCost,
+				.usesMagnitude = !form->data.flags.all(Flag::kNoMagnitude),
+				.usesDuration = !form->data.flags.all(Flag::kNoDuration) };
+		}
 	};
 
 	// Static data: JSON definitions from Data/SKSE/Plugins/AtelierAlchemy/ plus
