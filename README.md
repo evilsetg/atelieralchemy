@@ -60,7 +60,7 @@ synthesis systems of the *Atelier* series. Every synthesis ends with a *Shadow H
   Each judgement has its own sound: a hit lands like a punch, a strike shatters like glass,
   a miss gives a retro menu-cancel blip, and a Perfect ends in a rising arpeggio. The WAVs in
   `SKSE/Plugins/AtelierAlchemy/sounds/` can be replaced with your own 16-bit PCM files.
-- **36 recipes** covering every vanilla alchemy effect: restoration, regeneration, resistances,
+- **42 recipes** (31 potions and poisons, 11 materials) covering every vanilla alchemy effect: restoration, regeneration, resistances,
   every skill Fortify, waterbreathing, invisibility, carry weight, and poisons from Damage,
   Ravage and Lingering Damage to regen drain, Weakness, Fear, Frenzy, Slow and Paralysis.
 - **Balanced against vanilla.** Effect strength is derived from what vanilla alchemy could
@@ -70,8 +70,8 @@ synthesis systems of the *Atelier* series. Every synthesis ends with a *Shadow H
   110% of that. For effects such as Invisibility, where potency lengthens the effect, the
   share applies to duration. Masterwork recipes multiply those shares: Elixir of Vitality and
   Panacea ×1.25, Grand Elixir ×1.5.
-- **Batch sizes.** A potion or poison synthesis makes one item, like a vanilla brew;
-  materials come in larger batches. A Perfect ring, some effect-line tiers and "potions
+- **Batch sizes.** A potion or poison synthesis makes two items, as a reward for the extra
+  work over a vanilla brew; materials come in batches of two or three. A Perfect ring, some effect-line tiers and "potions
   created" perks add more.
 - **Quality matters.** On top of that, magnitude scales linearly with quality: Q1 = 0.6×,
   Q80 = 1.0× (a typical mid-game brew), Q200 = 1.6×, capped at 2.0× from Q280. Duration gets
@@ -164,6 +164,10 @@ bundles the dependency sources CMake fetched (run a build first) in `third_party
 build from that archive uses them instead of downloading anything. CommonLib's OpenVR
 submodule is left out except for its headers and license, since the mod doesn't build for
 Skyrim VR.
+
+The Nexus page text lives in `nexus/description.md`. `package.sh` copies it to `dist/nexus/`
+along with a BBCode version (`description.bbcode`) to paste into the Nexus editor.
+`tools/make_banner.py` renders the banner and cover images into the same folder.
 
 The first build compiles CommonLibSSE-NG and takes about 15 minutes; later builds take
 seconds. Dependencies (CommonLibSSE-NG, spdlog, Dear ImGui, nlohmann/json, SimpleMath) are

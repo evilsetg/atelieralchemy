@@ -57,11 +57,11 @@
 							"amount": 1
 						},
 						{
-							"at": 6,
+							"at": 5,
 							"quality": 8
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"element": "Fire",
 							"amount": 2
 						}
@@ -77,11 +77,11 @@
 							"amount": 1
 						},
 						{
-							"at": 6,
+							"at": 5,
 							"traitSlot": 1
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"element": "Lightning",
 							"amount": 2
 						}
@@ -97,12 +97,12 @@
 							"amount": 1
 						},
 						{
-							"at": 5,
+							"at": 4,
 							"element": "Wind",
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Wind",
 							"amount": 1
 						}
@@ -118,12 +118,12 @@
 							"amount": 1
 						},
 						{
-							"at": 5,
+							"at": 4,
 							"element": "Ice",
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Ice",
 							"amount": 1
 						}
@@ -179,11 +179,11 @@
 							"amount": 1
 						},
 						{
-							"at": 5,
+							"at": 4,
 							"quality": 10
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Ice",
 							"amount": 2
 						}
@@ -199,11 +199,11 @@
 							"amount": 1
 						},
 						{
-							"at": 6,
+							"at": 5,
 							"yield": 1
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"element": "Wind",
 							"amount": 2
 						}
@@ -219,12 +219,12 @@
 							"amount": 1
 						},
 						{
-							"at": 5,
+							"at": 4,
 							"element": "Fire",
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Fire",
 							"amount": 1
 						}
@@ -240,12 +240,12 @@
 							"amount": 1
 						},
 						{
-							"at": 5,
+							"at": 4,
 							"element": "Lightning",
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Lightning",
 							"amount": 1
 						}
@@ -307,11 +307,11 @@
 							"amount": 1
 						},
 						{
-							"at": 6,
+							"at": 5,
 							"quality": 10
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"element": "Fire",
 							"amount": 2
 						}
@@ -327,11 +327,11 @@
 							"amount": 1
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"traitSlot": 1
 						},
 						{
-							"at": 10,
+							"at": 8,
 							"element": "Wind",
 							"amount": 2
 						}
@@ -347,12 +347,12 @@
 							"amount": 1
 						},
 						{
-							"at": 5,
+							"at": 4,
 							"element": "Ice",
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Ice",
 							"amount": 1
 						}
@@ -368,12 +368,12 @@
 							"amount": 1
 						},
 						{
-							"at": 5,
+							"at": 4,
 							"element": "Lightning",
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Lightning",
 							"amount": 1
 						}
@@ -422,11 +422,11 @@
 							"amount": 1
 						},
 						{
-							"at": 6,
+							"at": 5,
 							"quality": 8
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"element": "Fire",
 							"amount": 2
 						}
@@ -442,11 +442,11 @@
 							"amount": 1
 						},
 						{
-							"at": 6,
+							"at": 5,
 							"traitSlot": 1
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"element": "Lightning",
 							"amount": 2
 						}
@@ -462,12 +462,12 @@
 							"amount": 1
 						},
 						{
-							"at": 5,
+							"at": 4,
 							"element": "Wind",
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Wind",
 							"amount": 1
 						}
@@ -483,12 +483,12 @@
 							"amount": 1
 						},
 						{
-							"at": 5,
+							"at": 4,
 							"element": "Ice",
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Ice",
 							"amount": 1
 						}
@@ -537,11 +537,11 @@
 							"amount": 1
 						},
 						{
-							"at": 6,
+							"at": 5,
 							"quality": 10
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"element": "Ice",
 							"amount": 2
 						}
@@ -557,11 +557,11 @@
 							"amount": 1
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"yield": 1
 						},
 						{
-							"at": 10,
+							"at": 8,
 							"element": "Lightning",
 							"amount": 2
 						}
@@ -577,12 +577,12 @@
 							"amount": 1
 						},
 						{
-							"at": 5,
+							"at": 4,
 							"element": "Wind",
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Wind",
 							"amount": 1
 						}
@@ -598,12 +598,12 @@
 							"amount": 1
 						},
 						{
-							"at": 5,
+							"at": 4,
 							"element": "Fire",
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Fire",
 							"amount": 1
 						}
@@ -652,11 +652,11 @@
 							"amount": 1
 						},
 						{
-							"at": 6,
+							"at": 5,
 							"quality": 10
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"element": "Wind",
 							"amount": 2
 						}
@@ -672,11 +672,11 @@
 							"amount": 1
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"traitSlot": 1
 						},
 						{
-							"at": 10,
+							"at": 8,
 							"element": "Ice",
 							"amount": 2
 						}
@@ -692,12 +692,12 @@
 							"amount": 1
 						},
 						{
-							"at": 5,
+							"at": 4,
 							"element": "Fire",
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Fire",
 							"amount": 1
 						}
@@ -713,12 +713,12 @@
 							"amount": 1
 						},
 						{
-							"at": 5,
+							"at": 4,
 							"element": "Lightning",
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Lightning",
 							"amount": 1
 						}
@@ -770,11 +770,11 @@
 							"amount": 1
 						},
 						{
-							"at": 6,
+							"at": 5,
 							"quality": 10
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"element": "Fire",
 							"amount": 2
 						}
@@ -790,11 +790,11 @@
 							"amount": 1
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"traitSlot": 1
 						},
 						{
-							"at": 10,
+							"at": 8,
 							"element": "Lightning",
 							"amount": 2
 						}
@@ -810,12 +810,12 @@
 							"amount": 1
 						},
 						{
-							"at": 5,
+							"at": 4,
 							"element": "Ice",
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Ice",
 							"amount": 1
 						}
@@ -831,12 +831,12 @@
 							"amount": 1
 						},
 						{
-							"at": 5,
+							"at": 4,
 							"element": "Wind",
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Wind",
 							"amount": 1
 						}
@@ -889,11 +889,11 @@
 							"amount": 1
 						},
 						{
-							"at": 6,
+							"at": 5,
 							"traitSlot": 1
 						},
 						{
-							"at": 10,
+							"at": 8,
 							"element": "Wind",
 							"amount": 2
 						}
@@ -909,11 +909,11 @@
 							"amount": 1
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"quality": 15
 						},
 						{
-							"at": 10,
+							"at": 8,
 							"element": "Ice",
 							"amount": 2
 						}
@@ -929,12 +929,12 @@
 							"amount": 1
 						},
 						{
-							"at": 5,
+							"at": 4,
 							"element": "Fire",
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Fire",
 							"amount": 1
 						}
@@ -950,12 +950,12 @@
 							"amount": 1
 						},
 						{
-							"at": 5,
+							"at": 4,
 							"element": "Lightning",
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Lightning",
 							"amount": 1
 						}
@@ -1018,12 +1018,12 @@
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Fire",
 							"amount": 2
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"quality": 15
 						}
 					]
@@ -1038,12 +1038,12 @@
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Ice",
 							"amount": 2
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"yield": 1
 						}
 					]
@@ -1058,12 +1058,12 @@
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Lightning",
 							"amount": 2
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"quality": 15
 						}
 					]
@@ -1078,12 +1078,12 @@
 							"amount": 1
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"element": "Wind",
 							"amount": 2
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"traitSlot": 1
 						}
 					]
@@ -1112,7 +1112,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 250,
 			"weight": 0.1,
 			"template": "INGR:Glow Dust",
@@ -1138,11 +1138,11 @@
 							"amount": 2
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"quality": 10
 						},
 						{
-							"at": 12,
+							"at": 11,
 							"traitSlot": 1
 						}
 					]
@@ -1157,11 +1157,11 @@
 							"amount": 2
 						},
 						{
-							"at": 10,
+							"at": 9,
 							"quality": 10
 						},
 						{
-							"at": 13,
+							"at": 11,
 							"element": "Ice",
 							"amount": 3
 						}
@@ -1177,7 +1177,7 @@
 							"amount": 2
 						},
 						{
-							"at": 11,
+							"at": 10,
 							"element": "Lightning",
 							"amount": 3
 						}
@@ -1193,11 +1193,11 @@
 							"amount": 2
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"quality": 15
 						},
 						{
-							"at": 12,
+							"at": 11,
 							"yield": 1
 						}
 					]
@@ -1227,7 +1227,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 120,
 			"weight": 0.1,
 			"template": "INGR:Glowing Mushroom",
@@ -1253,7 +1253,7 @@
 							"amount": 2
 						},
 						{
-							"at": 12,
+							"at": 11,
 							"yield": 1
 						}
 					]
@@ -1268,11 +1268,11 @@
 							"amount": 2
 						},
 						{
-							"at": 10,
+							"at": 9,
 							"quality": 10
 						},
 						{
-							"at": 13,
+							"at": 11,
 							"element": "Ice",
 							"amount": 3
 						}
@@ -1288,7 +1288,7 @@
 							"amount": 2
 						},
 						{
-							"at": 11,
+							"at": 10,
 							"element": "Lightning",
 							"amount": 3
 						}
@@ -1304,11 +1304,11 @@
 							"amount": 2
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"traitSlot": 1
 						},
 						{
-							"at": 12,
+							"at": 11,
 							"quality": 20
 						}
 					]
@@ -1333,7 +1333,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 20,
 			"weight": 0.5,
 			"lines": [
@@ -1346,11 +1346,11 @@
 							"effect": "RestoreHealth"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "RestoreHealth"
 						},
 						{
-							"at": 14,
+							"at": 11,
 							"effect": "RestoreHealth"
 						}
 					]
@@ -1364,7 +1364,7 @@
 							"effect": "RestoreStamina"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "RestoreStamina"
 						}
 					]
@@ -1378,7 +1378,7 @@
 							"effect": "RegenHealth"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"quality": 15
 						}
 					]
@@ -1419,7 +1419,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 25,
 			"weight": 0.5,
 			"lines": [
@@ -1432,11 +1432,11 @@
 							"effect": "RestoreMagicka"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "RestoreMagicka"
 						},
 						{
-							"at": 14,
+							"at": 11,
 							"effect": "RestoreMagicka"
 						}
 					]
@@ -1450,7 +1450,7 @@
 							"effect": "RegenMagicka"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "RegenMagicka"
 						}
 					]
@@ -1464,7 +1464,7 @@
 							"effect": "FortifyMagicka"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"traitSlot": 1
 						}
 					]
@@ -1510,7 +1510,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 22,
 			"weight": 0.5,
 			"lines": [
@@ -1523,11 +1523,11 @@
 							"effect": "RestoreStamina"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "RestoreStamina"
 						},
 						{
-							"at": 14,
+							"at": 11,
 							"effect": "RestoreStamina"
 						}
 					]
@@ -1541,7 +1541,7 @@
 							"effect": "FortifyStamina"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "FortifyStamina"
 						}
 					]
@@ -1555,7 +1555,7 @@
 							"effect": "FortifyCarryWeight"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "FortifyCarryWeight"
 						}
 					]
@@ -1602,7 +1602,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 30,
 			"weight": 0.5,
 			"lines": [
@@ -1615,11 +1615,11 @@
 							"effect": "WaterBreathing"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "WaterBreathing"
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"effect": "WaterBreathing"
 						}
 					]
@@ -1633,7 +1633,7 @@
 							"effect": "ResistFrost"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "ResistFrost"
 						}
 					]
@@ -1647,7 +1647,7 @@
 							"effect": "RegenStamina"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "RegenStamina"
 						}
 					]
@@ -1676,7 +1676,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 35,
 			"weight": 0.5,
 			"lines": [
@@ -1689,11 +1689,11 @@
 							"effect": "CureDisease"
 						},
 						{
-							"at": 6,
+							"at": 5,
 							"effect": "ResistPoison"
 						},
 						{
-							"at": 11,
+							"at": 9,
 							"effect": "ResistPoison"
 						}
 					]
@@ -1707,7 +1707,7 @@
 							"effect": "RegenHealth"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "RegenHealth"
 						}
 					]
@@ -1721,7 +1721,7 @@
 							"quality": 10
 						},
 						{
-							"at": 10,
+							"at": 9,
 							"traitSlot": 1
 						}
 					]
@@ -1750,7 +1750,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 30,
 			"weight": 0.5,
 			"lines": [
@@ -1763,11 +1763,11 @@
 							"effect": "RegenStamina"
 						},
 						{
-							"at": 6,
+							"at": 5,
 							"effect": "RegenStamina"
 						},
 						{
-							"at": 11,
+							"at": 9,
 							"effect": "RegenStamina"
 						}
 					]
@@ -1781,7 +1781,7 @@
 							"effect": "FortifyCarryWeight"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "FortifyCarryWeight"
 						}
 					]
@@ -1795,7 +1795,7 @@
 							"effect": "FortifyStamina"
 						},
 						{
-							"at": 10,
+							"at": 9,
 							"effect": "FortifyStamina"
 						}
 					]
@@ -1824,7 +1824,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 40,
 			"weight": 0.5,
 			"lines": [
@@ -1837,11 +1837,11 @@
 							"effect": "FortifyBarter"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "FortifyBarter"
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"effect": "FortifyBarter"
 						}
 					]
@@ -1855,7 +1855,7 @@
 							"effect": "FortifyIllusion"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "FortifyIllusion"
 						}
 					]
@@ -1869,7 +1869,7 @@
 							"effect": "RestoreMagicka"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "RestoreMagicka"
 						}
 					]
@@ -1898,7 +1898,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 50,
 			"weight": 0.5,
 			"lines": [
@@ -1911,11 +1911,11 @@
 							"effect": "FortifyArchery"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "FortifyArchery"
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"effect": "FortifyArchery"
 						}
 					]
@@ -1929,7 +1929,7 @@
 							"effect": "FortifySneak"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "FortifySneak"
 						}
 					]
@@ -1943,7 +1943,7 @@
 							"effect": "FortifyLightArmor"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "FortifyLightArmor"
 						}
 					]
@@ -1972,7 +1972,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 40,
 			"weight": 0.5,
 			"lines": [
@@ -1985,11 +1985,11 @@
 							"effect": "ResistFrost"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "ResistFrost"
 						},
 						{
-							"at": 11,
+							"at": 9,
 							"effect": "ResistFrost"
 						}
 					]
@@ -2003,11 +2003,11 @@
 							"effect": "ResistFire"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "ResistFire"
 						},
 						{
-							"at": 11,
+							"at": 9,
 							"effect": "ResistFire"
 						}
 					]
@@ -2021,11 +2021,11 @@
 							"effect": "ResistShock"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "ResistShock"
 						},
 						{
-							"at": 11,
+							"at": 9,
 							"effect": "ResistShock"
 						}
 					]
@@ -2039,7 +2039,7 @@
 							"effect": "ResistMagic"
 						},
 						{
-							"at": 12,
+							"at": 11,
 							"effect": "ResistMagic"
 						}
 					]
@@ -2080,7 +2080,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 60,
 			"weight": 0.4,
 			"lines": [
@@ -2093,11 +2093,11 @@
 							"effect": "FortifySneak"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "Invisibility"
 						},
 						{
-							"at": 13,
+							"at": 11,
 							"effect": "Invisibility"
 						}
 					]
@@ -2111,7 +2111,7 @@
 							"effect": "FortifyLockpicking"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "FortifyPickpocket"
 						}
 					]
@@ -2125,7 +2125,7 @@
 							"effect": "WaterBreathing"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "WaterBreathing"
 						}
 					]
@@ -2161,7 +2161,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 55,
 			"weight": 0.5,
 			"lines": [
@@ -2174,11 +2174,11 @@
 							"effect": "FortifyOneHanded"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "FortifyOneHanded"
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"effect": "FortifyOneHanded"
 						}
 					]
@@ -2192,11 +2192,11 @@
 							"effect": "FortifyTwoHanded"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "FortifyTwoHanded"
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"effect": "FortifyTwoHanded"
 						}
 					]
@@ -2210,11 +2210,11 @@
 							"effect": "FortifyArchery"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "FortifyArchery"
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"effect": "FortifyArchery"
 						}
 					]
@@ -2228,7 +2228,7 @@
 							"effect": "FortifyBlock"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "FortifyBlock"
 						}
 					]
@@ -2264,7 +2264,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 90,
 			"weight": 0.4,
 			"lines": [
@@ -2277,11 +2277,11 @@
 							"effect": "FortifySmithing"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "FortifySmithing"
 						},
 						{
-							"at": 13,
+							"at": 11,
 							"effect": "FortifySmithing"
 						}
 					]
@@ -2295,11 +2295,11 @@
 							"effect": "FortifyEnchanting"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "FortifyEnchanting"
 						},
 						{
-							"at": 13,
+							"at": 11,
 							"effect": "FortifyEnchanting"
 						}
 					]
@@ -2313,7 +2313,7 @@
 							"effect": "FortifyBarter"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "FortifyBarter"
 						}
 					]
@@ -2327,7 +2327,7 @@
 							"effect": "FortifyLightArmor"
 						},
 						{
-							"at": 10,
+							"at": 9,
 							"effect": "FortifyHeavyArmor"
 						}
 					]
@@ -2356,7 +2356,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 70,
 			"weight": 0.6,
 			"lines": [
@@ -2369,11 +2369,11 @@
 							"effect": "FortifyHeavyArmor"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "FortifyHeavyArmor"
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"effect": "FortifyHeavyArmor"
 						}
 					]
@@ -2387,7 +2387,7 @@
 							"effect": "FortifyBlock"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "FortifyBlock"
 						}
 					]
@@ -2401,7 +2401,7 @@
 							"effect": "FortifyHealth"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "FortifyHealth"
 						}
 					]
@@ -2415,7 +2415,7 @@
 							"effect": "ResistShock"
 						},
 						{
-							"at": 10,
+							"at": 9,
 							"effect": "ResistShock"
 						}
 					]
@@ -2444,7 +2444,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 80,
 			"weight": 0.4,
 			"lines": [
@@ -2457,11 +2457,11 @@
 							"effect": "FortifyConjuration"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "FortifyConjuration"
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"effect": "FortifyConjuration"
 						}
 					]
@@ -2475,11 +2475,11 @@
 							"effect": "FortifyAlteration"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "FortifyAlteration"
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"effect": "FortifyAlteration"
 						}
 					]
@@ -2493,7 +2493,7 @@
 							"effect": "ResistMagic"
 						},
 						{
-							"at": 11,
+							"at": 10,
 							"effect": "ResistMagic"
 						}
 					]
@@ -2507,7 +2507,7 @@
 							"quality": 10
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"yield": 1
 						}
 					]
@@ -2536,7 +2536,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 80,
 			"weight": 0.4,
 			"lines": [
@@ -2549,11 +2549,11 @@
 							"effect": "FortifyDestruction"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "FortifyDestruction"
 						},
 						{
-							"at": 13,
+							"at": 11,
 							"effect": "FortifyDestruction"
 						}
 					]
@@ -2567,11 +2567,11 @@
 							"effect": "FortifyRestoration"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "FortifyRestoration"
 						},
 						{
-							"at": 13,
+							"at": 11,
 							"effect": "FortifyRestoration"
 						}
 					]
@@ -2585,7 +2585,7 @@
 							"effect": "FortifyConjuration"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "FortifyConjuration"
 						}
 					]
@@ -2599,11 +2599,11 @@
 							"effect": "FortifyIllusion"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "FortifyIllusion"
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"effect": "FortifyAlteration"
 						}
 					]
@@ -2632,7 +2632,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 110,
 			"weight": 0.5,
 			"lines": [
@@ -2645,11 +2645,11 @@
 							"effect": "FortifyDestruction"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "FortifyDestruction"
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"effect": "FortifyDestruction"
 						}
 					]
@@ -2663,7 +2663,7 @@
 							"effect": "FortifyMagicka"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "FortifyMagicka"
 						}
 					]
@@ -2677,7 +2677,7 @@
 							"effect": "RegenMagicka"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "RegenMagicka"
 						}
 					]
@@ -2691,7 +2691,7 @@
 							"effect": "ResistMagic"
 						},
 						{
-							"at": 11,
+							"at": 10,
 							"effect": "ResistMagic"
 						}
 					]
@@ -2721,7 +2721,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 140,
 			"weight": 0.5,
 			"lines": [
@@ -2734,11 +2734,11 @@
 							"effect": "CureDisease"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "ResistPoison"
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"effect": "ResistPoison"
 						}
 					]
@@ -2752,7 +2752,7 @@
 							"effect": "RestoreHealth"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "RestoreHealth"
 						}
 					]
@@ -2766,7 +2766,7 @@
 							"effect": "RestoreStamina"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "RestoreStamina"
 						}
 					]
@@ -2780,7 +2780,7 @@
 							"effect": "RestoreMagicka"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "RestoreMagicka"
 						}
 					]
@@ -2810,7 +2810,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 150,
 			"weight": 0.5,
 			"lines": [
@@ -2823,11 +2823,11 @@
 							"effect": "RestoreHealth"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "RestoreHealth"
 						},
 						{
-							"at": 15,
+							"at": 12,
 							"effect": "RestoreHealth"
 						}
 					]
@@ -2841,7 +2841,7 @@
 							"effect": "FortifyHealth"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "FortifyHealth"
 						}
 					]
@@ -2855,7 +2855,7 @@
 							"effect": "RegenHealth"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "RegenHealth"
 						}
 					]
@@ -2869,7 +2869,7 @@
 							"yield": 1
 						},
 						{
-							"at": 12,
+							"at": 11,
 							"yield": 1
 						}
 					]
@@ -2905,7 +2905,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 180,
 			"weight": 0.5,
 			"lines": [
@@ -2918,11 +2918,11 @@
 							"effect": "ResistFire"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "ResistFire"
 						},
 						{
-							"at": 13,
+							"at": 11,
 							"effect": "ResistFire"
 						}
 					]
@@ -2936,7 +2936,7 @@
 							"effect": "FortifyHealth"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "FortifyHealth"
 						}
 					]
@@ -2950,7 +2950,7 @@
 							"effect": "FortifyOneHanded"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "FortifyOneHanded"
 						}
 					]
@@ -2964,7 +2964,7 @@
 							"effect": "RegenStamina"
 						},
 						{
-							"at": 10,
+							"at": 9,
 							"effect": "RegenStamina"
 						}
 					]
@@ -2993,7 +2993,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 200,
 			"weight": 0.4,
 			"lines": [
@@ -3006,11 +3006,11 @@
 							"effect": "Invisibility"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "Invisibility"
 						},
 						{
-							"at": 14,
+							"at": 12,
 							"effect": "Invisibility"
 						}
 					]
@@ -3024,7 +3024,7 @@
 							"effect": "FortifySneak"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "FortifySneak"
 						}
 					]
@@ -3038,7 +3038,7 @@
 							"effect": "FortifyPickpocket"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "FortifyPickpocket"
 						}
 					]
@@ -3052,7 +3052,7 @@
 							"effect": "FortifyIllusion"
 						},
 						{
-							"at": 12,
+							"at": 11,
 							"effect": "FortifyIllusion"
 						}
 					]
@@ -3081,7 +3081,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 220,
 			"weight": 0.6,
 			"lines": [
@@ -3094,7 +3094,7 @@
 							"effect": "FortifyCarryWeight"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "FortifyCarryWeight"
 						}
 					]
@@ -3108,11 +3108,11 @@
 							"effect": "FortifyTwoHanded"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "FortifyTwoHanded"
 						},
 						{
-							"at": 13,
+							"at": 11,
 							"effect": "FortifyTwoHanded"
 						}
 					]
@@ -3126,7 +3126,7 @@
 							"effect": "FortifyStamina"
 						},
 						{
-							"at": 10,
+							"at": 9,
 							"effect": "FortifyStamina"
 						}
 					]
@@ -3140,7 +3140,7 @@
 							"effect": "RegenStamina"
 						},
 						{
-							"at": 11,
+							"at": 10,
 							"quality": 20
 						}
 					]
@@ -3170,7 +3170,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 500,
 			"weight": 0.5,
 			"lines": [
@@ -3183,11 +3183,11 @@
 							"effect": "RestoreHealth"
 						},
 						{
-							"at": 10,
+							"at": 9,
 							"effect": "RestoreHealth"
 						},
 						{
-							"at": 16,
+							"at": 13,
 							"effect": "FortifyHealth"
 						}
 					]
@@ -3201,11 +3201,11 @@
 							"effect": "RestoreMagicka"
 						},
 						{
-							"at": 10,
+							"at": 9,
 							"effect": "RestoreMagicka"
 						},
 						{
-							"at": 16,
+							"at": 13,
 							"effect": "FortifyMagicka"
 						}
 					]
@@ -3219,11 +3219,11 @@
 							"effect": "RestoreStamina"
 						},
 						{
-							"at": 10,
+							"at": 9,
 							"effect": "RestoreStamina"
 						},
 						{
-							"at": 16,
+							"at": 13,
 							"effect": "FortifyStamina"
 						}
 					]
@@ -3237,11 +3237,11 @@
 							"traitSlot": 1
 						},
 						{
-							"at": 12,
+							"at": 11,
 							"quality": 30
 						},
 						{
-							"at": 18,
+							"at": 15,
 							"yield": 1
 						}
 					]
@@ -3266,7 +3266,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 25,
 			"weight": 0.25,
 			"lines": [
@@ -3279,11 +3279,11 @@
 							"effect": "DamageHealth"
 						},
 						{
-							"at": 6,
+							"at": 5,
 							"effect": "DamageHealth"
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"effect": "DamageHealth"
 						}
 					]
@@ -3297,7 +3297,7 @@
 							"effect": "DamageStamina"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "DamageStamina"
 						}
 					]
@@ -3311,7 +3311,7 @@
 							"effect": "DamageMagicka"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "DamageMagicka"
 						}
 					]
@@ -3358,7 +3358,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 35,
 			"weight": 0.25,
 			"lines": [
@@ -3371,11 +3371,11 @@
 							"effect": "DamageStamina"
 						},
 						{
-							"at": 6,
+							"at": 5,
 							"effect": "DamageStamina"
 						},
 						{
-							"at": 11,
+							"at": 9,
 							"effect": "DamageStamina"
 						}
 					]
@@ -3389,7 +3389,7 @@
 							"effect": "DamageStaminaRegen"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "DamageStaminaRegen"
 						}
 					]
@@ -3403,7 +3403,7 @@
 							"effect": "Slow"
 						},
 						{
-							"at": 10,
+							"at": 9,
 							"effect": "Slow"
 						}
 					]
@@ -3417,7 +3417,7 @@
 							"effect": "RavageStamina"
 						},
 						{
-							"at": 12,
+							"at": 11,
 							"effect": "RavageStamina"
 						}
 					]
@@ -3449,7 +3449,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 40,
 			"weight": 0.2,
 			"lines": [
@@ -3462,11 +3462,11 @@
 							"effect": "Fear"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "Fear"
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"effect": "Fear"
 						}
 					]
@@ -3480,7 +3480,7 @@
 							"effect": "DamageStamina"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "DamageStamina"
 						}
 					]
@@ -3515,7 +3515,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 50,
 			"weight": 0.25,
 			"lines": [
@@ -3528,11 +3528,11 @@
 							"effect": "DamageMagicka"
 						},
 						{
-							"at": 6,
+							"at": 5,
 							"effect": "DamageMagicka"
 						},
 						{
-							"at": 11,
+							"at": 9,
 							"effect": "DamageMagicka"
 						}
 					]
@@ -3546,7 +3546,7 @@
 							"effect": "DamageMagickaRegen"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "DamageMagickaRegen"
 						}
 					]
@@ -3560,7 +3560,7 @@
 							"effect": "RavageMagicka"
 						},
 						{
-							"at": 10,
+							"at": 9,
 							"effect": "RavageMagicka"
 						}
 					]
@@ -3574,7 +3574,7 @@
 							"effect": "WeaknessMagic"
 						},
 						{
-							"at": 11,
+							"at": 10,
 							"effect": "WeaknessMagic"
 						}
 					]
@@ -3603,7 +3603,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 70,
 			"weight": 0.25,
 			"lines": [
@@ -3616,7 +3616,7 @@
 							"effect": "WeaknessFire"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "WeaknessFire"
 						}
 					]
@@ -3630,7 +3630,7 @@
 							"effect": "WeaknessFrost"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "WeaknessFrost"
 						}
 					]
@@ -3644,7 +3644,7 @@
 							"effect": "WeaknessShock"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "WeaknessShock"
 						}
 					]
@@ -3658,7 +3658,7 @@
 							"effect": "WeaknessMagic"
 						},
 						{
-							"at": 10,
+							"at": 9,
 							"effect": "WeaknessPoison"
 						}
 					]
@@ -3687,7 +3687,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 70,
 			"weight": 0.25,
 			"lines": [
@@ -3700,11 +3700,11 @@
 							"effect": "LingeringDamageHealth"
 						},
 						{
-							"at": 7,
+							"at": 6,
 							"effect": "LingeringDamageHealth"
 						},
 						{
-							"at": 12,
+							"at": 10,
 							"effect": "LingeringDamageHealth"
 						}
 					]
@@ -3718,7 +3718,7 @@
 							"effect": "LingeringDamageMagicka"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "LingeringDamageMagicka"
 						}
 					]
@@ -3732,7 +3732,7 @@
 							"effect": "LingeringDamageStamina"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "LingeringDamageStamina"
 						}
 					]
@@ -3746,7 +3746,7 @@
 							"effect": "WeaknessPoison"
 						},
 						{
-							"at": 10,
+							"at": 9,
 							"effect": "WeaknessPoison"
 						}
 					]
@@ -3775,7 +3775,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 90,
 			"weight": 0.25,
 			"lines": [
@@ -3788,11 +3788,11 @@
 							"effect": "Frenzy"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "Frenzy"
 						},
 						{
-							"at": 13,
+							"at": 11,
 							"effect": "Frenzy"
 						}
 					]
@@ -3806,7 +3806,7 @@
 							"effect": "Fear"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "Fear"
 						}
 					]
@@ -3820,7 +3820,7 @@
 							"effect": "RavageHealth"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "RavageHealth"
 						}
 					]
@@ -3856,7 +3856,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 120,
 			"weight": 0.25,
 			"lines": [
@@ -3869,11 +3869,11 @@
 							"effect": "Paralysis"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "Paralysis"
 						},
 						{
-							"at": 13,
+							"at": 11,
 							"effect": "Paralysis"
 						}
 					]
@@ -3887,7 +3887,7 @@
 							"effect": "DamageHealth"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "DamageHealth"
 						}
 					]
@@ -3901,7 +3901,7 @@
 							"effect": "Slow"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "Slow"
 						}
 					]
@@ -3930,7 +3930,7 @@
 					"count": 1
 				}
 			],
-			"yield": 1,
+			"yield": 2,
 			"value": 350,
 			"weight": 0.25,
 			"lines": [
@@ -3943,11 +3943,11 @@
 							"effect": "RavageHealth"
 						},
 						{
-							"at": 8,
+							"at": 7,
 							"effect": "RavageHealth"
 						},
 						{
-							"at": 13,
+							"at": 11,
 							"effect": "RavageHealth"
 						}
 					]
@@ -3961,7 +3961,7 @@
 							"effect": "Paralysis"
 						},
 						{
-							"at": 10,
+							"at": 9,
 							"effect": "Paralysis"
 						}
 					]
@@ -3975,7 +3975,7 @@
 							"effect": "LingeringDamageHealth"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "LingeringDamageHealth"
 						}
 					]
@@ -3989,7 +3989,7 @@
 							"effect": "WeaknessPoison"
 						},
 						{
-							"at": 9,
+							"at": 8,
 							"effect": "WeaknessPoison"
 						}
 					]

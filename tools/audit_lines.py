@@ -18,7 +18,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from validate_data import DEFAULT_DIR, load  # noqa: E402
 
-ING_GUESS = 4
+ING_GUESS = 3
 TRAIT_BONUS = 2  # one element trait on one input
 
 

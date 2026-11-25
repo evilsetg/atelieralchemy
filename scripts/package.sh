@@ -3,6 +3,9 @@
 #   AtelierAlchemy-<version>.zip         the mod, mod-manager friendly (Data/ layout)
 #   AtelierAlchemy-<version>-source.zip  the source code (GPL-3), everything git tracks or would
 #                                        track (uncommitted edits included, .gitignore respected)
+#   nexus/                               the Nexus page text from nexus/ (Markdown, plus a BBCode
+#                                        copy for the Nexus editor); tools/make_banner.py adds
+#                                        the banner images
 # With --with-deps the source archive also contains the dependency sources CMake fetched
 # (CommonLibSSE-NG, spdlog, Dear ImGui, ...; run a build first), for a fully self-contained
 # GPL source release.
@@ -21,6 +24,8 @@ version=$(sed -n 's/^\s*VERSION \([0-9.]*\)$/\1/p' CMakeLists.txt | head -1)
 
 python3 - "$version" "$with_deps" <<'PY'
 import pathlib
+import re
+import shutil
 import subprocess
 import sys
 import zipfile
@@ -71,4 +76,41 @@ with zipfile.ZipFile(source, "w", zipfile.ZIP_DEFLATED) as z:
                 z.write(f, prefix / "third_party" / dep.name / rel)
             deps += 1
 print("wrote", source, f"({len(files)} files" + (f", {deps} dependencies)" if with_deps else ")"))
+
+# The Nexus page.
+def bbcode(markdown):
+    out, in_list = [], None
+    for line in markdown.splitlines():
+        item = re.match(r"^(-|\d+\.) (.*)", line)
+        kind = None if not item else ("list" if item[1] == "-" else "list=1")
+        if in_list and kind != in_list:
+            out.append("[/list]")
+            in_list = None
+        if kind and not in_list:
+            out.append(f"[{kind}]")
+            in_list = kind
+        heading = re.match(r"^(#+) (.*)", line)
+        text = item[2] if item else heading[2] if heading else line
+        text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r"[url=\2]\1[/url]", text)
+        text = re.sub(r"\*\*(.+?)\*\*", r"[b]\1[/b]", text)
+        text = re.sub(r"\*(.+?)\*", r"[i]\1[/i]", text)
+        text = re.sub(r"`(.+?)`", r"[font=Courier New]\1[/font]", text)
+        if item:
+            text = "[*]" + text
+        elif heading:
+            size = {1: 6, 2: 5}.get(len(heading[1]), 4)
+            text = f"[size={size}][b]{text}[/b][/size]"
+        out.append(text)
+    if in_list:
+        out.append("[/list]")
+    return "\n".join(out) + "\n"
+
+nexus = dist / "nexus"
+nexus.mkdir(parents=True, exist_ok=True)
+for f in sorted(pathlib.Path("nexus").iterdir()):
+    if f.is_file():
+        shutil.copy2(f, nexus / f.name)
+        if f.suffix == ".md":
+            (nexus / f.with_suffix(".bbcode").name).write_text(bbcode(f.read_text(encoding="utf-8")), encoding="utf-8")
+print("wrote", nexus)
 PY

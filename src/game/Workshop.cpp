@@ -388,6 +388,10 @@ namespace game
 		result.yield = yield;
 		logger::info("Synthesized {}x {} (Q{}) from {}{}", result.yield, result.brew.name, result.brew.quality, recipe->id,
 			result.yieldBonus.empty() ? "" : std::format(" [{}]", result.yieldBonus));
+		for (const auto& effect : result.brew.effects) {
+			logger::info("  {} magnitude {} duration {}s ({})", effect.effectKey, effect.magnitude, effect.duration,
+				effect.breakdown.empty() ? "no breakdown" : effect.breakdown);
+		}
 		return result;
 	}
 
