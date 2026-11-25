@@ -3,6 +3,8 @@
 // Core data model for Atelier Alchemy. Nothing in src/core depends on the game,
 // so it can be unit tested on the host (see tests/).
 
+#include "core/JudgementRing.h"
+
 #include <array>
 #include <cstdint>
 #include <optional>
@@ -124,6 +126,10 @@ namespace atelier
 		int                      baseValue{ 10 };
 		float                    baseWeight{ 0.5f };
 		std::string              templateRef;  // resolved by the game layer (model/icon/sounds)
+		// Judgement Ring pattern (a preset from ring_patterns.json or the recipe's own).
+		float                      potency{ 1.0f };  // multiplies every effect tier's share of vanilla
+		std::string                ringPattern;
+		std::vector<RingShapeArea> ringShape;
 		// material outputs
 		std::vector<std::string> outputCategories;
 		ElementValues            outputElements{};

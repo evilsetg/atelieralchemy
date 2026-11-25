@@ -10,6 +10,9 @@
 //   {"at": N, "quality": +Q} {"at": N, "yield": +Y} {"at": N, "traitSlot": +1}
 //   {"at": N, "element": "Fire", "amount": +A}   (materials: the product gains elements)
 // For effect tiers only the highest reached tier per line applies.
+// "ring": a Judgement Ring pattern from ring_patterns.json (or a list of areas, same format).
+// "potency": multiplies every effect tier's share of vanilla (1.5 = 120% / 150% / 165%), for
+// recipes whose effects should outclass simpler ones.
 // Discovery: "known" (from the start), "unlockSkill" (Alchemy level) and "unlocks" rules
 // ("ideas"): synthesizing this recipe with an item / category / quality unlocks another.
 {
@@ -19,6 +22,7 @@
 			"name": "Alchemist's Ash",
 			"kind": "material",
 			"level": 15,
+			"ring": "even",
 			"known": true,
 			"description": "Calcined remains, ground fine. A stable, fiery base that binds strong ingredients together.",
 			"ingredients": [
@@ -139,6 +143,7 @@
 			"name": "Distilled Water",
 			"kind": "material",
 			"level": 15,
+			"ring": "gentle",
 			"known": true,
 			"description": "The foundation of nearly every brew. Boil any plant matter with salt and keep what condenses.",
 			"ingredients": [
@@ -266,6 +271,7 @@
 			"name": "Herbal Extract",
 			"kind": "material",
 			"level": 15,
+			"ring": "gentle",
 			"known": true,
 			"description": "Leaves and roots steeped until the water turns green and bitter. The backbone of restorative brews.",
 			"ingredients": [
@@ -380,6 +386,7 @@
 			"name": "Beast Tallow",
 			"kind": "material",
 			"level": 20,
+			"ring": "even",
 			"unlockSkill": 20,
 			"description": "Animal fat rendered over embers with a little ash. Binds strong ingredients and carries them into the blood.",
 			"ingredients": [
@@ -494,6 +501,7 @@
 			"name": "Fungal Paste",
 			"kind": "material",
 			"level": 20,
+			"ring": "late_bloom",
 			"unlockSkill": 20,
 			"description": "Mushrooms ground with salt into a pale, cold paste. Draws out the mind's virtues - and its poisons.",
 			"ingredients": [
@@ -608,6 +616,7 @@
 			"name": "Floral Tincture",
 			"kind": "material",
 			"level": 22,
+			"ring": "gentle",
 			"unlockSkill": 22,
 			"description": "Blossoms macerated in a clear solvent. Light, fragrant and quick to carry an effect to the senses.",
 			"ingredients": [
@@ -722,6 +731,7 @@
 			"name": "Concentrated Venom",
 			"kind": "material",
 			"level": 25,
+			"ring": "sting",
 			"unlockSkill": 25,
 			"description": "Venom glands and spores reduced in a solvent until a single drop is enough. Handle with gloves.",
 			"ingredients": [
@@ -839,6 +849,7 @@
 			"name": "Spirit Essence",
 			"kind": "material",
 			"level": 35,
+			"ring": "pulse",
 			"unlockSkill": 35,
 			"description": "A shimmering liquid that clings to the glass. Carries the virtues of other ingredients across.",
 			"ingredients": [
@@ -969,6 +980,7 @@
 			"name": "Philosopher's Salt",
 			"kind": "material",
 			"level": 50,
+			"ring": "crescendo",
 			"unlockSkill": 50,
 			"description": "Salt that remembers every element it has touched. Prized as a catalyst.",
 			"ingredients": [
@@ -1083,6 +1095,7 @@
 			"name": "Aether Crystal",
 			"kind": "material",
 			"level": 70,
+			"ring": "storm",
 			"unlockSkill": 70,
 			"description": "A fragment of solidified Magicka. As a catalyst, it lets the Judgement Ring sing.",
 			"ingredients": [
@@ -1197,6 +1210,7 @@
 			"name": "Quintessence",
 			"kind": "material",
 			"level": 75,
+			"ring": "grand",
 			"unlockSkill": 75,
 			"description": "The fifth essence: every virtue of a brew drawn together into one shining drop.",
 			"ingredients": [
@@ -1306,6 +1320,7 @@
 			"name": "Healing Salve",
 			"kind": "potion",
 			"level": 15,
+			"ring": "gentle",
 			"known": true,
 			"description": "Every alchemist's first lesson. Herbs steeped in distilled water.",
 			"ingredients": [
@@ -1387,6 +1402,7 @@
 			"name": "Mana Tonic",
 			"kind": "potion",
 			"level": 15,
+			"ring": "even",
 			"known": true,
 			"description": "A cool, bitter tonic favoured by the College of Winterhold.",
 			"ingredients": [
@@ -1477,6 +1493,7 @@
 			"name": "Stamina Draught",
 			"kind": "potion",
 			"level": 15,
+			"ring": "late_bloom",
 			"known": true,
 			"description": "A hearty draught for long marches and longer fights.",
 			"ingredients": [
@@ -1568,6 +1585,7 @@
 			"name": "Mariner's Draught",
 			"kind": "potion",
 			"level": 20,
+			"ring": "even",
 			"unlockSkill": 20,
 			"description": "Sailors swear by it: a briny draught that lets the lungs forget they need air.",
 			"ingredients": [
@@ -1641,6 +1659,7 @@
 			"name": "Purifying Draught",
 			"kind": "potion",
 			"level": 20,
+			"ring": "gentle",
 			"unlockSkill": 20,
 			"description": "Salted herb water, boiled twice. Plain, bitter and reliable against sickness.",
 			"ingredients": [
@@ -1714,6 +1733,7 @@
 			"name": "Courier's Tonic",
 			"kind": "potion",
 			"level": 22,
+			"ring": "rush",
 			"unlockSkill": 22,
 			"description": "Fruit-sweet and quick to act. Couriers drink it before the long road between holds.",
 			"ingredients": [
@@ -1787,6 +1807,7 @@
 			"name": "Bard's Honeywine",
 			"kind": "potion",
 			"level": 25,
+			"ring": "pairs",
 			"unlockSkill": 25,
 			"description": "Mulled fruit and blossoms. Loosens the tongue and charms the listener.",
 			"ingredients": [
@@ -1860,6 +1881,7 @@
 			"name": "Hunter's Draught",
 			"kind": "potion",
 			"level": 25,
+			"ring": "rush",
 			"unlockSkill": 25,
 			"description": "Brewed in the field from what the hunt provides. Sharpens the eye and quiets the step.",
 			"ingredients": [
@@ -1933,6 +1955,7 @@
 			"name": "Elemental Ward",
 			"kind": "potion",
 			"level": 28,
+			"ring": "crescendo",
 			"unlockSkill": 28,
 			"description": "Coats the skin against fire, frost and lightning. Which, depends on the elements you feed it.",
 			"ingredients": [
@@ -2040,6 +2063,7 @@
 			"name": "Shadow Draught",
 			"kind": "potion",
 			"level": 32,
+			"ring": "pulse",
 			"unlockSkill": 32,
 			"description": "Thieves' Guild favourite. Smells of nothing at all, which is the point.",
 			"ingredients": [
@@ -2120,6 +2144,7 @@
 			"name": "Warrior's Brew",
 			"kind": "potion",
 			"level": 35,
+			"ring": "crescendo",
 			"unlockSkill": 35,
 			"description": "Sharpens the eye and steadies the arm. Companions swear by it.",
 			"ingredients": [
@@ -2222,6 +2247,7 @@
 			"name": "Artisan's Draught",
 			"kind": "potion",
 			"level": 40,
+			"ring": "pairs",
 			"unlockSkill": 40,
 			"description": "For the smith, the enchanter and the merchant. Steady hands, sharp eyes, silver tongue.",
 			"ingredients": [
@@ -2313,6 +2339,7 @@
 			"name": "Ironhide Tonic",
 			"kind": "potion",
 			"level": 42,
+			"ring": "late_bloom",
 			"unlockSkill": 42,
 			"description": "Ground stone and monster hide bound with ash. Heavy on the tongue, heavier on the skin.",
 			"ingredients": [
@@ -2400,6 +2427,7 @@
 			"name": "Conjurer's Ink",
 			"kind": "potion",
 			"level": 45,
+			"ring": "pulse",
 			"unlockSkill": 45,
 			"description": "Bone black dissolved in spirit water. Drawn on the palm, it steadies binding and shaping spells.",
 			"ingredients": [
@@ -2491,6 +2519,7 @@
 			"name": "Scholar's Tea",
 			"kind": "potion",
 			"level": 45,
+			"ring": "cascade",
 			"unlockSkill": 45,
 			"description": "Steeped slowly; drunk while the candle burns low over a spell tome.",
 			"ingredients": [
@@ -2586,6 +2615,7 @@
 			"name": "Battlemage's Draught",
 			"kind": "potion",
 			"level": 52,
+			"ring": "storm",
 			"unlockSkill": 52,
 			"description": "For those who fight with fire in one hand and a ward in the other.",
 			"ingredients": [
@@ -2673,6 +2703,8 @@
 			"name": "Panacea",
 			"kind": "potion",
 			"level": 58,
+			"ring": "cascade",
+			"potency": 1.25,
 			"unlockSkill": 58,
 			"description": "Cures what ails you, whatever it is. Mostly.",
 			"ingredients": [
@@ -2760,6 +2792,8 @@
 			"name": "Elixir of Vitality",
 			"kind": "potion",
 			"level": 60,
+			"ring": "finale",
+			"potency": 1.25,
 			"unlockSkill": 60,
 			"description": "Brewed around a single chiming root. Mends wounds that should have been fatal.",
 			"ingredients": [
@@ -2854,6 +2888,7 @@
 			"name": "Dragonblood Tonic",
 			"kind": "potion",
 			"level": 62,
+			"ring": "storm",
 			"unlockSkill": 62,
 			"description": "Said to be the drink of those who hunt dragons. It burns going down and leaves you unafraid of the fire.",
 			"ingredients": [
@@ -2941,6 +2976,7 @@
 			"name": "Ghostwalk Elixir",
 			"kind": "potion",
 			"level": 65,
+			"ring": "heartbeat",
 			"unlockSkill": 65,
 			"description": "The drinker thins like mist. Thieves pay a fortune for a single vial.",
 			"ingredients": [
@@ -3028,6 +3064,7 @@
 			"name": "Titan's Draught",
 			"kind": "potion",
 			"level": 70,
+			"ring": "finale",
 			"unlockSkill": 70,
 			"description": "A crystalline brew that makes every burden feel like a feather and every blow land like a hammer.",
 			"ingredients": [
@@ -3115,6 +3152,8 @@
 			"name": "Grand Elixir",
 			"kind": "potion",
 			"level": 90,
+			"ring": "grand",
+			"potency": 1.5,
 			"unlockSkill": 90,
 			"description": "The masterwork of an Atelier. Built upon another potion, refined until it glows.",
 			"ingredients": [
@@ -3214,6 +3253,7 @@
 			"name": "Viper Venom",
 			"kind": "poison",
 			"level": 15,
+			"ring": "sting",
 			"known": true,
 			"description": "A simple, honest poison. Coat a blade and strike first.",
 			"ingredients": [
@@ -3305,6 +3345,7 @@
 			"name": "Leaden Draught",
 			"kind": "poison",
 			"level": 25,
+			"ring": "late_bloom",
 			"unlockSkill": 25,
 			"description": "Makes the limbs heavy and the breath short. A favourite of bandits who prefer their marks slow.",
 			"ingredients": [
@@ -3395,6 +3436,7 @@
 			"name": "Coward's Dust",
 			"kind": "poison",
 			"level": 28,
+			"ring": "sting",
 			"unlockSkill": 28,
 			"description": "Grave dust and pressed petals. One breath and the bravest warrior remembers somewhere else to be.",
 			"ingredients": [
@@ -3460,6 +3502,7 @@
 			"name": "Mage's Bane",
 			"kind": "poison",
 			"level": 30,
+			"ring": "needle",
 			"unlockSkill": 30,
 			"description": "Tasteless and odourless. A mage who drinks it reaches for a spell and finds nothing there.",
 			"ingredients": [
@@ -3543,6 +3586,7 @@
 			"name": "Hexing Oil",
 			"kind": "poison",
 			"level": 40,
+			"ring": "pairs",
 			"unlockSkill": 40,
 			"description": "Strips away a target's protections. Pair it with your favourite spell.",
 			"ingredients": [
@@ -3626,6 +3670,7 @@
 			"name": "Lingering Rot",
 			"kind": "poison",
 			"level": 40,
+			"ring": "rush",
 			"unlockSkill": 40,
 			"description": "Fermented in the dark for weeks. It doesn't kill quickly, and that is the point.",
 			"ingredients": [
@@ -3713,6 +3758,7 @@
 			"name": "Draught of Madness",
 			"kind": "poison",
 			"level": 45,
+			"ring": "heartbeat",
 			"unlockSkill": 45,
 			"description": "Whoever drinks - or bleeds - it sees enemies everywhere. Or monsters.",
 			"ingredients": [
@@ -3793,6 +3839,7 @@
 			"name": "Paralytic Toxin",
 			"kind": "poison",
 			"level": 50,
+			"ring": "needle",
 			"unlockSkill": 50,
 			"description": "Locks every muscle. Short, but long enough.",
 			"ingredients": [
@@ -3866,6 +3913,7 @@
 			"name": "Deathbell Draught",
 			"kind": "poison",
 			"level": 80,
+			"ring": "finale",
 			"unlockSkill": 80,
 			"description": "The last poison an alchemist learns, and the last thing its victim tastes.",
 			"ingredients": [

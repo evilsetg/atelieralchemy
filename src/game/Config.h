@@ -44,5 +44,7 @@ namespace game
 		static Config&       Get();
 		static const Config& Current() { return Get(); }
 		void                 Load();
+		// Writes ringMode back to the INI's [Ring] Mode line, keeping everything else.
+		void SaveRingMode() const;
 	};
 }

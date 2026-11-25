@@ -54,7 +54,11 @@ synthesis systems of the *Atelier* series. Every synthesis ends with a *Shadow H
   each strike by 6%. Striking every area is a **Perfect** synthesis: another +10% and +1 item.
   A miss costs 15% and, as in Shadow Hearts, ends the ring. Missing the first area botches the
   batch (×0.6 quality, −1 item). The width and speed of the areas depend on your skill, the
-  recipe's level, your catalyst and *Steady Hand* traits. *Easy* and *Auto* (no bonuses) modes are
+  recipe's level, your catalyst and *Steady Hand* traits. Every recipe has its own ring
+  pattern (for example *Gentle*: big, big, small; *Needle*: four slim areas with wide
+  strikes; *Finale*: four small areas and a big last one), previewed next to the Synthesize
+  button. Patterns live in `ring_patterns.json`. The ring sits on a slowly turning mandala of
+  alchemical symbols (the four elements, Sun, Moon, Mercury and Salt) that glows on a hit. *Easy* and *Auto* (no bonuses) modes are
   available for accessibility.
   Each judgement has its own sound: a hit lands like a punch, a strike shatters like glass,
   a miss gives a retro menu-cancel blip, and a Perfect ends in a rising arpeggio. The WAVs in
@@ -67,7 +71,8 @@ synthesis systems of the *Atelier* series. Every synthesis ends with a *Shadow H
   potency formula (skill, the game settings behind it, and every perk you own that changes
   alchemy effectiveness, which also covers Fortify Alchemy). A line's first, second and third tier give 80%, 100% and
   110% of that. For effects such as Invisibility, where potency lengthens the effect, the
-  share applies to duration.
+  share applies to duration. Masterwork recipes multiply those shares: Elixir of Vitality and
+  Panacea ×1.25, Grand Elixir ×1.5.
 - **Batch sizes.** A potion or poison synthesis makes one item, like a vanilla brew;
   materials come in larger batches. A Perfect ring, some effect-line tiers and "potions
   created" perks add more.
@@ -112,7 +117,8 @@ It is ESL-flagged, so it doesn't use a load order slot.
 3. Fill each ingredient slot (or use **Auto-fill**), optionally add a catalyst, and watch the
    element bars and effect lines update. Tick the traits you want the product to inherit.
 4. Press **Synthesize!** and play the Judgement Ring with **Space / E / left mouse /
-   gamepad A**.
+   gamepad A**. Next to the button you can switch the ring between *Normal*, *Easy* and
+   *Auto*; during a ring, **Skip** (or Tab / gamepad Y) finishes that synthesis as Auto would.
 5. Collect your batch. Its name shows the rank and quality, for example
    `Healing Salve (B Q112)`. Drink it, sell it, or use it as an ingredient in a later
    synthesis.
@@ -152,8 +158,15 @@ The flake provides `clang-cl`, `lld-link`, CMake, Ninja and `xwin`.
 nix develop
 ./scripts/setup-xwin.sh      # once: downloads the MSVC CRT + Windows SDK (accepts Microsoft's license)
 ./scripts/build.sh           # assets, data validation, core tests, DLL -> dist/AtelierAlchemy
-./scripts/package.sh         # dist/AtelierAlchemy-<version>.zip
+./scripts/package.sh         # dist/AtelierAlchemy-<version>.zip and ...-source.zip
 ```
+
+`package.sh` also writes `AtelierAlchemy-<version>-source.zip`, the source code for the GPL:
+everything git tracks or would track, uncommitted edits included. With `--with-deps` it also
+bundles the dependency sources CMake fetched (run a build first) in `third_party/`, and a
+build from that archive uses them instead of downloading anything. CommonLib's OpenVR
+submodule is left out except for its headers and license, since the mod doesn't build for
+Skyrim VR.
 
 The first build compiles CommonLibSSE-NG and takes about 15 minutes; later builds take
 seconds. Dependencies (CommonLibSSE-NG, spdlog, Dear ImGui, nlohmann/json, SimpleMath) are

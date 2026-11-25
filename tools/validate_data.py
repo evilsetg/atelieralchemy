@@ -75,8 +75,33 @@ def main() -> int:
             if t not in traits:
                 errors.append(f"ingredient {ingredient.get('name')}: unknown trait '{t}'")
 
+    patterns = merged.get("ringPatterns", {})
+
+    def check_shape(where: str, shape) -> None:
+        if not isinstance(shape, list) or not shape:
+            errors.append(f"{where}: ring pattern must be a non-empty list")
+            return
+        if len(shape) > 8:
+            errors.append(f"{where}: at most 8 ring areas")
+        for area in shape:
+            if not 0.0 <= area.get("at", -1) <= 1.0:
+                errors.append(f"{where}: ring area 'at' must be between 0 and 1")
+            if area.get("width", 1.0) <= 0 or area.get("strike", 1.0) <= 0:
+                errors.append(f"{where}: ring area sizes must be positive")
+
+    for name, shape in patterns.items():
+        check_shape(f"ring pattern {name}", shape)
+
     for rid, recipe in recipes.items():
         where = f"recipe {rid}"
+        if recipe.get("potency", 1.0) <= 0:
+            errors.append(f"{where}: potency must be positive")
+        ring = recipe.get("ring")
+        if isinstance(ring, str):
+            if ring not in patterns:
+                errors.append(f"{where}: unknown ring pattern '{ring}'")
+        elif ring is not None:
+            check_shape(where, ring)
         if recipe.get("kind", "potion") not in KINDS:
             errors.append(f"{where}: unknown kind {recipe.get('kind')}")
         for req in recipe.get("ingredients", []):
@@ -116,7 +141,7 @@ def main() -> int:
         if rid not in reachable:
             errors.append(f"recipe {rid} can never be learned (no known / unlockSkill / unlock rule)")
 
-    print(f"{len(recipes)} recipes, {len(traits)} traits, {len(effects)} effects, {len(ingredients)} ingredients, "
+    print(f"{len(recipes)} recipes, {len(patterns)} ring patterns, {len(traits)} traits, {len(effects)} effects, {len(ingredients)} ingredients, "
           f"{len(merged.get('catalysts', []))} catalysts")
     for e in errors:
         print("ERROR:", e)

@@ -284,24 +284,38 @@ namespace atelier
 			OutputEffect effect;
 			effect.effectKey = best->effectKey;
 			const auto ref = a_input.references.find(best->effectKey);
+			// "x tier 110% x recipe 150%" - the recipe part only when it differs from 100%.
+			const float share = best->vanillaScale * recipe.potency;
+			const auto  shareText = [&] {
+				auto text = std::format("tier {:.0f}%", best->vanillaScale * 100.0f);
+				if (recipe.potency != 1.0f) {
+					text += std::format(" x recipe {:.0f}%", recipe.potency * 100.0f);
+				}
+				return text;
+			};
 			if (best->vanillaScale > 0.0f && ref != a_input.references.end()) {
 				const auto& r = ref->second;
-				const float scale = best->vanillaScale * potency;
+				const float scale = share * potency;
 				if (r.scalesDuration) {
 					// Fixed magnitude: tier, quality and traits all lengthen the effect.
 					effect.magnitude = RoundMagnitude(r.magnitude);
 					effect.duration = static_cast<int>(std::lround(r.duration * scale * std::max(0.0f, 1.0f + durationPct / 100.0f)));
-					effect.breakdown = std::format("vanilla {:.0f}s x tier {:.0f}% ({}, duration traits {:+.0f}%)", r.duration,
-						best->vanillaScale * 100.0f, factors(), durationPct);
+					effect.breakdown = std::format("vanilla {:.0f}s x {} ({}, duration traits {:+.0f}%)", r.duration, shareText(), factors(), durationPct);
 				} else {
 					effect.magnitude = RoundMagnitude(r.magnitude * scale);
 					effect.duration = static_cast<int>(std::lround(r.duration * durMult));
-					effect.breakdown = std::format("vanilla {:.1f} x tier {:.0f}% ({})", r.magnitude, best->vanillaScale * 100.0f, factors());
+					effect.breakdown = std::format("vanilla {:.1f} x {} ({})", r.magnitude, shareText(), factors());
+					if (r.duration > 0.0f) {
+						effect.breakdown += std::format("\nduration: vanilla {:.0f}s x quality {:.2f}, traits {:+.0f}%", r.duration, QualityDurationMult(outcome.quality), durationPct);
+					}
 				}
 			} else {
-				effect.magnitude = RoundMagnitude(best->magnitude * potency * a_input.stats.magnitudeMult);
+				effect.magnitude = RoundMagnitude(best->magnitude * recipe.potency * potency * a_input.stats.magnitudeMult);
 				effect.duration = static_cast<int>(std::lround(static_cast<float>(best->duration) * durMult));
 				effect.breakdown = std::format("recipe {:.1f} x perks {:.2f} ({})", best->magnitude, a_input.stats.magnitudeMult, factors());
+				if (best->duration > 0) {
+					effect.breakdown += std::format("\nduration: recipe {}s x quality {:.2f}, traits {:+.0f}%", best->duration, QualityDurationMult(outcome.quality), durationPct);
+				}
 			}
 
 			const auto existing = std::ranges::find(brew.effects, effect.effectKey, &OutputEffect::effectKey);

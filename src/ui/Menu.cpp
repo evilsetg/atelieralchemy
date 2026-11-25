@@ -41,6 +41,12 @@ namespace ui::Menu
 			std::string              notice;
 			// Element the player is trying to raise: pickers sort by it and highlight it.
 			std::optional<atelier::Element> focus;
+			// Search fields start empty every time the menu opens.
+			std::array<char, 64> recipeSearch{};
+			std::array<char, 64> categorySearch{};
+			// Screen rectangle of the ring's Skip button last frame: clicks there aren't ring presses.
+			ImVec2 skipMin{ -1.0f, -1.0f };
+			ImVec2 skipMax{ -1.0f, -1.0f };
 
 			atelier::JudgementRing ring;
 			atelier::RingParams    ringParams;
@@ -196,7 +202,7 @@ namespace ui::Menu
 		}
 
 		// A tier before quality: its share of vanilla, and what that means right now.
-		std::string TierText(const atelier::EffectTier& a_tier, const std::unordered_map<std::string, atelier::EffectReference>& a_refs)
+		std::string TierText(const atelier::EffectTier& a_tier, const std::unordered_map<std::string, atelier::EffectReference>& a_refs, float a_potency)
 		{
 			if (!a_tier.label.empty()) {
 				return a_tier.label;
@@ -206,9 +212,10 @@ namespace ui::Menu
 			case Kind::kEffect:
 				if (const auto ref = a_refs.find(a_tier.effectKey); a_tier.vanillaScale > 0.0f && ref != a_refs.end()) {
 					const auto& r = ref->second;
-					const float mag = r.scalesDuration ? r.magnitude : r.magnitude * a_tier.vanillaScale;
-					const float dur = r.scalesDuration ? r.duration * a_tier.vanillaScale : r.duration;
-					return std::format("{}  ({:.0f}% of vanilla)", EffectText(a_tier.effectKey, mag, static_cast<int>(std::lround(dur))), a_tier.vanillaScale * 100.0f);
+					const float share = a_tier.vanillaScale * a_potency;
+					const float mag = r.scalesDuration ? r.magnitude : r.magnitude * share;
+					const float dur = r.scalesDuration ? r.duration * share : r.duration;
+					return std::format("{}  ({:.0f}% of vanilla)", EffectText(a_tier.effectKey, mag, static_cast<int>(std::lround(dur))), share * 100.0f);
 				}
 				return EffectText(a_tier.effectKey, a_tier.magnitude, a_tier.duration) + " (base)";
 			case Kind::kQuality:
@@ -492,8 +499,44 @@ namespace ui::Menu
 			std::ranges::sort(recipes, [](auto* a, auto* b) { return std::tie(a->level, a->name) < std::tie(b->level, b->name); });
 
 			ImGui::TextColored(ToVec4(Colors::kGold), "Recipe Book  (%zu)", recipes.size());
+			auto& search = a_session.recipeSearch;
+			ImGui::SetNextItemWidth(-FLT_MIN);
+			ImGui::InputTextWithHint("##recipe_search", "Search recipes, effects, ingredients", search.data(), search.size());
+			if (ImGui::IsItemHovered() && !ImGui::IsItemActive()) {
+				ImGui::SetTooltip("Matches recipe names, the effects they can make, what they need and the slots materials fill.");
+			}
 			ImGui::Separator();
-			for (const auto* recipe : recipes) {
+
+			const auto needle = game::Lower(search.data());
+			const auto matches = [&](const atelier::RecipeDef& a_recipe) {
+				if (needle.empty()) {
+					return true;
+				}
+				const auto hit = [&](std::string_view a_text) { return game::Lower(a_text).find(needle) != std::string::npos; };
+				if (hit(a_recipe.name) || hit(KindLabel(a_recipe.kind))) {
+					return true;
+				}
+				for (const auto& line : a_recipe.lines) {
+					for (const auto& tier : line.tiers) {
+						if (tier.kind == atelier::EffectTier::Kind::kEffect && hit(Db().EffectName(tier.effectKey))) {
+							return true;
+						}
+					}
+				}
+				for (const auto& req : a_recipe.requirements) {
+					if (hit(RequirementLabel(req))) {
+						return true;
+					}
+				}
+				return std::ranges::any_of(a_recipe.outputCategories, hit);
+			};
+			auto shown = recipes;  // the ideas below still use every known recipe
+			std::erase_if(shown, [&](const atelier::RecipeDef* r) { return !matches(*r); });
+			if (shown.empty()) {
+				ImGui::TextDisabled("No known recipe matches.");
+			}
+
+			for (const auto* recipe : shown) {
 				ImGui::PushID(recipe->id.c_str());
 				const bool selected = a_session.recipeId == recipe->id;
 				if (ImGui::Selectable("##recipe", selected, ImGuiSelectableFlags_None, { 0.0f, ImGui::GetTextLineHeightWithSpacing() })) {
@@ -692,7 +735,7 @@ namespace ui::Menu
 					const auto& tier = line.tiers[t];
 					const bool  reached = static_cast<int>(t) <= state.reachedTier;
 					ImGui::PushStyleColor(ImGuiCol_Text, ToVec4(reached ? Colors::kGood : Colors::kMuted));
-					ImGui::Text("  %s %2d  %s", reached ? "[x]" : "[ ]", tier.threshold, TierText(tier, refs).c_str());
+					ImGui::Text("  %s %2d  %s", reached ? "[x]" : "[ ]", tier.threshold, TierText(tier, refs, a_recipe.potency).c_str());
 					ImGui::PopStyleColor();
 				}
 				ImGui::PopID();
@@ -728,6 +771,87 @@ namespace ui::Menu
 					final += (final.empty() ? "" : ", ") + TraitName(id);
 				}
 				ImGui::TextWrapped("Inherited: %s", final.c_str());
+			}
+		}
+
+		float ToRadians(float a_degrees)
+		{
+			return (a_degrees - 90.0f) * std::numbers::pi_v<float> / 180.0f;
+		}
+
+		void Arc(ImDrawList* a_draw, ImVec2 a_center, float a_radius, float a_from, float a_to, ImU32 a_color, float a_thickness)
+		{
+			if (a_to <= a_from) {
+				return;
+			}
+			a_draw->PathArcTo(a_center, a_radius, ToRadians(a_from), ToRadians(a_to), std::max(4, static_cast<int>((a_to - a_from) / 3.0f)));
+			a_draw->PathStroke(a_color, ImDrawFlags_None, a_thickness);
+		}
+
+		// One cue per frame: the best result judged since the last frame. A miss that ends
+		// the ring fails every later area at once, which must still sound like one miss.
+		// Normal / Easy / Auto, saved back to the INI.
+		void DrawRingModeSwitch()
+		{
+			using game::RingMode;
+			static constexpr std::array<std::pair<RingMode, const char*>, 3> kModes{ {
+				{ RingMode::kNormal, "Normal" },
+				{ RingMode::kEasy, "Easy" },
+				{ RingMode::kAuto, "Auto" },
+			} };
+			auto&       config = game::Config::Get();
+			const char* current = "Normal";
+			for (const auto& [mode, label] : kModes) {
+				if (mode == config.ringMode) {
+					current = label;
+				}
+			}
+			ImGui::BeginGroup();
+			ImGui::TextDisabled("Judgement Ring");
+			ImGui::SetNextItemWidth(ImGui::GetFontSize() * 6.5f);
+			if (ImGui::BeginCombo("##ring_mode", current)) {
+				for (const auto& [mode, label] : kModes) {
+					if (ImGui::Selectable(label, mode == config.ringMode) && mode != config.ringMode) {
+						config.ringMode = mode;
+						config.SaveRingMode();
+					}
+					if (ImGui::IsItemHovered()) {
+						ImGui::SetTooltip("%s", mode == RingMode::kNormal ? "The full Judgement Ring: hits and strikes raise quality, a Perfect adds an item." :
+						                        mode == RingMode::kEasy   ? "Slower needle, wider areas, and a miss doesn't end the ring." :
+						                                                    "Every area is hit automatically: no miss, but no hit, strike or Perfect bonus.");
+					}
+				}
+				ImGui::EndCombo();
+			}
+			ImGui::EndGroup();
+		}
+
+		// A small picture of the ring this synthesis will get, with the player's current widths.
+		void DrawRingPreview(Session& a_session, const atelier::RecipeDef& a_recipe)
+		{
+			const auto   params = game::RingParamsFor(a_session.snapshot, a_recipe, a_session.slots, a_session.catalyst);
+			std::mt19937 rng(0);  // jitter-free: the pattern as designed
+			auto         layoutParams = params;
+			const auto   areas = atelier::JudgementRing::Layout(layoutParams, rng);
+
+			const float  size = ImGui::GetFrameHeight() * 2.2f;
+			const ImVec2 origin = ImGui::GetCursorScreenPos();
+			const ImVec2 center{ origin.x + size * 0.5f, origin.y + size * 0.5f };
+			const float  radius = size * 0.38f;
+			const float  thickness = size * 0.12f;
+			auto*        draw = ImGui::GetWindowDrawList();
+			draw->AddCircle(center, radius, Colors::kRingTrack, 48, thickness);
+			for (const auto& area : areas) {
+				Arc(draw, center, radius, area.start, area.strikeStart, Colors::kHitArea, thickness);
+				Arc(draw, center, radius, area.strikeStart, area.end, Colors::kStrikeArea, thickness);
+			}
+			ImGui::Dummy({ size, size });
+			if (ImGui::IsItemHovered()) {
+				ImGui::BeginTooltip();
+				ImGui::TextColored(ToVec4(Colors::kGold), "Judgement Ring: %s", a_recipe.ringPattern.empty() ? "standard" : a_recipe.ringPattern.c_str());
+				ImGui::Text("%zu areas, needle %.0f deg/s", areas.size(), params.degreesPerSecond);
+				ImGui::TextDisabled("Orange: hit area. Red: strike area. Areas grow with skill, catalysts and Steady traits.");
+				ImGui::EndTooltip();
 			}
 		}
 
@@ -846,6 +970,10 @@ namespace ui::Menu
 				StartRing(a_session, *recipe);
 			}
 			ImGui::EndDisabled();
+			ImGui::SameLine(0.0f, ImGui::GetStyle().ItemSpacing.x * 3.0f);
+			DrawRingPreview(a_session, *recipe);
+			ImGui::SameLine();
+			DrawRingModeSwitch();
 		}
 
 		// Lays out short labels left to right, wrapping at the window edge.
@@ -929,10 +1057,10 @@ namespace ui::Menu
 				}
 			}
 
-			static char filter[64]{};
+			auto&       filter = a_session.categorySearch;
 			static bool ownedOnly = false;
 			ImGui::SetNextItemWidth(ImGui::GetFontSize() * 16.0f);
-			ImGui::InputTextWithHint("##filter", "Search categories or ingredients", filter, sizeof(filter));
+			ImGui::InputTextWithHint("##filter", "Search categories or ingredients", filter.data(), filter.size());
 			ImGui::SameLine();
 			ImGui::Checkbox("Only what I carry", &ownedOnly);
 			ImGui::SameLine();
@@ -941,7 +1069,7 @@ namespace ui::Menu
 				ImGui::SetTooltip("Also list ingredients that no NPC, container, plant, crafting recipe or loot list in your load order provides,\n"
 								  "e.g. from asset files of mods that aren't installed. Hover an ingredient to see its plugin.");
 			}
-			const auto needle = game::Lower(filter);
+			const auto needle = game::Lower(filter.data());
 			const auto matches = [&](std::string_view a_text) { return needle.empty() || game::Lower(a_text).find(needle) != std::string::npos; };
 
 			if (!ImGui::BeginChild("categories", { 0.0f, 0.0f }, ImGuiChildFlags_Borders)) {
@@ -1055,22 +1183,146 @@ namespace ui::Menu
 		// Judgement Ring screen
 		// -----------------------------------------------------------------------------
 
-		float ToRadians(float a_degrees)
+		// -----------------------------------------------------------------------------
+		// Mandala backdrop of the Judgement Ring: rotation-symmetric layers and alchemical
+		// symbols, drawn in faint gold. a_glow (0..1) brightens it briefly after a hit.
+		// -----------------------------------------------------------------------------
+
+		ImU32 Gold(float a_alpha)
 		{
-			return (a_degrees - 90.0f) * std::numbers::pi_v<float> / 180.0f;
+			return IM_COL32(232, 190, 110, static_cast<int>(std::clamp(a_alpha, 0.0f, 1.0f) * 255.0f));
 		}
 
-		void Arc(ImDrawList* a_draw, ImVec2 a_center, float a_radius, float a_from, float a_to, ImU32 a_color, float a_thickness)
+		ImVec2 Polar(ImVec2 a_center, float a_radius, float a_angle)
 		{
-			if (a_to <= a_from) {
-				return;
+			return { a_center.x + std::cos(a_angle) * a_radius, a_center.y + std::sin(a_angle) * a_radius };
+		}
+
+		void Triangle(ImDrawList* a_draw, ImVec2 a_c, float a_s, bool a_up, ImU32 a_col, float a_w)
+		{
+			const float dir = a_up ? -1.0f : 1.0f;
+			const ImVec2 apex{ a_c.x, a_c.y + dir * a_s };
+			const ImVec2 left{ a_c.x - a_s * 0.87f, a_c.y - dir * a_s * 0.5f };
+			const ImVec2 right{ a_c.x + a_s * 0.87f, a_c.y - dir * a_s * 0.5f };
+			a_draw->AddTriangle(apex, left, right, a_col, a_w);
+		}
+
+		// Classical alchemical glyphs, upright, centered on a_c, roughly a_s in radius.
+		void Glyph(ImDrawList* a_draw, int a_index, ImVec2 a_c, float a_s, ImU32 a_col, float a_w)
+		{
+			switch (a_index % 8) {
+			case 0:  // Fire: triangle pointing up
+				Triangle(a_draw, a_c, a_s, true, a_col, a_w);
+				break;
+			case 1:  // Mercury: horns, circle, cross
+				a_draw->AddCircle({ a_c.x, a_c.y - a_s * 0.1f }, a_s * 0.38f, a_col, 20, a_w);
+				a_draw->PathArcTo({ a_c.x, a_c.y - a_s * 0.85f }, a_s * 0.38f, 0.25f, std::numbers::pi_v<float> - 0.25f, 12);
+				a_draw->PathStroke(a_col, ImDrawFlags_None, a_w);
+				a_draw->AddLine({ a_c.x, a_c.y + a_s * 0.28f }, { a_c.x, a_c.y + a_s }, a_col, a_w);
+				a_draw->AddLine({ a_c.x - a_s * 0.32f, a_c.y + a_s * 0.66f }, { a_c.x + a_s * 0.32f, a_c.y + a_s * 0.66f }, a_col, a_w);
+				break;
+			case 2:  // Air: triangle up with a bar
+				Triangle(a_draw, a_c, a_s, true, a_col, a_w);
+				a_draw->AddLine({ a_c.x - a_s * 0.75f, a_c.y }, { a_c.x + a_s * 0.75f, a_c.y }, a_col, a_w);
+				break;
+			case 3:  // Sun / gold: circle with a point
+				a_draw->AddCircle(a_c, a_s * 0.8f, a_col, 24, a_w);
+				a_draw->AddCircleFilled(a_c, a_s * 0.16f, a_col, 10);
+				break;
+			case 4:  // Water: triangle pointing down
+				Triangle(a_draw, a_c, a_s, false, a_col, a_w);
+				break;
+			case 5:  // Salt: circle with a horizontal line
+				a_draw->AddCircle(a_c, a_s * 0.8f, a_col, 24, a_w);
+				a_draw->AddLine({ a_c.x - a_s * 0.8f, a_c.y }, { a_c.x + a_s * 0.8f, a_c.y }, a_col, a_w);
+				break;
+			case 6:  // Earth: triangle down with a bar
+				Triangle(a_draw, a_c, a_s, false, a_col, a_w);
+				a_draw->AddLine({ a_c.x - a_s * 0.75f, a_c.y }, { a_c.x + a_s * 0.75f, a_c.y }, a_col, a_w);
+				break;
+			default:  // Moon / silver: crescent
+				{
+					const float pi = std::numbers::pi_v<float>;
+					a_draw->PathArcTo(a_c, a_s * 0.8f, pi * 0.5f, pi * 1.5f, 20);
+					a_draw->PathArcTo({ a_c.x - a_s * 0.3f, a_c.y }, a_s * 0.62f, pi * 1.38f, pi * 0.62f, 16);
+					a_draw->PathStroke(a_col, ImDrawFlags_Closed, a_w);
+				}
+				break;
 			}
-			a_draw->PathArcTo(a_center, a_radius, ToRadians(a_from), ToRadians(a_to), std::max(4, static_cast<int>((a_to - a_from) / 3.0f)));
-			a_draw->PathStroke(a_color, ImDrawFlags_None, a_thickness);
 		}
 
-		// One cue per frame: the best result judged since the last frame. A miss that ends
-		// the ring fails every later area at once, which must still sound like one miss.
+		void DrawMandala(ImDrawList* a_draw, ImVec2 a_center, float a_radius, float a_thickness, float a_outer, float a_glow)
+		{
+			const float pi = std::numbers::pi_v<float>;
+			const float t = static_cast<float>(ImGui::GetTime());
+			const float w = std::max(1.0f, Renderer::Scale());
+			const float lift = 1.0f + a_glow * 1.6f;
+			const float ringOuter = a_radius + a_thickness;
+
+			// Outer band: 8 symbols with dots between them, turning slowly.
+			const float band = (ringOuter + a_outer) * 0.5f;
+			const float glyphSize = std::min((a_outer - ringOuter) * 0.26f, band * 0.09f);
+			const float spinA = t * 0.06f;
+			a_draw->AddCircle(a_center, a_outer, Gold(0.22f * lift), 128, w);
+			// Petals from the ring out to the outer circle, behind the symbols, turning the
+			// other way.
+			const float spinB = -t * 0.04f;
+			const float petalBase = ringOuter + a_thickness * 0.1f;
+			const float petalTip = a_outer * 0.99f;
+			for (int i = 0; i < 16; ++i) {
+				const float a = spinB + static_cast<float>(i) * pi / 8.0f;
+				const float half = pi / 16.0f;
+				const ImVec2 p0 = Polar(a_center, petalBase, a - half);
+				const ImVec2 p1 = Polar(a_center, petalBase, a + half);
+				const ImVec2 tip = Polar(a_center, petalTip, a);
+				a_draw->AddBezierQuadratic(p0, Polar(a_center, petalTip * 0.98f, a - half * 0.9f), tip, Gold(0.16f * lift), w);
+				a_draw->AddBezierQuadratic(tip, Polar(a_center, petalTip * 0.98f, a + half * 0.9f), p1, Gold(0.16f * lift), w);
+			}
+
+			for (int i = 0; i < 8; ++i) {
+				const float a = spinA + static_cast<float>(i) * pi / 4.0f;
+				a_draw->AddCircleFilled(Polar(a_center, band, a), glyphSize * 1.3f, Colors::kRingBase, 20);  // keeps petals off the symbol
+				a_draw->AddCircle(Polar(a_center, band, a), glyphSize * 1.3f, Gold(0.18f * lift), 20, w);
+				Glyph(a_draw, i, Polar(a_center, band, a), glyphSize, Gold(0.38f * lift), w * 1.3f);
+				a_draw->AddCircleFilled(Polar(a_center, band, a + pi / 8.0f), glyphSize * 0.14f, Gold(0.3f * lift), 8);
+			}
+
+			// Inside the ring: eight-pointed star of two squares, twelve spokes, circles.
+			const float inner = a_radius - a_thickness * 0.6f;
+			const float spinC = -t * 0.03f;
+			for (int square = 0; square < 2; ++square) {
+				ImVec2 corners[4];
+				for (int k = 0; k < 4; ++k) {
+					corners[k] = Polar(a_center, inner * 0.96f, spinC + static_cast<float>(square) * pi / 4.0f + static_cast<float>(k) * pi / 2.0f);
+				}
+				a_draw->AddPolyline(corners, 4, Gold(0.14f * lift), ImDrawFlags_Closed, w);
+			}
+			for (int i = 0; i < 12; ++i) {
+				const float a = -spinC + static_cast<float>(i) * pi / 6.0f;
+				a_draw->AddLine(Polar(a_center, a_radius * 0.46f, a), Polar(a_center, inner * 0.7f, a), Gold(0.1f * lift), w);
+				a_draw->AddCircleFilled(Polar(a_center, inner * 0.7f, a), w * 1.6f, Gold(0.18f * lift), 6);
+			}
+			a_draw->AddCircle(a_center, inner * 0.7f, Gold(0.1f * lift), 96, w);
+			a_draw->AddCircle(a_center, inner, Gold(0.12f * lift), 96, w);
+		}
+
+		// The squared circle behind the counter text: circle, square, triangle, circle.
+		void DrawMandalaCenter(ImDrawList* a_draw, ImVec2 a_center, float a_r, float a_glow)
+		{
+			const float pi = std::numbers::pi_v<float>;
+			const float w = std::max(1.0f, Renderer::Scale());
+			const ImU32 col = Gold(0.13f * (1.0f + a_glow * 1.6f));
+			const float square = a_r * 0.92f;
+			ImVec2 corners[4];
+			for (int k = 0; k < 4; ++k) {
+				corners[k] = Polar(a_center, square, pi / 4.0f + static_cast<float>(k) * pi / 2.0f);
+			}
+			a_draw->AddPolyline(corners, 4, col, ImDrawFlags_Closed, w);
+			const float tri = square * 0.707f;
+			a_draw->AddTriangle(Polar(a_center, tri, -pi / 2.0f), Polar(a_center, tri, pi / 6.0f), Polar(a_center, tri, pi * 5.0f / 6.0f), col, w);
+			a_draw->AddCircle(a_center, tri * 0.5f, col, 32, w);
+		}
+
 		void PlayJudgementCues(const std::vector<atelier::AreaResult>& a_before, const atelier::JudgementRing& a_ring)
 		{
 			const auto& after = a_ring.Results();
@@ -1101,6 +1353,20 @@ namespace ui::Menu
 			}
 		}
 
+		// Resolves the rest of the synthesis as Auto mode would: every area hit, no bonuses.
+		void SkipRing(Session& a_session)
+		{
+			auto params = a_session.ringParams;
+			params.autoHit = true;
+			params.missEndsRing = false;
+			a_session.countdown = 0.0f;
+			a_session.ring.Start(params, 0);
+			a_session.ring.Update(3600.0f);  // the needle runs the whole way at once
+			a_session.lastRingUpdate = Clock::now();
+			TakeRingPresses();
+			Sound::Play(Sound::Cue::kHit);
+		}
+
 		void UpdateRing(Session& a_session)
 		{
 			const auto now = Clock::now();
@@ -1120,8 +1386,12 @@ namespace ui::Menu
 			if (a_session.ring.Running()) {
 				const auto before = a_session.ring.Results();
 				// Replay presses at the moment they happened, not at frame time.
-				std::ranges::sort(presses);
-				for (const auto t : presses) {
+				const auto mouse = ImGui::GetIO().MousePos;
+				const bool overSkip = mouse.x >= a_session.skipMin.x && mouse.x <= a_session.skipMax.x && mouse.y >= a_session.skipMin.y &&
+				                      mouse.y <= a_session.skipMax.y;
+				std::erase_if(presses, [&](const RingPress& a_press) { return a_press.mouse && overSkip; });
+				std::ranges::sort(presses, {}, &RingPress::time);
+				for (const auto& [t, fromMouse] : presses) {
 					if (t > a_session.lastRingUpdate) {
 						a_session.ring.Update(std::chrono::duration<float>(t - a_session.lastRingUpdate).count());
 						a_session.lastRingUpdate = t;
@@ -1182,13 +1452,19 @@ namespace ui::Menu
 			const ImVec2 avail = ImGui::GetContentRegionAvail();
 			const ImVec2 origin = ImGui::GetCursorScreenPos();
 			const float  footer = ImGui::GetTextLineHeightWithSpacing() * 4.0f;
-			const float  radius = std::min(avail.x, avail.y - footer) * 0.40f;
+			const float  extent = std::min(avail.x, avail.y - footer) * 0.5f;
+			const float  radius = extent * 0.70f;  // leaves room for the mandala's symbol band
 			const ImVec2 center{ origin.x + avail.x * 0.5f, origin.y + (avail.y - footer) * 0.5f };
 			const float  thickness = radius * 0.16f;
 			auto*        draw = ImGui::GetWindowDrawList();
+			const float  glow = ring.LastJudgedArea() >= 0 && ring.SinceLastJudgement() >= 0.0f &&
+			                           ring.Results()[static_cast<std::size_t>(ring.LastJudgedArea())] != atelier::AreaResult::kMiss ?
+			                       std::max(0.0f, 1.0f - ring.SinceLastJudgement() / 0.5f) :
+			                       0.0f;
 
-			// Body and track.
+			// Body and track, over the mandala.
 			draw->AddCircleFilled(center, radius + thickness, Colors::kRingBase, 96);
+			DrawMandala(draw, center, radius, thickness, extent * 0.97f, glow);
 			draw->AddCircle(center, radius + thickness, Colors::kGold, 96, 2.0f);
 			draw->AddCircle(center, radius, Colors::kRingTrack, 96, thickness);
 			for (int deg = 0; deg < 360; deg += 30) {
@@ -1235,6 +1511,7 @@ namespace ui::Menu
 			draw->AddLine(center, tip, IM_COL32(255, 230, 160, 90), thickness * 0.35f);
 			draw->AddLine(center, tip, Colors::kNeedle, 3.0f * Renderer::Scale());
 			draw->AddCircleFilled(center, radius * 0.42f, Colors::kRingBase, 64);
+			DrawMandalaCenter(draw, center, radius * 0.42f, glow);
 			draw->AddCircle(center, radius * 0.42f, Colors::kGold, 64, 2.0f);
 			draw->AddCircleFilled(center, 6.0f * Renderer::Scale(), Colors::kGold);
 
@@ -1275,8 +1552,19 @@ namespace ui::Menu
 				ImGui::TextWrapped("Press [Space], [E], left mouse or (A) as the needle crosses each orange hit area. Hits raise quality a little (+2%%); "
 								   "the red strike zone at its end is a critical (+6%%). Striking every area is a Perfect synthesis (+10%% more and +1 item). "
 								   "A miss costs 15%% and ruins the remaining stages. Higher quality means stronger, longer-lasting effects.");
+				const bool skip = ImGui::Button("Skip ring  [Tab] / (Y)") || ImGui::IsKeyPressed(ImGuiKey_Tab, false) ||
+				                  ImGui::IsKeyPressed(ImGuiKey_GamepadFaceUp, false);
+				a_session.skipMin = ImGui::GetItemRectMin();
+				a_session.skipMax = ImGui::GetItemRectMax();
+				if (ImGui::IsItemHovered()) {
+					ImGui::SetTooltip("Finish this synthesis as Auto mode would: every area is hit, no strike or Perfect bonus, no miss.");
+				}
+				if (skip) {
+					SkipRing(a_session);
+				}
 				return;
 			}
+			a_session.skipMin = a_session.skipMax = { -1.0f, -1.0f };
 
 			const auto summary = ring.Summary();
 			const float factor = atelier::RingQualityFactor(summary);

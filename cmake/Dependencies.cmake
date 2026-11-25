@@ -1,4 +1,17 @@
 include(FetchContent)
+
+# A source release made with `scripts/package.sh --with-deps` bundles every dependency in
+# third_party/<name>-src; build from those instead of downloading.
+file(GLOB ATELIER_BUNDLED_DEPS LIST_DIRECTORIES true "${CMAKE_CURRENT_LIST_DIR}/../third_party/*-src")
+foreach(dir IN LISTS ATELIER_BUNDLED_DEPS)
+	get_filename_component(name "${dir}" NAME)
+	string(REGEX REPLACE "-src$" "" name "${name}")
+	string(TOUPPER "${name}" upper)
+	if(NOT FETCHCONTENT_SOURCE_DIR_${upper})
+		set(FETCHCONTENT_SOURCE_DIR_${upper} "${dir}" CACHE PATH "Bundled ${name} sources")
+		message(STATUS "Using bundled ${name} from ${dir}")
+	endif()
+endforeach()
 set(FETCHCONTENT_QUIET OFF)
 
 # --- spdlog (CommonLib does find_package(spdlog CONFIG REQUIRED)) ---------------

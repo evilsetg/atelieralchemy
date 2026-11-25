@@ -27,6 +27,15 @@ namespace atelier
 		float strikeStart{ 0.0f };  // strike area is [strikeStart, end]
 	};
 
+	// One hit area of a recipe's ring pattern. Sizes are relative to the skill-based widths,
+	// so a pattern keeps its character while skill, catalysts and traits still widen it.
+	struct RingShapeArea
+	{
+		float center{ 0.5f };  // 0..1 along the usable part of the ring
+		float width{ 1.0f };   // hit area width multiplier
+		float strike{ 1.0f };  // strike area width multiplier
+	};
+
 	struct RingParams
 	{
 		int   areaCount{ 3 };
@@ -35,6 +44,7 @@ namespace atelier
 		float degreesPerSecond{ 180.0f };
 		bool  missEndsRing{ true };
 		bool  autoHit{ false };  // accessibility: every area is hit automatically (never strikes)
+		std::vector<RingShapeArea> shape;  // empty: areaCount evenly spaced areas of equal size
 	};
 
 	struct RingSummary

@@ -73,6 +73,8 @@ namespace game
 		void LoadCatalysts(const nlohmann::json& a_doc, const std::string& a_file);
 		void LoadEffects(const nlohmann::json& a_doc, const std::string& a_file);
 		void LoadIngredients(const nlohmann::json& a_doc, const std::string& a_file);
+		void LoadRingPatterns(const nlohmann::json& a_doc, const std::string& a_file);
+		void ResolveRingPatterns();
 		void MarkObtainable();
 		void AuditRecipes() const;
 		void ResolveEffects();
@@ -112,6 +114,8 @@ namespace game
 		std::unordered_map<RE::ActorValue, atelier::Element> _avElements;
 		std::unordered_map<RE::EffectArchetypes::ArchetypeID, atelier::Element> _archetypeElements;
 
+		std::map<std::string, std::vector<atelier::RingShapeArea>, std::less<>> _ringPatterns;
+		std::map<std::string, nlohmann::json, std::less<>>                    _recipeRings;  // recipe id -> "ring" value
 		std::vector<IngredientOverride>                                  _ingredientOverrides;
 		std::map<std::string, std::vector<std::string>, std::less<>>     _categoryKeywords;
 		std::map<std::string, std::vector<std::string>, std::less<>>     _categoryTraitPools;

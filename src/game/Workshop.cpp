@@ -245,8 +245,29 @@ namespace game
 
 		// One area per distinct ingredient requirement, at least two: each is a stage
 		// of the synthesis (Shadow Hearts rings have 2-5 areas).
-		const int areas = std::clamp(static_cast<int>(a_recipe.requirements.size()) + 1 + extraAreas, 2, 6);
+		// A recipe's ring pattern sets the number, position and size of its areas; without one,
+		// there is one area per distinct ingredient requirement plus one.
+		auto shape = a_recipe.ringShape;
+		if (!shape.empty()) {
+			// Catalyst extra areas go, small, into the widest gaps of the pattern.
+			for (int n = 0; n < extraAreas && shape.size() < 8; ++n) {
+				std::vector<float> centers{ 0.0f, 1.0f };
+				for (const auto& area : shape) {
+					centers.push_back(area.center);
+				}
+				std::ranges::sort(centers);
+				std::size_t widest = 0;
+				for (std::size_t i = 1; i + 1 < centers.size(); ++i) {
+					if (centers[i + 1] - centers[i] > centers[widest + 1] - centers[widest]) {
+						widest = i;
+					}
+				}
+				shape.push_back({ (centers[widest] + centers[widest + 1]) * 0.5f, 0.7f, 1.0f });
+			}
+		}
+		const int areas = shape.empty() ? std::clamp(static_cast<int>(a_recipe.requirements.size()) + 1 + extraAreas, 2, 6) : static_cast<int>(shape.size());
 		auto      params = atelier::MakeRingParams(areas, a_snapshot.skill, a_recipe.level, bonusWidth, speedMult);
+		params.shape = std::move(shape);
 		params.hitWidthDeg *= config.ringWidthMult;
 		params.strikeWidthDeg *= config.ringWidthMult;
 		params.missEndsRing = config.missEndsRing;

@@ -19,8 +19,13 @@ namespace ui
 
 	// Called on the render thread inside an ImGui frame.
 	void ApplyQueuedInput();
-	// Timestamps of "ring button" presses since the last call.
-	std::vector<Clock::time_point> TakeRingPresses();
+	struct RingPress
+	{
+		Clock::time_point time;
+		bool              mouse{ false };  // left click: also reaches ImGui (e.g. the Skip button)
+	};
+	// "Ring button" presses since the last call.
+	std::vector<RingPress> TakeRingPresses();
 	// Main thread (menu show/hide). Also leaves Skyrim's text entry mode.
 	void                           ClearInput();
 	// Render thread, after each frame: whether an ImGui text field wants keyboard text.

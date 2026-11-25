@@ -162,6 +162,11 @@ static void TestVanillaReferences()
 	CHECK(std::abs(out.brew.effects[1].magnitude - 1.0f) < 0.01f);
 	CHECK(out.brew.effects[1].duration == 48);  // 40 * 1.1 * 1.1
 
+	// A recipe's potency multiplies its tiers' share of vanilla.
+	recipe.potency = 1.5f;
+	CHECK(std::abs(Evaluate(input, catalog, nullptr).brew.effects[0].magnitude - 11.0f) < 0.01f);  // 8.256 * 0.8 * 1.5 * 1.1 = 10.9, whole numbers from 10
+	recipe.potency = 1.0f;
+
 	// Trait bonuses are capped: +60% counts as +25%.
 	catalog.traits["strong"] = TraitDef{ .id = "strong", .name = "Strong", .magnitudePct = 60.0f };
 	auto strong = input;
@@ -211,6 +216,38 @@ static void TestRingModifiers()
 	input.materials[0].categories.push_back("Fungus");
 	unlocks = CheckUnlocks(*input.recipe, input, out);
 	CHECK(unlocks.size() == 1);
+}
+
+static void TestRingShape()
+{
+	std::puts("ring shapes");
+	RingParams params;
+	params.hitWidthDeg = 40.0f;
+	params.strikeWidthDeg = 8.0f;
+	// Big, big, small - and a deliberately crowded pair that must be pushed apart.
+	params.shape = { { 0.12f, 1.4f, 1.2f }, { 0.45f, 1.3f, 1.0f }, { 0.82f, 0.7f, 0.8f }, { 0.84f, 0.7f, 0.8f } };
+	params.areaCount = static_cast<int>(params.shape.size());
+	for (std::uint32_t seed = 0; seed < 50; ++seed) {
+		std::mt19937 rng(seed);
+		const auto   areas = JudgementRing::Layout(params, rng);
+		CHECK(areas.size() == 4);
+		for (std::size_t i = 0; i < areas.size(); ++i) {
+			CHECK(areas[i].start >= 25.0f - 0.01f && areas[i].end <= 345.0f + 0.01f);
+			CHECK(areas[i].strikeStart > areas[i].start && areas[i].strikeStart < areas[i].end);
+			if (i > 0) {
+				CHECK(areas[i].start >= areas[i - 1].end + 3.99f);
+			}
+		}
+		const auto width = [&](std::size_t i) { return areas[i].end - areas[i].start; };
+		CHECK(width(0) > width(2) && width(1) > width(2));
+	}
+
+	// A pattern far too large for the ring is scaled down to fit.
+	params.hitWidthDeg = 100.0f;
+	params.shape.assign(6, { 0.5f, 1.0f, 1.0f });
+	std::mt19937 rng(7);
+	const auto   areas = JudgementRing::Layout(params, rng);
+	CHECK(areas.front().start >= 25.0f - 0.01f && areas.back().end <= 345.0f + 0.01f);
 }
 
 static void TestRing()
@@ -296,6 +333,7 @@ int main()
 	TestQualityCurves();
 	TestVanillaReferences();
 	TestRingModifiers();
+	TestRingShape();
 	TestRing();
 	if (g_failures) {
 		std::printf("%d check(s) failed\n", g_failures);

@@ -116,7 +116,9 @@ namespace game
 			LoadIngredients(*doc, name);
 			LoadRecipes(*doc, name);
 			LoadCatalysts(*doc, name);
+			LoadRingPatterns(*doc, name);
 		}
+		ResolveRingPatterns();  // patterns and recipes may come from different files
 
 		ResolveEffects();
 		BuildIngredientProfiles();
@@ -303,6 +305,10 @@ namespace game
 			recipe.baseValue = Value<int>(def, "value", 10);
 			recipe.baseWeight = Value<float>(def, "weight", 0.5f);
 			recipe.templateRef = Value<std::string>(def, "template", "");
+			recipe.potency = std::max(Value<float>(def, "potency", 1.0f), 0.0f);
+			if (const auto ring = def.find("ring"); ring != def.end()) {
+				_recipeRings[recipe.id] = *ring;
+			}
 			recipe.knownAtStart = Value<bool>(def, "known", false);
 			recipe.unlockSkill = Value<int>(def, "unlockSkill", -1);
 			recipe.outputCategories = StringList(def, "categories");
@@ -786,6 +792,65 @@ namespace game
 		}
 		for (const auto& [plugin, count] : hidden) {
 			logger::info("{} ingredient(s) from {} are not carried, grown, crafted or looted anywhere; hidden in the category list", count, plugin);
+		}
+	}
+
+	namespace
+	{
+		std::optional<std::vector<atelier::RingShapeArea>> ParseRingShape(const json& a_list)
+		{
+			if (!a_list.is_array() || a_list.empty()) {
+				return std::nullopt;
+			}
+			std::vector<atelier::RingShapeArea> shape;
+			for (const auto& area : a_list) {
+				if (!area.is_object() || !area.contains("at")) {
+					return std::nullopt;
+				}
+				shape.push_back({ std::clamp(area["at"].get<float>(), 0.0f, 1.0f), std::max(area.value("width", 1.0f), 0.1f),
+					std::max(area.value("strike", 1.0f), 0.1f) });
+			}
+			return shape;
+		}
+	}
+
+	void Database::LoadRingPatterns(const json& a_doc, const std::string& a_file)
+	{
+		const auto it = a_doc.find("ringPatterns");
+		if (it == a_doc.end() || !it->is_object()) {
+			return;
+		}
+		for (const auto& [name, list] : it->items()) {
+			if (auto shape = ParseRingShape(list)) {
+				_ringPatterns[name] = std::move(*shape);
+			} else {
+				Error(std::format("{}: ring pattern '{}' must be a list of {{\"at\": 0..1, \"width\": x, \"strike\": x}}", a_file, name));
+			}
+		}
+	}
+
+	void Database::ResolveRingPatterns()
+	{
+		for (const auto& [id, value] : _recipeRings) {
+			auto it = _catalog.recipes.find(id);
+			if (it == _catalog.recipes.end()) {
+				continue;
+			}
+			auto& recipe = it->second;
+			if (value.is_string()) {
+				const auto name = value.get<std::string>();
+				if (const auto pattern = _ringPatterns.find(name); pattern != _ringPatterns.end()) {
+					recipe.ringPattern = name;
+					recipe.ringShape = pattern->second;
+				} else {
+					Error(std::format("recipe '{}': unknown ring pattern '{}'", id, name));
+				}
+			} else if (auto shape = ParseRingShape(value)) {
+				recipe.ringPattern = "custom";
+				recipe.ringShape = std::move(*shape);
+			} else {
+				Error(std::format("recipe '{}': 'ring' must be a pattern name or a list of areas", id));
+			}
 		}
 	}
 

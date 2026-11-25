@@ -130,4 +130,55 @@ namespace game
 		}
 		logger::info("Loaded {}", kIniPath);
 	}
+
+	void Config::SaveRingMode() const
+	{
+		const char* value = ringMode == RingMode::kAuto ? "Auto" : ringMode == RingMode::kEasy ? "Easy" : "Normal";
+
+		std::vector<std::string> lines;
+		{
+			std::ifstream in(kIniPath);
+			for (std::string line; std::getline(in, line);) {
+				lines.push_back(line);
+			}
+		}
+		std::string section;
+		bool        written = false;
+		std::size_t ringEnd = lines.size();  // where to add the key if [Ring] lacks it
+		bool        hasRing = false;
+		for (std::size_t i = 0; i < lines.size(); ++i) {
+			const auto trimmed = Trim(lines[i]);
+			if (!trimmed.empty() && trimmed.front() == '[' && trimmed.back() == ']') {
+				if (section == "ring") {
+					ringEnd = i;
+				}
+				section = Lower(trimmed.substr(1, trimmed.size() - 2));
+				hasRing = hasRing || section == "ring";
+				continue;
+			}
+			const auto eq = trimmed.find('=');
+			if (section == "ring" && eq != std::string::npos && Lower(Trim(std::string_view(trimmed).substr(0, eq))) == "mode") {
+				lines[i] = std::format("Mode = {}", value);
+				written = true;
+			}
+		}
+		if (!written) {
+			if (!hasRing) {
+				lines.emplace_back("");
+				lines.emplace_back("[Ring]");
+				ringEnd = lines.size();
+			}
+			lines.insert(lines.begin() + static_cast<std::ptrdiff_t>(ringEnd), std::format("Mode = {}", value));
+		}
+
+		std::ofstream out(kIniPath, std::ios::trunc);
+		if (!out) {
+			logger::warn("Could not write {}", kIniPath);
+			return;
+		}
+		for (const auto& line : lines) {
+			out << line << '\n';
+		}
+		logger::info("Ring mode set to {}", value);
+	}
 }

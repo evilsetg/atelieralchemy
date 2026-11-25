@@ -30,12 +30,15 @@ namespace ui
 
 		std::mutex                     g_lock;
 		std::vector<QueuedEvent>       g_events;
-		std::vector<Clock::time_point> g_ringPresses;
+		std::vector<RingPress>         g_ringPresses;
 
 		// Text entry: the render thread says whether an ImGui text field is active, the main
 		// thread switches Skyrim's text mode (which makes the game send character events and
 		// stop treating keys as controls) to match.
 		std::atomic_bool g_wantText{ false };
+		// Set when the menu opens or closes: ImGui never sees the keys released while the menu
+		// was closed (e.g. the Escape that closed it), so its key state is reset next frame.
+		std::atomic_bool g_resetImGui{ false };
 		bool             g_textEnabled{ false };  // main thread only
 
 		void ApplyTextInput()
@@ -225,10 +228,15 @@ namespace ui
 				}
 
 				if (ringActive && IsRingButton(device, code)) {
+					const bool mouse = device == RE::INPUT_DEVICE::kMouse;
 					if (down) {
-						g_ringPresses.push_back(now);
+						g_ringPresses.push_back({ now, mouse });
 					}
-					continue;  // don't let ring presses click UI buttons
+					if (!mouse) {
+						continue;  // keys and pad buttons must not activate UI buttons mid-ring
+					}
+					// Clicks still reach ImGui so the Skip button works; the menu drops ring
+					// presses made on it.
 				}
 
 				switch (device) {
@@ -270,6 +278,12 @@ namespace ui
 	void ApplyQueuedInput()
 	{
 		auto& io = ImGui::GetIO();
+
+		if (g_resetImGui.exchange(false)) {
+			io.ClearEventsQueue();
+			io.ClearInputKeys();
+			io.ClearInputMouse();
+		}
 
 		std::vector<QueuedEvent> events;
 		{
@@ -327,10 +341,10 @@ namespace ui
 		io.AddMousePosEvent(cursor.x, cursor.y);
 	}
 
-	std::vector<Clock::time_point> TakeRingPresses()
+	std::vector<RingPress> TakeRingPresses()
 	{
 		std::scoped_lock lock(g_lock);
-		std::vector<Clock::time_point> out;
+		std::vector<RingPress> out;
 		out.swap(g_ringPresses);
 		return out;
 	}
@@ -343,6 +357,7 @@ namespace ui
 			g_ringPresses.clear();
 		}
 		g_wantText = false;
+		g_resetImGui = true;
 		ApplyTextInput();
 	}
 

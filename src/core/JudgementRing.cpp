@@ -26,8 +26,67 @@ namespace atelier
 		return params;
 	}
 
+	namespace
+	{
+		// Places a pattern's areas: sizes from the multipliers, centers from the pattern plus a
+		// little jitter, then pushed apart so they never overlap and always fit the ring.
+		std::vector<RingArea> LayoutShape(const RingParams& a_params, std::mt19937& a_rng)
+		{
+			const float span = kLeadOut - kLeadIn;
+			const auto  count = a_params.shape.size();
+			std::uniform_real_distribution<float> jitter(-span * 0.015f, span * 0.015f);
+
+			struct Slot
+			{
+				float center;
+				float width;
+				float strike;
+			};
+			std::vector<Slot> slots;
+			for (const auto& area : a_params.shape) {
+				const float width = std::clamp(a_params.hitWidthDeg * area.width, 6.0f, 100.0f);
+				slots.push_back({ kLeadIn + span * std::clamp(area.center, 0.0f, 1.0f) + jitter(a_rng), width, a_params.strikeWidthDeg * area.strike });
+			}
+			std::ranges::sort(slots, {}, &Slot::center);
+
+			// Shrink everything proportionally if the pattern doesn't fit at this size.
+			float total = kMinGap * static_cast<float>(count - 1);
+			for (const auto& slot : slots) {
+				total += slot.width;
+			}
+			if (total > span) {
+				const float scale = (span - kMinGap * static_cast<float>(count - 1)) / (total - kMinGap * static_cast<float>(count - 1));
+				for (auto& slot : slots) {
+					slot.width *= scale;
+				}
+			}
+
+			std::vector<RingArea> areas(count);
+			for (std::size_t i = 0; i < count; ++i) {
+				areas[i].start = std::max(slots[i].center - slots[i].width * 0.5f, i == 0 ? kLeadIn : areas[i - 1].end + kMinGap);
+				areas[i].end = areas[i].start + slots[i].width;
+			}
+			// Pull back from the end if the forward pass ran past it.
+			for (std::size_t i = count; i-- > 0;) {
+				const float limit = i + 1 == count ? kLeadOut : areas[i + 1].start - kMinGap;
+				if (areas[i].end > limit) {
+					areas[i].end = limit;
+					areas[i].start = limit - slots[i].width;
+				}
+			}
+			for (std::size_t i = 0; i < count; ++i) {
+				const float width = areas[i].end - areas[i].start;
+				areas[i].strikeStart = areas[i].end - std::clamp(slots[i].strike, 2.0f, width * 0.6f);
+			}
+			return areas;
+		}
+	}
+
 	std::vector<RingArea> JudgementRing::Layout(const RingParams& a_params, std::mt19937& a_rng)
 	{
+		if (!a_params.shape.empty()) {
+			return LayoutShape(a_params, a_rng);
+		}
 		std::vector<RingArea> areas;
 		const int             count = std::max(a_params.areaCount, 1);
 		const float           segment = (kLeadOut - kLeadIn) / static_cast<float>(count);
