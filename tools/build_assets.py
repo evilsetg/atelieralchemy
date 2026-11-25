@@ -3,7 +3,7 @@
 
   data/AtelierAlchemy.esp              ESL-flagged plugin with the brew slot records
   data/Interface/AtelierAlchemy.swf    empty Scaleform movie backing the engine-side menu
-  data/SKSE/Plugins/AtelierAlchemy/sounds/*.wav   Judgement Ring cues (synthesized here)
+  data/Sound/FX/AtelierAlchemy/*.wav   Judgement Ring cues (synthesized here)
 
 The plugin only contains generic placeholder forms. The SKSE DLL rewrites their
 name, effects, value, weight and model at runtime for every synthesized batch
@@ -11,6 +11,7 @@ name, effects, value, weight and model at runtime for every synthesized batch
 
   ALCH  0x800 .. 0x800+POTION_SLOTS-1    potions and poisons
   MISC  0xA00 .. 0xA00+MATERIAL_SLOTS-1  synthesized materials
+  SNDR  0xB00 .. 0xB00+len(SOUNDS)-1     Judgement Ring cues, in SOUNDS order
 
 Usage: python3 tools/build_assets.py
 """
@@ -30,6 +31,7 @@ POTION_SLOTS = 256
 MATERIAL_SLOTS = 64
 POTION_BASE = 0x800
 MATERIAL_BASE = 0xA00
+SOUND_BASE = 0xB00
 
 FORM_VERSION = 44  # Skyrim Special Edition
 MASTER_INDEX = 0x01  # our own records: one master (Skyrim.esm) precedes us
@@ -39,6 +41,15 @@ MASTER_INDEX = 0x01  # our own records: one master (Skyrim.esm) precedes us
 ALCH_RESTORE_HEALTH = 0x0003EB15
 
 RECORD_FLAG_ESL = 0x200
+
+# Sound descriptors are set up like the vanilla menu sounds (UIMenuOKSD): standard
+# descriptor, AudioCategoryUI (plays while menus pause the game, follows the master
+# volume) and the SOMMono01400Player1st output model. File names are relative to
+# Data\Sound\.
+SNDR_TYPE_STANDARD = 0x1EEF540A
+SNCT_AUDIO_CATEGORY_UI = 0x00064451
+SOPM_MONO_PLAYER_1ST = 0x000B4058
+SOUND_FOLDER = "fx\\AtelierAlchemy"
 
 
 def subrecord(tag: str, data: bytes) -> bytes:
@@ -95,16 +106,34 @@ def misc(index: int) -> bytes:
     return record("MISC", (MASTER_INDEX << 24) | local_id, body)
 
 
+def sndr(index: int, file_name: str) -> bytes:
+    local_id = SOUND_BASE + index
+    body = b"".join(
+        [
+            subrecord("EDID", zstring(f"AA_{Path(file_name).stem.title().replace('_', '')}SD")),
+            subrecord("CNAM", struct.pack("<I", SNDR_TYPE_STANDARD)),
+            subrecord("GNAM", struct.pack("<I", SNCT_AUDIO_CATEGORY_UI)),
+            subrecord("ANAM", zstring(f"{SOUND_FOLDER}\\{file_name}")),
+            subrecord("ONAM", struct.pack("<I", SOPM_MONO_PLAYER_1ST)),
+            subrecord("LNAM", struct.pack("<4B", 2, 0, 0, 0)),
+            # frequency shift, frequency variance, priority, dB variance, static attenuation
+            subrecord("BNAM", struct.pack("<bbBBH", 0, 0, 0x80, 0, 0)),
+        ]
+    )
+    return record("SNDR", (MASTER_INDEX << 24) | local_id, body)
+
+
 def build_esp() -> bytes:
     potions = [alch(i) for i in range(POTION_SLOTS)]
     materials = [misc(i) for i in range(MATERIAL_SLOTS)]
-    # Top level groups follow the engine's canonical order (MISC precedes ALCH).
-    groups = [group("MISC", materials), group("ALCH", potions)]
-    num_records = len(potions) + len(materials) + len(groups)
+    sounds = [sndr(i, name) for i, name in enumerate(SOUNDS)]
+    # Top level groups follow the engine's canonical order (MISC, ALCH, ..., SNDR).
+    groups = [group("MISC", materials), group("ALCH", potions), group("SNDR", sounds)]
+    num_records = len(potions) + len(materials) + len(sounds) + len(groups)
 
     header_body = b"".join(
         [
-            subrecord("HEDR", struct.pack("<fiI", 1.70, num_records, MATERIAL_BASE + MATERIAL_SLOTS)),
+            subrecord("HEDR", struct.pack("<fiI", 1.70, num_records, SOUND_BASE + len(SOUNDS))),
             subrecord("CNAM", zstring("Atelier Alchemy")),
             subrecord("SNAM", zstring("Atelier-style synthesis and the Judgement Ring. Requires the AtelierAlchemy SKSE plugin.")),
             subrecord("MAST", zstring("Skyrim.esm")),
@@ -350,7 +379,7 @@ SOUNDS = {
 
 
 def build_sounds() -> None:
-    folder = DATA / "SKSE" / "Plugins" / "AtelierAlchemy" / "sounds"
+    folder = DATA / "Sound" / "FX" / "AtelierAlchemy"
     folder.mkdir(parents=True, exist_ok=True)
     for name, make in SOUNDS.items():
         write_wav(folder / name, make())

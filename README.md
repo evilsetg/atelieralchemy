@@ -59,7 +59,7 @@ synthesis systems of the *Atelier* series. Every synthesis ends with a *Shadow H
   available for accessibility.
   Each judgement has its own sound: a hit lands like a punch, a strike shatters like glass,
   a miss gives a retro menu-cancel blip, and a Perfect ends in a rising arpeggio. The WAVs in
-  `SKSE/Plugins/AtelierAlchemy/sounds/` can be replaced with your own 16-bit PCM files.
+  `Sound/FX/AtelierAlchemy/` can be replaced with your own files (same names).
 - **42 recipes** (31 potions and poisons, 11 materials) covering every vanilla alchemy effect: restoration, regeneration, resistances,
   every skill Fortify, waterbreathing, invisibility, carry weight, and poisons from Damage,
   Ravage and Lingering Damage to regen drain, Weakness, Fear, Frenzy, Slow and Paralysis.
@@ -208,9 +208,9 @@ tests: `./scripts/test-core.sh`.
   slot, which needs no version-specific addresses. Input comes from the game's own input
   event sink. A modal, game-pausing `IMenu`, backed by an empty SWF, blocks gameplay controls
   while the window is open.
-- **Sound.** The ring cues play through a separate XAudio2 device, loaded at runtime,
-  because the game is paused while the menu is open. Their volume is the INI volume times
-  the game's master volume.
+- **Sound.** The ring cues are sound descriptors in the ESP, set up like the vanilla menu
+  sounds: they play through the game's audio engine in the UI category, which keeps playing
+  while the menu pauses the game and follows the master volume. The INI volume scales them.
 - **Vanilla alchemy is left alone.** The vanilla alchemy lab still works as before.
 
 ## Credits and license

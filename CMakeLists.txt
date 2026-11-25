@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.24)
 
 project(
 	AtelierAlchemy
-	VERSION 0.1.3
+	VERSION 0.1.4
 	LANGUAGES C CXX
 )
 
