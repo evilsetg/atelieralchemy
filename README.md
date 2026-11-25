@@ -4,9 +4,6 @@ An alchemy overhaul for Skyrim Special Edition / Anniversary Edition, inspired b
 synthesis systems of the *Atelier* series. Every synthesis ends with a *Shadow Hearts*-style
 **Judgement Ring** minigame.
 
-> **Status: 0.1.0, untested in-game.** The plugin compiles and the core logic is unit tested,
-> but nothing has run inside Skyrim yet. See [First test run](#first-test-run).
-
 ## Features
 
 - **Quality and traits on every ingredient.** When you pick up an ingredient it rolls a
@@ -205,22 +202,6 @@ tests: `./scripts/test-core.sh`.
   because the game is paused while the menu is open. Their volume is the INI volume times
   the game's master volume.
 - **Vanilla alchemy is left alone.** The vanilla alchemy lab still works as before.
-
-## First test run
-
-Nothing here has been verified in-game yet. On the first run, check
-`Documents/My Games/Skyrim Special Edition/SKSE/AtelierAlchemy.log`:
-
-- `Effect 'X' -> ...` lines show how each effect key was matched. Any key that resolves to
-  the wrong magic effect can be fixed in `effects.json`.
-- `Brew slots: 256 potion, 64 material` confirms that the ESP was found.
-- `Renderer: hooked IDXGISwapChain::Present` and `ImGui initialized` confirm the overlay.
-- `Sound: XAudio2 ready, 5 of 5 cues loaded` confirms the ring sounds.
-- `Effect 'X' vanilla base: ...` lines show which ingredient each effect's strength is
-  measured against.
-
-Likely rough edges: the menu's interaction with other UI mods, and ENB or ReShade overlays
-that also hook `Present`. Balance has not been playtested either.
 
 ## Credits and license
 
