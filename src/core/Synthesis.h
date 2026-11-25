@@ -22,6 +22,7 @@ namespace atelier
 		float magnitude{ 0.0f };
 		float duration{ 0.0f };
 		bool  scalesDuration{ false };  // potency lengthens the effect instead (Invisibility, Paralysis...)
+		bool  customDuration{ false };  // duration set by effects.json rather than vanilla ("base" in breakdowns)
 	};
 
 	// What a magic effect costs, as the game prices it: base cost x magnitude^1.1 x
@@ -32,6 +33,9 @@ namespace atelier
 		float baseCost{ 0.0f };
 		bool  usesMagnitude{ true };
 		bool  usesDuration{ true };
+		// Duration counts at this share: effects lengthened by effects.json are priced at
+		// their vanilla duration, so the longer effect isn't also a gold mine.
+		float pricedDurationScale{ 1.0f };
 	};
 
 	float EffectCost(const EffectCostInfo& a_info, float a_magnitude, int a_duration);

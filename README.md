@@ -69,7 +69,8 @@ synthesis systems of the *Atelier* series. Every synthesis ends with a *Shadow H
   alchemy effectiveness, which also covers Fortify Alchemy). A line's first, second and third tier give 80%, 100% and
   110% of that. For effects such as Invisibility, where potency lengthens the effect, the
   share applies to duration. Masterwork recipes multiply those shares: Elixir of Vitality and
-  Panacea ×1.25, Grand Elixir ×1.5.
+  Panacea ×1.25, Grand Elixir ×1.5. Fortify Health, Magicka and Stamina last 300 s instead of
+  vanilla's 60 s (set per effect with `"duration"` in `effects.json`), priced at vanilla length.
 - **Batch sizes.** A potion or poison synthesis makes two items, as a reward for the extra
   work over a vanilla brew; materials come in batches of two or three. A Perfect ring, some effect-line tiers and "potions
   created" perks add more.

@@ -49,7 +49,8 @@ namespace atelier
 			cost *= std::pow(std::max(a_magnitude, 1.0f), 1.1f);
 		}
 		if (a_info.usesDuration && a_duration > 0) {
-			cost *= std::pow(static_cast<float>(std::max(a_duration, 10)) / 10.0f, 1.1f);
+			const float duration = static_cast<float>(a_duration) * a_info.pricedDurationScale;
+			cost *= std::pow(std::max(duration, 10.0f) / 10.0f, 1.1f);
 		}
 		return cost;
 	}
@@ -308,18 +309,19 @@ namespace atelier
 			};
 			if (best->vanillaScale > 0.0f && ref != a_input.references.end()) {
 				const auto& r = ref->second;
+				const char* durationSource = r.customDuration ? "base" : "vanilla";
 				const float scale = share * potency;
 				if (r.scalesDuration) {
 					// Fixed magnitude: tier, quality and traits all lengthen the effect.
 					effect.magnitude = RoundMagnitude(r.magnitude);
 					effect.duration = static_cast<int>(std::lround(r.duration * scale * std::max(0.0f, 1.0f + durationPct / 100.0f)));
-					effect.breakdown = std::format("vanilla {:.0f}s x {} ({}, duration traits {:+.0f}%)", r.duration, shareText(), factors(), durationPct);
+					effect.breakdown = std::format("{} {:.0f}s x {} ({}, duration traits {:+.0f}%)", durationSource, r.duration, shareText(), factors(), durationPct);
 				} else {
 					effect.magnitude = RoundMagnitude(r.magnitude * scale);
 					effect.duration = static_cast<int>(std::lround(r.duration * durMult));
 					effect.breakdown = std::format("vanilla {:.1f} x {} ({})", r.magnitude, shareText(), factors());
 					if (r.duration > 0.0f) {
-						effect.breakdown += std::format("\nduration: vanilla {:.0f}s x quality {:.2f}, traits {:+.0f}%", r.duration, QualityDurationMult(outcome.quality), durationPct);
+						effect.breakdown += std::format("\nduration: {} {:.0f}s x quality {:.2f}, traits {:+.0f}%", durationSource, r.duration, QualityDurationMult(outcome.quality), durationPct);
 					}
 				}
 			} else {

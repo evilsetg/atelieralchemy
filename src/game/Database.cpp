@@ -166,6 +166,7 @@ namespace game
 				}
 				sig.nameContains = Lower(Value<std::string>(def, "nameContains", ""));
 				sig.formRef = Value<std::string>(def, "form", "");
+				sig.duration = std::max(0, Value<int>(def, "duration", 0));
 				for (const auto& word : StringList(def, "nameExcludes")) {
 					sig.nameExcludes.push_back(Lower(word));
 				}
@@ -590,6 +591,12 @@ namespace game
 			const auto mode = std::ranges::max_element(counts, [](const auto& a, const auto& b) { return a.second < b.second; });
 			info.baseMagnitude = mode->first.first;
 			info.baseDuration = mode->first.second;
+			info.vanillaDuration = info.baseDuration;
+			if (const auto sig = _signatures.find(key); sig != _signatures.end() && sig->second.duration > 0 && info.baseDuration > 0) {
+				info.baseDuration = sig->second.duration;
+				logger::info("Effect '{}': base duration {}s replaced by {}s (effects.json); priced at the vanilla duration", key, info.vanillaDuration,
+					info.baseDuration);
+			}
 			int total = 0;
 			for (const auto& [values, n] : counts) {
 				total += n;

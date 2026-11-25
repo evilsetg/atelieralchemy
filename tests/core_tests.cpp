@@ -175,6 +175,10 @@ static void TestVanillaReferences()
 	const auto capped = Evaluate(strong, catalog, nullptr);
 	CHECK(std::abs(capped.brew.effects[0].magnitude - 9.1f) < 0.01f);  // 8.256 * 0.8 * 1.1 * 1.25
 	CHECK(!capped.brew.effects[0].breakdown.empty());
+	CHECK(capped.brew.effects[0].breakdown.find("duration: vanilla 60s") != std::string::npos);
+	auto custom = input;
+	custom.references["RestoreHealth"].customDuration = true;
+	CHECK(Evaluate(custom, catalog, nullptr).brew.effects[0].breakdown.find("duration: base 60s") != std::string::npos);
 
 	// Value: the sum of the effects' costs like a vanilla potion, floored by the recipe value.
 	const int floorValue = Evaluate(input, catalog, nullptr).brew.value;
@@ -185,6 +189,8 @@ static void TestVanillaReferences()
 	const float costA = EffectCost(priced.costs["RestoreHealth"], pricedOut.brew.effects[0].magnitude, pricedOut.brew.effects[0].duration);
 	const float costB = EffectCost(priced.costs["RestoreStamina"], pricedOut.brew.effects[1].magnitude, pricedOut.brew.effects[1].duration);
 	const float expected = std::max(costA, costB) + 0.5f * std::min(costA, costB);  // diminishing returns
+	CHECK(std::abs(EffectCost(EffectCostInfo{ .baseCost = 2.0f, .pricedDurationScale = 0.2f }, 10.0f, 500) -
+	               EffectCost(EffectCostInfo{ .baseCost = 2.0f }, 10.0f, 100)) < 0.01f);  // lengthened effects priced at vanilla duration
 	CHECK(std::abs(EffectCost(EffectCostInfo{ .baseCost = 2.0f }, 10.0f, 100) - 2.0f * std::pow(10.0f, 1.1f) * std::pow(10.0f, 1.1f)) < 0.01f);
 	CHECK(pricedOut.brew.value == std::max(floorValue, static_cast<int>(std::lround(expected))));
 	auto doubled = priced;

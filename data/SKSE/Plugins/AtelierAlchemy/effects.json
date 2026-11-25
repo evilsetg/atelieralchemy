@@ -8,13 +8,15 @@
 	// "nameContains" / "nameExcludes" (a word or a list) narrow that fallback by the English
 	// effect name, where properties alone can't tell effects apart (Damage, Lingering Damage
 	// and Ravage). They are never consulted when the form resolves.
+	// "duration" replaces the vanilla base duration (seconds) that tiers, quality and traits
+	// scale from. The gold value still uses the vanilla duration.
 	"effects": {
 		"RestoreHealth":      { "name": "Restore Health", "form": "Skyrim.esm|0x03EB15",   "av": "Health",  "detrimental": false, "recover": false },
 		"RestoreMagicka":     { "name": "Restore Magicka", "form": "Skyrim.esm|0x03EB17",  "av": "Magicka", "detrimental": false, "recover": false },
 		"RestoreStamina":     { "name": "Restore Stamina", "form": "Skyrim.esm|0x03EB16",  "av": "Stamina", "detrimental": false, "recover": false },
-		"FortifyHealth":      { "name": "Fortify Health", "form": "Skyrim.esm|0x03EAF3",   "av": "Health",  "detrimental": false, "recover": true },
-		"FortifyMagicka":     { "name": "Fortify Magicka", "form": "Skyrim.esm|0x03EAF8",  "av": "Magicka", "detrimental": false, "recover": true },
-		"FortifyStamina":     { "name": "Fortify Stamina", "form": "Skyrim.esm|0x03EAF9",  "av": "Stamina", "detrimental": false, "recover": true },
+		"FortifyHealth":      { "name": "Fortify Health", "form": "Skyrim.esm|0x03EAF3",   "av": "Health",  "detrimental": false, "recover": true, "duration": 300 },
+		"FortifyMagicka":     { "name": "Fortify Magicka", "form": "Skyrim.esm|0x03EAF8",  "av": "Magicka", "detrimental": false, "recover": true, "duration": 300 },
+		"FortifyStamina":     { "name": "Fortify Stamina", "form": "Skyrim.esm|0x03EAF9",  "av": "Stamina", "detrimental": false, "recover": true, "duration": 300 },
 		"RegenHealth":        { "name": "Regenerate Health", "form": "Skyrim.esm|0x03EB06",  "av": ["HealRateMult", "HealRate"],       "detrimental": false },
 		"RegenMagicka":       { "name": "Regenerate Magicka", "form": "Skyrim.esm|0x03EB07", "av": ["MagickaRateMult", "MagickaRate"], "detrimental": false },
 		"RegenStamina":       { "name": "Regenerate Stamina", "form": "Skyrim.esm|0x03EB08", "av": ["StaminaRateMult", "StaminaRate"], "detrimental": false },

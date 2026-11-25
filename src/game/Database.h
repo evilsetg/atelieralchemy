@@ -31,6 +31,7 @@ namespace game
 		// ingredient does). Vanilla alchemy multiplies one of the two by its potency.
 		float       baseMagnitude{ 0.0f };
 		int         baseDuration{ 0 };
+		int         vanillaDuration{ 0 };  // before an effects.json "duration" override; used for pricing
 		bool        powerAffectsMagnitude{ true };
 		bool        powerAffectsDuration{ false };
 		std::string baseSource;
@@ -41,7 +42,8 @@ namespace game
 			using Flag = RE::EffectSetting::EffectSettingData::Flag;
 			return { .baseCost = form->data.baseCost,
 				.usesMagnitude = !form->data.flags.all(Flag::kNoMagnitude),
-				.usesDuration = !form->data.flags.all(Flag::kNoDuration) };
+				.usesDuration = !form->data.flags.all(Flag::kNoDuration),
+				.pricedDurationScale = baseDuration > 0 && vanillaDuration > 0 ? static_cast<float>(vanillaDuration) / static_cast<float>(baseDuration) : 1.0f };
 		}
 	};
 
@@ -104,6 +106,7 @@ namespace game
 			std::string                                       nameContains;  // lower case, matched against the MGEF name
 			std::vector<std::string>                          nameExcludes;
 			std::string                                       formRef;  // "Plugin.esp|0x123456", preferred over the rest
+			int                                               duration{ 0 };  // replaces the vanilla base duration, 0 = keep
 		};
 
 		struct IngredientOverride

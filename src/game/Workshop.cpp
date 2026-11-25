@@ -182,6 +182,7 @@ namespace game
 				atelier::EffectReference ref;
 				ref.magnitude = info->baseMagnitude;
 				ref.duration = static_cast<float>(info->baseDuration);
+				ref.customDuration = info->baseDuration != info->vanillaDuration;
 				if (info->powerAffectsMagnitude) {
 					ref.magnitude *= power;
 				} else if (info->powerAffectsDuration) {
