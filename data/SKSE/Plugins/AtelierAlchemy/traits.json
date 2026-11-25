@@ -1,0 +1,85 @@
+{
+	// Traits ride along on individual ingredients and synthesized items. When you
+	// synthesize you choose which ones the product inherits (3 slots by default).
+	// Two different traits listed together in "traitCombos" fuse into a stronger one.
+	//
+	// The traits on a product stack, but their combined magnitude bonus is capped at +25%
+	// and their duration bonus at +50% (src/core/Synthesis.h); penalties are not capped.
+	// Fields: magnitude / duration / value / weight are percentages, quality is a flat
+	// bonus, ringWidth widens the Judgement Ring hit areas (degrees) while the item is used.
+	"traits": [
+		{ "id": "quality_up",    "name": "Quality Up",       "grade": 1, "quality": 6,  "description": "Raises the quality of the product." },
+		{ "id": "quality_up_2",  "name": "Quality Up+",      "grade": 2, "quality": 12, "description": "Greatly raises the quality of the product." },
+		{ "id": "quality_up_3",  "name": "Supreme Quality",  "grade": 3, "quality": 22, "description": "The mark of a true master's ingredient." },
+
+		{ "id": "potent",        "name": "Potent",           "grade": 1, "magnitude": 10, "description": "Effects are a little stronger." },
+		{ "id": "potent_2",      "name": "Potent+",          "grade": 2, "magnitude": 18, "description": "Effects are noticeably stronger." },
+		{ "id": "concentrated",  "name": "Concentrated",     "grade": 3, "magnitude": 30, "description": "Distilled to its very essence." },
+
+		{ "id": "lingering",     "name": "Lingering",        "grade": 1, "duration": 20, "description": "Effects last longer." },
+		{ "id": "lingering_2",   "name": "Lingering+",       "grade": 2, "duration": 35, "description": "Effects last much longer." },
+		{ "id": "everlasting",   "name": "Everlasting",      "grade": 3, "duration": 60, "description": "The effect refuses to fade." },
+
+		{ "id": "precious",      "name": "Precious",         "grade": 1, "value": 25,  "description": "Merchants pay more for it." },
+		{ "id": "precious_2",    "name": "Precious+",        "grade": 2, "value": 50,  "description": "A coveted rarity." },
+		{ "id": "treasure",      "name": "Treasure",         "grade": 3, "value": 100, "description": "Worth a small fortune." },
+
+		{ "id": "light",         "name": "Light",            "grade": 1, "weight": -30, "description": "Weighs less in your pack." },
+		{ "id": "featherweight", "name": "Featherweight",    "grade": 2, "weight": -65, "description": "Practically weightless." },
+		{ "id": "dense",         "name": "Dense",            "grade": 1, "magnitude": 8, "weight": 25, "value": 10, "description": "Heavy, but packed with power." },
+
+		{ "id": "steady",        "name": "Steady Hand",      "grade": 1, "ringWidth": 4, "description": "Easy to work with: widens the Judgement Ring's hit areas." },
+		{ "id": "masters_hand",  "name": "Master's Hand",    "grade": 2, "ringWidth": 9, "quality": 4, "description": "Practically mixes itself." },
+
+		{ "id": "fresh",         "name": "Fresh",            "grade": 1, "quality": 3, "magnitude": 5, "description": "Picked at just the right moment." },
+		{ "id": "volatile",      "name": "Volatile",         "grade": 1, "magnitude": 25, "duration": -20, "description": "Strong but short-lived." },
+		{ "id": "blessed",       "name": "Blessed",          "grade": 2, "quality": 8, "magnitude": 8, "description": "Touched by the Divines." },
+		{ "id": "spirit_touched","name": "Spirit-Touched",   "grade": 1, "duration": 15, "ringWidth": 3, "description": "Hums faintly with Aetherial energy." },
+		{ "id": "daedric",       "name": "Daedric Essence",  "grade": 3, "magnitude": 20, "value": 40, "quality": 5, "description": "Something from Oblivion lingers in it." },
+
+		{ "id": "soothing",      "name": "Soothing",         "grade": 1, "magnitude": 12, "duration": 10, "potionsOnly": true, "description": "Gentle on the body. Potions only." },
+		{ "id": "panacea",       "name": "Panacea",          "grade": 3, "magnitude": 22, "duration": 25, "quality": 6, "potionsOnly": true, "description": "Heals body and spirit alike. Potions only." },
+		{ "id": "venomous",      "name": "Venomous",         "grade": 1, "magnitude": 20, "poisonsOnly": true, "description": "Bites deeper. Poisons only." },
+		{ "id": "deadly_venom",  "name": "Deadly Venom",     "grade": 3, "magnitude": 38, "poisonsOnly": true, "description": "A single drop fells a mammoth. Poisons only." },
+
+		{ "id": "enduring",      "name": "Enduring Potency", "grade": 2, "magnitude": 15, "duration": 25, "description": "Strong and long-lasting." },
+		{ "id": "fine_crafted",  "name": "Fine Craftsmanship","grade": 2, "value": 40, "weight": -30, "description": "Elegant, light and valuable." },
+		{ "id": "twilight",      "name": "Twilight Essence", "grade": 3, "magnitude": 25, "duration": 25, "quality": 10, "description": "Where Aetherius and Oblivion meet." }
+	],
+
+	// [first, second, result]
+	"traitCombos": [
+		["quality_up",   "quality_up_2", "quality_up_3"],
+		["potent",       "potent_2",     "concentrated"],
+		["lingering",    "lingering_2",  "everlasting"],
+		["precious",     "precious_2",   "treasure"],
+		["light",        "featherweight","featherweight"],
+		["potent",       "lingering",    "enduring"],
+		["light",        "precious",     "fine_crafted"],
+		["steady",       "spirit_touched","masters_hand"],
+		["blessed",      "soothing",     "panacea"],
+		["venomous",     "volatile",     "deadly_venom"],
+		["blessed",      "daedric",      "twilight"],
+		["fresh",        "quality_up",   "quality_up_2"],
+		["dense",        "potent",       "potent_2"],
+		["spirit_touched","lingering",   "lingering_2"]
+	],
+
+	// Traits an ingredient of a category can be found with (rolled when you pick it up).
+	"categoryTraitPools": {
+		"Plants":        ["fresh", "potent", "light", "soothing"],
+		"Flowers":       ["fresh", "precious", "soothing", "lingering"],
+		"Fungus":        ["potent", "volatile", "venomous", "lingering"],
+		"Fruit":         ["fresh", "soothing", "precious"],
+		"Insects":       ["light", "volatile", "venomous", "steady"],
+		"Animal Parts":  ["dense", "potent", "lingering"],
+		"Fish":          ["fresh", "dense", "lingering"],
+		"Aquatic":       ["precious", "blessed", "light", "precious_2"],
+		"Minerals":      ["quality_up", "dense", "steady", "precious"],
+		"Salts":         ["quality_up", "steady", "potent"],
+		"Monster Parts": ["potent", "dense", "volatile", "venomous", "potent_2"],
+		"Spirit":        ["spirit_touched", "blessed", "lingering", "steady", "lingering_2"],
+		"Remains":       ["lingering", "venomous", "dense"],
+		"Daedric":       ["daedric", "potent", "volatile", "quality_up_2"]
+	}
+}

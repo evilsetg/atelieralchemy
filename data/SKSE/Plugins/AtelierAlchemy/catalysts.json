@@ -1,0 +1,133 @@
+// Catalysts: optional extra slot in every synthesis. Any ingredient or material whose key is
+// listed here can be used. elements = added element values, quality = flat bonus,
+// ringWidth (degrees) / ringSpeed (multiplier) / extraAreas modify the Judgement Ring.
+{
+	"catalysts": [
+		{
+			"item": "salt_pile",
+			"quality": 4,
+			"ringWidth": 2,
+			"description": "A pinch of salt steadies any mixture. Slightly wider hit areas."
+		},
+		{
+			"item": "fire_salts",
+			"elements": {
+				"fire": 3
+			},
+			"quality": 5,
+			"ringSpeed": 1.15,
+			"description": "Fire +3. The mixture boils fast: the ring spins faster."
+		},
+		{
+			"item": "frost_salts",
+			"elements": {
+				"ice": 3
+			},
+			"quality": 5,
+			"ringSpeed": 0.9,
+			"description": "Ice +3. Chills the cauldron: the ring spins slower."
+		},
+		{
+			"item": "void_salts",
+			"elements": {
+				"wind": 3
+			},
+			"quality": 8,
+			"ringWidth": 3,
+			"description": "Wind +3. The mixture settles readily."
+		},
+		{
+			"item": "glowing_mushroom",
+			"elements": {
+				"lightning": 2
+			},
+			"ringWidth": 2,
+			"description": "Lightning +2."
+		},
+		{
+			"item": "ectoplasm",
+			"elements": {
+				"wind": 2,
+				"ice": 1
+			},
+			"ringSpeed": 0.85,
+			"description": "Wind +2, Ice +1. Time seems to slow while you stir."
+		},
+		{
+			"item": "bone_meal",
+			"elements": {
+				"fire": 1
+			},
+			"ringSpeed": 0.9,
+			"description": "Fire +1. Thickens the brew; the ring slows a little."
+		},
+		{
+			"item": "briar_heart",
+			"elements": {
+				"fire": 2,
+				"lightning": 1
+			},
+			"quality": 8,
+			"description": "Fire +2, Lightning +1."
+		},
+		{
+			"item": "nirnroot",
+			"elements": {
+				"wind": 2
+			},
+			"quality": 10,
+			"ringWidth": 4,
+			"description": "Wind +2. Its chime guides your hand."
+		},
+		{
+			"item": "crimson_nirnroot",
+			"elements": {
+				"fire": 1,
+				"ice": 1,
+				"lightning": 1,
+				"wind": 1
+			},
+			"quality": 20,
+			"ringWidth": 6,
+			"description": "All elements +1. A legendary catalyst."
+		},
+		{
+			"item": "daedra_heart",
+			"elements": {
+				"fire": 2,
+				"ice": 2,
+				"lightning": 2,
+				"wind": 2
+			},
+			"quality": 15,
+			"ringSpeed": 1.25,
+			"extraAreas": 1,
+			"description": "All elements +2, but the ring spins fast and gains an extra area."
+		},
+		{
+			"item": "philosopher_salt",
+			"elements": {
+				"fire": 2,
+				"ice": 2,
+				"lightning": 2,
+				"wind": 2
+			},
+			"quality": 15,
+			"ringWidth": 4,
+			"description": "All elements +2."
+		},
+		{
+			"item": "aether_crystal",
+			"elements": {
+				"fire": 3,
+				"ice": 3,
+				"lightning": 3,
+				"wind": 3
+			},
+			"quality": 25,
+			"ringWidth": 6,
+			"extraAreas": 1,
+			"description": "All elements +3, wide hit areas, one extra chance to strike."
+		}
+	]
+}

@@ -1,0 +1,104 @@
+{
+	// Magic effects used by recipes. "form" pins each key to a vanilla magic effect; vanilla
+	// FormIDs are the same in every language and edition, and overhauls that change an
+	// effect edit that record, so their version is used. The SKSE log lists every alchemy
+	// magic effect in your load order in this format, for add-ons that use other effects.
+	// If a form is missing, the key is matched by actor value, archetype and flags instead,
+	// picking the effect used most often by ingredients and potions.
+	// "nameContains" / "nameExcludes" (a word or a list) narrow that fallback by the English
+	// effect name, where properties alone can't tell effects apart (Damage, Lingering Damage
+	// and Ravage). They are never consulted when the form resolves.
+	"effects": {
+		"RestoreHealth":      { "name": "Restore Health", "form": "Skyrim.esm|0x03EB15",   "av": "Health",  "detrimental": false, "recover": false },
+		"RestoreMagicka":     { "name": "Restore Magicka", "form": "Skyrim.esm|0x03EB17",  "av": "Magicka", "detrimental": false, "recover": false },
+		"RestoreStamina":     { "name": "Restore Stamina", "form": "Skyrim.esm|0x03EB16",  "av": "Stamina", "detrimental": false, "recover": false },
+		"FortifyHealth":      { "name": "Fortify Health", "form": "Skyrim.esm|0x03EAF3",   "av": "Health",  "detrimental": false, "recover": true },
+		"FortifyMagicka":     { "name": "Fortify Magicka", "form": "Skyrim.esm|0x03EAF8",  "av": "Magicka", "detrimental": false, "recover": true },
+		"FortifyStamina":     { "name": "Fortify Stamina", "form": "Skyrim.esm|0x03EAF9",  "av": "Stamina", "detrimental": false, "recover": true },
+		"RegenHealth":        { "name": "Regenerate Health", "form": "Skyrim.esm|0x03EB06",  "av": ["HealRateMult", "HealRate"],       "detrimental": false },
+		"RegenMagicka":       { "name": "Regenerate Magicka", "form": "Skyrim.esm|0x03EB07", "av": ["MagickaRateMult", "MagickaRate"], "detrimental": false },
+		"RegenStamina":       { "name": "Regenerate Stamina", "form": "Skyrim.esm|0x03EB08", "av": ["StaminaRateMult", "StaminaRate"], "detrimental": false },
+		"ResistFire":         { "name": "Resist Fire", "form": "Skyrim.esm|0x03EAEA",    "av": "ResistFire",   "detrimental": false },
+		"ResistFrost":        { "name": "Resist Frost", "form": "Skyrim.esm|0x03EAEB",   "av": "ResistFrost",  "detrimental": false },
+		"ResistShock":        { "name": "Resist Shock", "form": "Skyrim.esm|0x03EAEC",   "av": "ResistShock",  "detrimental": false },
+		"ResistMagic":        { "name": "Resist Magic", "form": "Skyrim.esm|0x039E51",   "av": "ResistMagic",  "detrimental": false },
+		"ResistPoison":       { "name": "Resist Poison", "form": "Skyrim.esm|0x090041",  "av": "PoisonResist", "detrimental": false },
+		"CureDisease":        { "name": "Cure Disease", "form": "Skyrim.esm|0x0AE722",   "archetype": "CureDisease" },
+		"Invisibility":       { "name": "Invisibility", "form": "Skyrim.esm|0x03EB3D",   "archetype": "Invisibility" },
+		"WaterBreathing":     { "name": "Waterbreathing", "form": "Skyrim.esm|0x03AC2D", "av": "WaterBreathing", "detrimental": false },
+		"FortifyCarryWeight": { "name": "Fortify Carry Weight", "form": "Skyrim.esm|0x03EB01", "av": "CarryWeight", "detrimental": false },
+		"FortifyOneHanded":   { "name": "Fortify One-handed", "form": "Skyrim.esm|0x03EB19",  "av": ["OneHanded", "OneHandedModifier", "OneHandedPowerModifier"], "detrimental": false },
+		"FortifyTwoHanded":   { "name": "Fortify Two-handed", "form": "Skyrim.esm|0x03EB1A",  "av": ["TwoHanded", "TwoHandedModifier", "TwoHandedPowerModifier"], "detrimental": false },
+		"FortifyArchery":     { "name": "Fortify Marksman", "form": "Skyrim.esm|0x03EB1B",    "av": ["Archery", "MarksmanModifier", "MarksmanPowerModifier"], "detrimental": false },
+		"FortifyBlock":       { "name": "Fortify Block", "form": "Skyrim.esm|0x03EB1C",       "av": ["Block", "BlockModifier", "BlockPowerModifier"], "detrimental": false },
+		"FortifySmithing":    { "name": "Fortify Smithing", "form": "Skyrim.esm|0x03EB1D",    "av": ["Smithing", "SmithingModifier", "SmithingPowerModifier"], "detrimental": false },
+		"FortifyEnchanting":  { "name": "Fortify Enchanting", "form": "Skyrim.esm|0x03EB29",  "av": ["Enchanting", "EnchantingModifier", "EnchantingPowerModifier"], "detrimental": false },
+		"FortifyBarter":      { "name": "Fortify Barter", "form": "Skyrim.esm|0x03EB23",      "av": ["Speech", "SpeechcraftModifier", "SpeechcraftPowerModifier"], "detrimental": false },
+		"FortifySneak":       { "name": "Fortify Sneak", "form": "Skyrim.esm|0x03EB22",       "av": ["Sneak", "SneakingModifier", "SneakingPowerModifier"], "detrimental": false },
+		"FortifyLockpicking": { "name": "Fortify Lockpicking", "form": "Skyrim.esm|0x03EB21", "av": ["Lockpicking", "LockpickingModifier", "LockpickingPowerModifier"], "detrimental": false },
+		"FortifyPickpocket":  { "name": "Fortify Pickpocket", "form": "Skyrim.esm|0x03EB20",  "av": ["Pickpocket", "PickpocketModifier", "PickpocketPowerModifier"], "detrimental": false },
+		"FortifyLightArmor":  { "name": "Fortify Light Armor", "form": "Skyrim.esm|0x03EB1F", "av": ["LightArmor", "LightArmorModifier", "LightArmorPowerModifier"], "detrimental": false },
+		"FortifyHeavyArmor":  { "name": "Fortify Heavy Armor", "form": "Skyrim.esm|0x03EB1E", "av": ["HeavyArmor", "HeavyArmorModifier", "HeavyArmorPowerModifier"], "detrimental": false },
+		"FortifyDestruction": { "name": "Fortify Destruction", "form": "Skyrim.esm|0x03EB26", "av": ["Destruction", "DestructionModifier", "DestructionPowerModifier"], "detrimental": false },
+		"FortifyRestoration": { "name": "Fortify Restoration", "form": "Skyrim.esm|0x03EB28", "av": ["Restoration", "RestorationModifier", "RestorationPowerModifier"], "detrimental": false },
+		"FortifyConjuration": { "name": "Fortify Conjuration", "form": "Skyrim.esm|0x03EB25", "av": ["Conjuration", "ConjurationModifier", "ConjurationPowerModifier"], "detrimental": false },
+		"FortifyIllusion":    { "name": "Fortify Illusion", "form": "Skyrim.esm|0x03EB27",    "av": ["Illusion", "IllusionModifier", "IllusionPowerModifier"], "detrimental": false },
+		"FortifyAlteration":  { "name": "Fortify Alteration", "form": "Skyrim.esm|0x03EB24",  "av": ["Alteration", "AlterationModifier", "AlterationPowerModifier"], "detrimental": false },
+
+		"DamageHealth":       { "name": "Damage Health", "form": "Skyrim.esm|0x03EB42",  "av": "Health",  "detrimental": true, "recover": false, "nameExcludes": ["lingering", "ravage"] },
+		"DamageMagicka":      { "name": "Damage Magicka", "form": "Skyrim.esm|0x03A2B6", "av": "Magicka", "detrimental": true, "recover": false, "nameExcludes": ["lingering", "ravage"] },
+		"DamageStamina":      { "name": "Damage Stamina", "form": "Skyrim.esm|0x03A2C6", "av": "Stamina", "detrimental": true, "recover": false, "nameExcludes": ["lingering", "ravage"] },
+		"LingeringDamageHealth":  { "name": "Lingering Damage Health", "form": "Skyrim.esm|0x10AA4A",  "av": "Health",  "detrimental": true, "nameContains": "lingering" },
+		"LingeringDamageMagicka": { "name": "Lingering Damage Magicka", "form": "Skyrim.esm|0x10DE5F", "av": "Magicka", "detrimental": true, "nameContains": "lingering" },
+		"LingeringDamageStamina": { "name": "Lingering Damage Stamina", "form": "Skyrim.esm|0x10DE5E", "av": "Stamina", "detrimental": true, "nameContains": "lingering" },
+		"RavageHealth":       { "name": "Ravage Health", "form": "Skyrim.esm|0x073F26",  "av": "Health",  "detrimental": true, "recover": true, "nameExcludes": "lingering" },
+		"RavageMagicka":      { "name": "Ravage Magicka", "form": "Skyrim.esm|0x073F27", "av": "Magicka", "detrimental": true, "nameContains": "ravage" },
+		"RavageStamina":      { "name": "Ravage Stamina", "form": "Skyrim.esm|0x073F23", "av": "Stamina", "detrimental": true, "nameContains": "ravage" },
+		"DamageMagickaRegen": { "name": "Damage Magicka Regen", "form": "Skyrim.esm|0x073F2B", "av": ["MagickaRateMult", "MagickaRate"], "detrimental": true },
+		"DamageStaminaRegen": { "name": "Damage Stamina Regen", "form": "Skyrim.esm|0x073F2C", "av": ["StaminaRateMult", "StaminaRate"], "detrimental": true },
+		"Paralysis":          { "name": "Paralysis", "form": "Skyrim.esm|0x073F30",      "archetype": "Paralysis" },
+		"Slow":               { "name": "Slow", "form": "Skyrim.esm|0x073F25",           "av": "SpeedMult",    "detrimental": true },
+		"Fear":               { "name": "Fear", "form": "Skyrim.esm|0x073F20",           "archetype": "Demoralize" },
+		"Frenzy":             { "name": "Frenzy", "form": "Skyrim.esm|0x073F29",         "archetype": "Frenzy" },
+		"WeaknessFire":       { "name": "Weakness to Fire", "form": "Skyrim.esm|0x073F2D",   "av": "ResistFire",   "detrimental": true },
+		"WeaknessFrost":      { "name": "Weakness to Frost", "form": "Skyrim.esm|0x073F2E",  "av": "ResistFrost",  "detrimental": true },
+		"WeaknessShock":      { "name": "Weakness to Shock", "form": "Skyrim.esm|0x073F2F",  "av": "ResistShock",  "detrimental": true },
+		"WeaknessMagic":      { "name": "Weakness to Magic", "form": "Skyrim.esm|0x073F51",  "av": "ResistMagic",  "detrimental": true },
+		"WeaknessPoison":     { "name": "Weakness to Poison", "form": "Skyrim.esm|0x090042", "av": "PoisonResist", "detrimental": true }
+	},
+
+	// Which element an alchemical effect contributes to an ingredient. Every effect on
+	// an ingredient adds 1 to its element (the first effect also adds the ingredient's
+	// rarity), so even ingredients from other mods get a sensible elemental profile.
+	"elementMap": {
+		"Health": "Fire", "HealRate": "Fire", "HealRateMult": "Fire", "ResistFrost": "Fire",
+		"OneHanded": "Fire", "OneHandedModifier": "Fire", "OneHandedPowerModifier": "Fire",
+		"TwoHanded": "Fire", "TwoHandedModifier": "Fire", "TwoHandedPowerModifier": "Fire",
+		"HeavyArmor": "Fire", "HeavyArmorModifier": "Fire", "HeavyArmorPowerModifier": "Fire",
+		"Block": "Fire", "BlockModifier": "Fire", "BlockPowerModifier": "Fire",
+		"Smithing": "Fire", "SmithingModifier": "Fire", "SmithingPowerModifier": "Fire",
+		"Destruction": "Fire", "DestructionModifier": "Fire", "DestructionPowerModifier": "Fire",
+
+		"Magicka": "Ice", "MagickaRate": "Ice", "MagickaRateMult": "Ice", "ResistFire": "Ice", "ResistMagic": "Ice",
+		"Alteration": "Ice", "AlterationModifier": "Ice", "AlterationPowerModifier": "Ice",
+		"Restoration": "Ice", "RestorationModifier": "Ice", "RestorationPowerModifier": "Ice",
+		"Conjuration": "Ice", "ConjurationModifier": "Ice", "ConjurationPowerModifier": "Ice",
+		"Enchanting": "Ice", "EnchantingModifier": "Ice", "EnchantingPowerModifier": "Ice",
+
+		"Stamina": "Lightning", "StaminaRate": "Lightning", "StaminaRateMult": "Lightning", "ResistShock": "Lightning",
+		"CarryWeight": "Lightning", "SpeedMult": "Lightning",
+		"Archery": "Lightning", "MarksmanModifier": "Lightning", "MarksmanPowerModifier": "Lightning",
+		"Speech": "Lightning", "SpeechcraftModifier": "Lightning", "SpeechcraftPowerModifier": "Lightning",
+		"archetype:Paralysis": "Lightning",
+
+		"Sneak": "Wind", "SneakingModifier": "Wind", "SneakingPowerModifier": "Wind",
+		"Lockpicking": "Wind", "LockpickingModifier": "Wind", "LockpickingPowerModifier": "Wind",
+		"Pickpocket": "Wind", "PickpocketModifier": "Wind", "PickpocketPowerModifier": "Wind",
+		"Illusion": "Wind", "IllusionModifier": "Wind", "IllusionPowerModifier": "Wind",
+		"LightArmor": "Wind", "LightArmorModifier": "Wind", "LightArmorPowerModifier": "Wind",
+		"Alchemy": "Wind", "AlchemyModifier": "Wind", "AlchemyPowerModifier": "Wind",
+		"WaterBreathing": "Wind", "PoisonResist": "Wind", "ResistDisease": "Wind",
+		"archetype:Invisibility": "Wind", "archetype:CureDisease": "Wind", "archetype:Demoralize": "Wind",
+		"archetype:Frenzy": "Wind", "archetype:NightEye": "Wind", "archetype:Calm": "Wind"
+	}
+}

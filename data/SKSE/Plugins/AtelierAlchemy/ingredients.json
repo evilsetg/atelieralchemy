@@ -1,0 +1,919 @@
+// Ingredient categories and signature traits. Entries are matched by (English) name or by
+// "form": "Plugin.esp|0x123456". Ingredients not listed here - e.g. from other mods - are
+// categorized from keywords in their name and model path ("categoryKeywords").
+// Optional per entry: "key" (id used by recipes), "rarity" 0-3, "elements" (bonus).
+{
+	"categoryKeywords": {
+		"Plants": [
+			"root",
+			"leaf",
+			"moss",
+			"grass",
+			"plant",
+			"herb",
+			"thistle",
+			"wheat",
+			"cotton",
+			"lichen",
+			"sap",
+			"branch",
+			"ivy",
+			"plants\\"
+		],
+		"Flowers": [
+			"flower",
+			"blossom",
+			"bloom",
+			"lavender",
+			"nightshade",
+			"bell",
+			"tongue",
+			"mirriam",
+			"petal"
+		],
+		"Fungus": [
+			"mushroom",
+			"fungus",
+			"fungal",
+			"cap",
+			"stool",
+			"amanita",
+			"pholiota",
+			"tapinella",
+			"parasol",
+			"spore",
+			"puffball"
+		],
+		"Fruit": [
+			"berry",
+			"berries",
+			"grape",
+			"apple",
+			"fruit"
+		],
+		"Insects": [
+			"wing",
+			"thorax",
+			"bee",
+			"beetle",
+			"moth",
+			"dartwing",
+			"butterfly",
+			"antenna",
+			"spider",
+			"husk",
+			"honeycomb",
+			"jelly"
+		],
+		"Animal Parts": [
+			"claw",
+			"tooth",
+			"teeth",
+			"feather",
+			"antler",
+			"tusk",
+			"hide",
+			"tail",
+			"beak",
+			"eye",
+			"egg",
+			"horn",
+			"pelt"
+		],
+		"Fish": [
+			"fish",
+			"perch",
+			"carp",
+			"longfin",
+			"spadetail",
+			"betty",
+			"roe",
+			"scale"
+		],
+		"Aquatic": [
+			"pearl",
+			"barnacle",
+			"chitin",
+			"coral",
+			"clam",
+			"kelp",
+			"shell"
+		],
+		"Minerals": [
+			"dust",
+			"ore",
+			"stone",
+			"crystal",
+			"oil",
+			"mineral",
+			"powder",
+			"meal",
+			"ash",
+			"sugar",
+			"gem"
+		],
+		"Salts": [
+			"salt"
+		],
+		"Monster Parts": [
+			"troll",
+			"hagraven",
+			"giant",
+			"falmer",
+			"spriggan",
+			"wraith",
+			"briar",
+			"netch",
+			"dragon",
+			"chaurus"
+		],
+		"Spirit": [
+			"ectoplasm",
+			"wisp",
+			"glow",
+			"soul",
+			"spirit",
+			"ghost",
+			"essence"
+		],
+		"Remains": [
+			"heart",
+			"flesh",
+			"bone",
+			"vampire",
+			"skull",
+			"blood"
+		],
+		"Daedric": [
+			"daedra",
+			"daedric",
+			"void",
+			"scamp",
+			"atronach",
+			"oblivion"
+		]
+	},
+	"ingredients": [
+		{
+			"name": "Abecean Longfin",
+			"categories": [
+				"Fish"
+			]
+		},
+		{
+			"name": "Bear Claws",
+			"categories": [
+				"Animal Parts"
+			]
+		},
+		{
+			"name": "Bee",
+			"categories": [
+				"Insects"
+			]
+		},
+		{
+			"name": "Beehive Husk",
+			"categories": [
+				"Insects"
+			]
+		},
+		{
+			"name": "Bleeding Crown",
+			"categories": [
+				"Fungus"
+			]
+		},
+		{
+			"name": "Blisterwort",
+			"categories": [
+				"Fungus"
+			]
+		},
+		{
+			"name": "Blue Butterfly Wing",
+			"categories": [
+				"Insects"
+			]
+		},
+		{
+			"name": "Blue Dartwing",
+			"categories": [
+				"Insects"
+			]
+		},
+		{
+			"name": "Blue Mountain Flower",
+			"categories": [
+				"Plants",
+				"Flowers"
+			]
+		},
+		{
+			"name": "Bone Meal",
+			"categories": [
+				"Remains",
+				"Minerals"
+			]
+		},
+		{
+			"name": "Briar Heart",
+			"categories": [
+				"Monster Parts",
+				"Remains"
+			],
+			"traits": [
+				"potent_2"
+			]
+		},
+		{
+			"name": "Butterfly Wing",
+			"categories": [
+				"Insects"
+			]
+		},
+		{
+			"name": "Canis Root",
+			"categories": [
+				"Plants"
+			]
+		},
+		{
+			"name": "Charred Skeever Hide",
+			"categories": [
+				"Animal Parts"
+			]
+		},
+		{
+			"name": "Chaurus Eggs",
+			"categories": [
+				"Insects",
+				"Monster Parts"
+			]
+		},
+		{
+			"name": "Chicken's Egg",
+			"categories": [
+				"Animal Parts"
+			]
+		},
+		{
+			"name": "Creep Cluster",
+			"categories": [
+				"Plants"
+			]
+		},
+		{
+			"name": "Crimson Nirnroot",
+			"categories": [
+				"Plants"
+			],
+			"traits": [
+				"blessed",
+				"quality_up_2"
+			],
+			"rarity": 3
+		},
+		{
+			"name": "Cyrodilic Spadetail",
+			"categories": [
+				"Fish"
+			]
+		},
+		{
+			"name": "Daedra Heart",
+			"categories": [
+				"Daedric",
+				"Remains"
+			],
+			"traits": [
+				"daedric",
+				"quality_up_2"
+			],
+			"rarity": 3
+		},
+		{
+			"name": "Deathbell",
+			"categories": [
+				"Plants",
+				"Flowers"
+			],
+			"traits": [
+				"venomous"
+			]
+		},
+		{
+			"name": "Dragon's Tongue",
+			"categories": [
+				"Plants",
+				"Flowers"
+			]
+		},
+		{
+			"name": "Dwarven Oil",
+			"categories": [
+				"Minerals"
+			],
+			"traits": [
+				"steady",
+				"masters_hand"
+			]
+		},
+		{
+			"name": "Ectoplasm",
+			"categories": [
+				"Spirit"
+			]
+		},
+		{
+			"name": "Elves Ear",
+			"categories": [
+				"Plants"
+			]
+		},
+		{
+			"name": "Eye of Sabre Cat",
+			"categories": [
+				"Animal Parts"
+			]
+		},
+		{
+			"name": "Falmer Ear",
+			"categories": [
+				"Monster Parts"
+			]
+		},
+		{
+			"name": "Fire Salts",
+			"categories": [
+				"Salts",
+				"Minerals"
+			]
+		},
+		{
+			"name": "Fly Amanita",
+			"categories": [
+				"Fungus"
+			]
+		},
+		{
+			"name": "Frost Mirriam",
+			"categories": [
+				"Plants"
+			]
+		},
+		{
+			"name": "Frost Salts",
+			"categories": [
+				"Salts",
+				"Minerals"
+			]
+		},
+		{
+			"name": "Garlic",
+			"categories": [
+				"Plants"
+			],
+			"rarity": 0
+		},
+		{
+			"name": "Giant Lichen",
+			"categories": [
+				"Plants",
+				"Fungus"
+			]
+		},
+		{
+			"name": "Giant's Toe",
+			"categories": [
+				"Monster Parts"
+			]
+		},
+		{
+			"name": "Glow Dust",
+			"categories": [
+				"Spirit",
+				"Minerals"
+			],
+			"traits": [
+				"spirit_touched",
+				"steady"
+			]
+		},
+		{
+			"name": "Glowing Mushroom",
+			"categories": [
+				"Fungus"
+			]
+		},
+		{
+			"name": "Grass Pod",
+			"categories": [
+				"Plants"
+			]
+		},
+		{
+			"name": "Hagraven Claw",
+			"categories": [
+				"Monster Parts"
+			]
+		},
+		{
+			"name": "Hagraven Feathers",
+			"categories": [
+				"Monster Parts"
+			]
+		},
+		{
+			"name": "Hanging Moss",
+			"categories": [
+				"Plants"
+			]
+		},
+		{
+			"name": "Hawk Beak",
+			"categories": [
+				"Animal Parts"
+			]
+		},
+		{
+			"name": "Hawk Feathers",
+			"categories": [
+				"Animal Parts"
+			]
+		},
+		{
+			"name": "Histcarp",
+			"categories": [
+				"Fish"
+			]
+		},
+		{
+			"name": "Honeycomb",
+			"categories": [
+				"Insects"
+			],
+			"traits": [
+				"soothing",
+				"fresh"
+			]
+		},
+		{
+			"name": "Human Flesh",
+			"categories": [
+				"Remains"
+			]
+		},
+		{
+			"name": "Human Heart",
+			"categories": [
+				"Remains"
+			]
+		},
+		{
+			"name": "Ice Wraith Teeth",
+			"categories": [
+				"Monster Parts",
+				"Spirit"
+			]
+		},
+		{
+			"name": "Imp Stool",
+			"categories": [
+				"Fungus"
+			]
+		},
+		{
+			"name": "Jazbay Grapes",
+			"categories": [
+				"Plants",
+				"Fruit"
+			],
+			"traits": [
+				"precious",
+				"fresh"
+			]
+		},
+		{
+			"name": "Juniper Berries",
+			"categories": [
+				"Plants",
+				"Fruit"
+			]
+		},
+		{
+			"name": "Large Antlers",
+			"categories": [
+				"Animal Parts"
+			]
+		},
+		{
+			"name": "Lavender",
+			"categories": [
+				"Plants",
+				"Flowers"
+			],
+			"traits": [
+				"soothing",
+				"fresh"
+			]
+		},
+		{
+			"name": "Luna Moth Wing",
+			"categories": [
+				"Insects"
+			]
+		},
+		{
+			"name": "Moon Sugar",
+			"categories": [
+				"Minerals"
+			],
+			"traits": [
+				"volatile",
+				"precious"
+			]
+		},
+		{
+			"name": "Mora Tapinella",
+			"categories": [
+				"Fungus"
+			]
+		},
+		{
+			"name": "Mudcrab Chitin",
+			"categories": [
+				"Aquatic",
+				"Animal Parts"
+			]
+		},
+		{
+			"name": "Namira's Rot",
+			"categories": [
+				"Fungus"
+			]
+		},
+		{
+			"name": "Nightshade",
+			"categories": [
+				"Plants",
+				"Flowers"
+			],
+			"traits": [
+				"venomous",
+				"deadly_venom"
+			]
+		},
+		{
+			"name": "Nirnroot",
+			"categories": [
+				"Plants"
+			],
+			"traits": [
+				"blessed",
+				"spirit_touched"
+			],
+			"rarity": 2
+		},
+		{
+			"name": "Nordic Barnacle",
+			"categories": [
+				"Aquatic"
+			]
+		},
+		{
+			"name": "Orange Dartwing",
+			"categories": [
+				"Insects"
+			]
+		},
+		{
+			"name": "Pearl",
+			"categories": [
+				"Aquatic",
+				"Minerals"
+			],
+			"traits": [
+				"precious_2",
+				"blessed"
+			],
+			"rarity": 2
+		},
+		{
+			"name": "Pine Thrush Egg",
+			"categories": [
+				"Animal Parts"
+			]
+		},
+		{
+			"name": "Powdered Mammoth Tusk",
+			"categories": [
+				"Animal Parts",
+				"Minerals"
+			]
+		},
+		{
+			"name": "Purple Mountain Flower",
+			"categories": [
+				"Plants",
+				"Flowers"
+			]
+		},
+		{
+			"name": "Red Mountain Flower",
+			"categories": [
+				"Plants",
+				"Flowers"
+			]
+		},
+		{
+			"name": "River Betty",
+			"categories": [
+				"Fish"
+			]
+		},
+		{
+			"name": "Rock Warbler Egg",
+			"categories": [
+				"Animal Parts"
+			]
+		},
+		{
+			"name": "Sabre Cat Tooth",
+			"categories": [
+				"Animal Parts"
+			]
+		},
+		{
+			"name": "Salt Pile",
+			"categories": [
+				"Salts",
+				"Minerals"
+			],
+			"traits": [
+				"quality_up",
+				"steady"
+			],
+			"rarity": 0
+		},
+		{
+			"name": "Scaly Pholiota",
+			"categories": [
+				"Fungus"
+			]
+		},
+		{
+			"name": "Silverside Perch",
+			"categories": [
+				"Fish"
+			]
+		},
+		{
+			"name": "Skeever Tail",
+			"categories": [
+				"Animal Parts"
+			]
+		},
+		{
+			"name": "Slaughterfish Egg",
+			"categories": [
+				"Fish"
+			]
+		},
+		{
+			"name": "Slaughterfish Scales",
+			"categories": [
+				"Fish"
+			]
+		},
+		{
+			"name": "Small Antlers",
+			"categories": [
+				"Animal Parts"
+			]
+		},
+		{
+			"name": "Small Pearl",
+			"categories": [
+				"Aquatic",
+				"Minerals"
+			],
+			"rarity": 1
+		},
+		{
+			"name": "Snowberries",
+			"categories": [
+				"Plants",
+				"Fruit"
+			]
+		},
+		{
+			"name": "Spider Egg",
+			"categories": [
+				"Insects"
+			]
+		},
+		{
+			"name": "Spriggan Sap",
+			"categories": [
+				"Spirit",
+				"Plants"
+			],
+			"traits": [
+				"blessed",
+				"soothing"
+			]
+		},
+		{
+			"name": "Swamp Fungal Pod",
+			"categories": [
+				"Fungus"
+			]
+		},
+		{
+			"name": "Taproot",
+			"categories": [
+				"Plants",
+				"Spirit"
+			]
+		},
+		{
+			"name": "Thistle Branch",
+			"categories": [
+				"Plants"
+			]
+		},
+		{
+			"name": "Torchbug Thorax",
+			"categories": [
+				"Insects"
+			]
+		},
+		{
+			"name": "Troll Fat",
+			"categories": [
+				"Monster Parts"
+			],
+			"traits": [
+				"dense",
+				"lingering"
+			]
+		},
+		{
+			"name": "Tundra Cotton",
+			"categories": [
+				"Plants"
+			]
+		},
+		{
+			"name": "Vampire Dust",
+			"categories": [
+				"Remains",
+				"Spirit"
+			]
+		},
+		{
+			"name": "Void Salts",
+			"categories": [
+				"Salts",
+				"Daedric"
+			],
+			"traits": [
+				"daedric",
+				"potent_2"
+			]
+		},
+		{
+			"name": "Wheat",
+			"categories": [
+				"Plants"
+			],
+			"rarity": 0
+		},
+		{
+			"name": "White Cap",
+			"categories": [
+				"Fungus"
+			]
+		},
+		{
+			"name": "Wisp Wrappings",
+			"categories": [
+				"Spirit"
+			],
+			"traits": [
+				"spirit_touched",
+				"lingering_2"
+			]
+		},
+		{
+			"name": "Chaurus Hunter Antennae",
+			"categories": [
+				"Insects",
+				"Monster Parts"
+			]
+		},
+		{
+			"name": "Gleamblossom",
+			"categories": [
+				"Plants",
+				"Flowers"
+			]
+		},
+		{
+			"name": "Yellow Mountain Flower",
+			"categories": [
+				"Plants",
+				"Flowers"
+			]
+		},
+		{
+			"name": "Poison Bloom",
+			"categories": [
+				"Plants",
+				"Flowers"
+			]
+		},
+		{
+			"name": "Salmon Roe",
+			"categories": [
+				"Fish"
+			]
+		},
+		{
+			"name": "Hawk's Egg",
+			"categories": [
+				"Animal Parts"
+			]
+		},
+		{
+			"name": "Ash Creep Cluster",
+			"categories": [
+				"Plants"
+			]
+		},
+		{
+			"name": "Ash Hopper Jelly",
+			"categories": [
+				"Insects"
+			]
+		},
+		{
+			"name": "Ashen Grass Pod",
+			"categories": [
+				"Plants"
+			]
+		},
+		{
+			"name": "Boar Tusk",
+			"categories": [
+				"Animal Parts"
+			]
+		},
+		{
+			"name": "Burnt Spriggan Wood",
+			"categories": [
+				"Spirit",
+				"Plants"
+			]
+		},
+		{
+			"name": "Emperor Parasol Moss",
+			"categories": [
+				"Fungus"
+			]
+		},
+		{
+			"name": "Felsaad Tern Feathers",
+			"categories": [
+				"Animal Parts"
+			]
+		},
+		{
+			"name": "Netch Jelly",
+			"categories": [
+				"Monster Parts",
+				"Aquatic"
+			]
+		},
+		{
+			"name": "Scathecraw",
+			"categories": [
+				"Plants"
+			]
+		},
+		{
+			"name": "Spawn Ash",
+			"categories": [
+				"Minerals",
+				"Spirit"
+			]
+		},
+		{
+			"name": "Trama Root",
+			"categories": [
+				"Plants"
+			]
+		}
+	]
+}
