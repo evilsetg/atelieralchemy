@@ -142,7 +142,12 @@
 			"bone",
 			"vampire",
 			"skull",
-			"blood"
+			"blood",
+			"tooth",
+			"teeth",
+			"claw",
+			"tusk",
+			"fat"
 		],
 		"Daedric": [
 			"daedra",
@@ -163,7 +168,8 @@
 		{
 			"name": "Bear Claws",
 			"categories": [
-				"Animal Parts"
+				"Animal Parts",
+				"Remains"
 			]
 		},
 		{
@@ -241,7 +247,8 @@
 		{
 			"name": "Charred Skeever Hide",
 			"categories": [
-				"Animal Parts"
+				"Animal Parts",
+				"Remains"
 			]
 		},
 		{
@@ -340,7 +347,8 @@
 		{
 			"name": "Falmer Ear",
 			"categories": [
-				"Monster Parts"
+				"Monster Parts",
+				"Remains"
 			]
 		},
 		{
@@ -386,7 +394,8 @@
 		{
 			"name": "Giant's Toe",
 			"categories": [
-				"Monster Parts"
+				"Monster Parts",
+				"Remains"
 			]
 		},
 		{
@@ -415,7 +424,8 @@
 		{
 			"name": "Hagraven Claw",
 			"categories": [
-				"Monster Parts"
+				"Monster Parts",
+				"Remains"
 			]
 		},
 		{
@@ -474,7 +484,8 @@
 			"name": "Ice Wraith Teeth",
 			"categories": [
 				"Monster Parts",
-				"Spirit"
+				"Spirit",
+				"Remains"
 			]
 		},
 		{
@@ -609,7 +620,8 @@
 			"name": "Powdered Mammoth Tusk",
 			"categories": [
 				"Animal Parts",
-				"Minerals"
+				"Minerals",
+				"Remains"
 			]
 		},
 		{
@@ -641,7 +653,8 @@
 		{
 			"name": "Sabre Cat Tooth",
 			"categories": [
-				"Animal Parts"
+				"Animal Parts",
+				"Remains"
 			]
 		},
 		{
@@ -671,7 +684,8 @@
 		{
 			"name": "Skeever Tail",
 			"categories": [
-				"Animal Parts"
+				"Animal Parts",
+				"Remains"
 			]
 		},
 		{
@@ -752,7 +766,8 @@
 		{
 			"name": "Troll Fat",
 			"categories": [
-				"Monster Parts"
+				"Monster Parts",
+				"Remains"
 			],
 			"traits": [
 				"dense",
@@ -867,7 +882,8 @@
 		{
 			"name": "Boar Tusk",
 			"categories": [
-				"Animal Parts"
+				"Animal Parts",
+				"Remains"
 			]
 		},
 		{
