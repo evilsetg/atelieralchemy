@@ -32,9 +32,16 @@ namespace game
 		float       baseMagnitude{ 0.0f };
 		int         baseDuration{ 0 };
 		int         vanillaDuration{ 0 };  // before an effects.json "duration" override; used for pricing
+		bool        customBase{ false };   // effects.json "base": no ingredient or potion has the effect
 		bool        powerAffectsMagnitude{ true };
 		bool        powerAffectsDuration{ false };
 		std::string baseSource;
+		// effects.json: the game's magnitude is ours x magnitudeScale (recipes work in percent,
+		// the actor value in fractions); maxMagnitude caps it (0 = no cap), both in our units.
+		// maxDuration caps the duration in seconds (0 = no cap).
+		float magnitudeScale{ 1.0f };
+		float maxMagnitude{ 0.0f };
+		int   maxDuration{ 0 };
 		[[nodiscard]] bool HasBase() const { return !baseSource.empty(); }
 
 		[[nodiscard]] atelier::EffectCostInfo CostInfo() const
@@ -107,6 +114,11 @@ namespace game
 			std::vector<std::string>                          nameExcludes;
 			std::string                                       formRef;  // "Plugin.esp|0x123456", preferred over the rest
 			int                                               duration{ 0 };  // replaces the vanilla base duration, 0 = keep
+			float                                             baseMagnitude{ 0.0f };  // "base": for effects nothing in the game carries
+			int                                               baseDuration{ 0 };
+			float                                             magnitudeScale{ 1.0f };
+			float                                             maxMagnitude{ 0.0f };
+			int                                               maxDuration{ 0 };
 		};
 
 		struct IngredientOverride

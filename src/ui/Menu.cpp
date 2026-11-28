@@ -187,7 +187,12 @@ namespace ui::Menu
 
 		std::string EffectText(std::string_view a_key, float a_magnitude, int a_duration)
 		{
-			std::string text = std::format("{} {}", Db().EffectName(a_key), a_magnitude >= 10.0f ? std::format("{:.0f}", a_magnitude) : std::format("{:.1f}", a_magnitude));
+			std::string text = Db().EffectName(a_key);
+			// Duration-based effects (Invisibility, Muffle...) have no meaningful magnitude.
+			if (const auto* info = Db().FindEffect(a_key); !info || info->powerAffectsMagnitude || !info->powerAffectsDuration) {
+				text += ' ';
+				text += a_magnitude >= 10.0f ? std::format("{:.0f}", a_magnitude) : std::format("{:.1f}", a_magnitude);
+			}
 			if (a_duration > 0) {
 				text += std::format(" for {}s", a_duration);
 			}
@@ -213,9 +218,16 @@ namespace ui::Menu
 				if (const auto ref = a_refs.find(a_tier.effectKey); a_tier.vanillaScale > 0.0f && ref != a_refs.end()) {
 					const auto& r = ref->second;
 					const float share = a_tier.vanillaScale * a_potency;
-					const float mag = r.scalesDuration ? r.magnitude : r.magnitude * share;
-					const float dur = r.scalesDuration ? r.duration * share : r.duration;
-					return std::format("{}  ({:.0f}% of vanilla)", EffectText(a_tier.effectKey, mag, static_cast<int>(std::lround(dur))), share * 100.0f);
+					float mag = r.scalesDuration ? r.magnitude : r.magnitude * share;
+					float dur = r.scalesDuration ? r.duration * share : r.duration;
+					if (r.maxMagnitude > 0.0f) {
+						mag = std::min(mag, r.maxMagnitude);
+					}
+					if (r.maxDuration > 0) {
+						dur = std::min(dur, static_cast<float>(r.maxDuration));
+					}
+					return std::format("{}  ({:.0f}% of {})", EffectText(a_tier.effectKey, mag, static_cast<int>(std::lround(dur))), share * 100.0f,
+						r.customMagnitude ? "base" : "vanilla");
 				}
 				return EffectText(a_tier.effectKey, a_tier.magnitude, a_tier.duration) + " (base)";
 			case Kind::kQuality:

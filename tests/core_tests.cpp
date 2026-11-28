@@ -180,6 +180,20 @@ static void TestVanillaReferences()
 	custom.references["RestoreHealth"].customDuration = true;
 	CHECK(Evaluate(custom, catalog, nullptr).brew.effects[0].breakdown.find("duration: base 60s") != std::string::npos);
 
+	// Effects with an effects.json base say so, and maxMagnitude caps the result.
+	auto own = input;
+	own.references["RestoreHealth"].customMagnitude = true;
+	own.references["RestoreHealth"].maxMagnitude = 5.0f;
+	const auto ownOut = Evaluate(own, catalog, nullptr);
+	CHECK(std::abs(ownOut.brew.effects[0].magnitude - 5.0f) < 0.01f);  // 7.3 capped
+	CHECK(ownOut.brew.effects[0].breakdown.starts_with("base 8.3"));
+	CHECK(ownOut.brew.effects[0].breakdown.find("capped at 5") != std::string::npos);
+	// maxDuration caps duration-based effects too (48s otherwise).
+	own.references["RestoreStamina"].maxDuration = 30;
+	const auto shortOut = Evaluate(own, catalog, nullptr);
+	CHECK(shortOut.brew.effects[1].duration == 30);
+	CHECK(shortOut.brew.effects[1].breakdown.find("duration capped at 30s") != std::string::npos);
+
 	// Value: the sum of the effects' costs like a vanilla potion, floored by the recipe value.
 	const int floorValue = Evaluate(input, catalog, nullptr).brew.value;
 	auto priced = input;

@@ -128,6 +128,7 @@ namespace atelier
 		std::string              templateRef;  // resolved by the game layer (model/icon/sounds)
 		// Judgement Ring pattern (a preset from ring_patterns.json or the recipe's own).
 		float                      potency{ 1.0f };  // multiplies every effect tier's share of vanilla
+		int                        minDuration{ 0 };  // lengthens shorter base durations (priced at the original)
 		std::string                ringPattern;
 		std::vector<RingShapeArea> ringShape;
 		// material outputs

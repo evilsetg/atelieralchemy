@@ -10,6 +10,11 @@
 	// and Ravage). They are never consulted when the form resolves.
 	// "duration" replaces the vanilla base duration (seconds) that tiers, quality and traits
 	// scale from. The gold value still uses the vanilla duration.
+	// "base": {"magnitude", "duration"} are the values an ingredient would carry, for effects
+	// no ingredient or potion in the game has; skill, perks and tiers scale them as usual.
+	// "magnitudeScale" converts the magnitude shown in the menu into the game's (0.01 for an
+	// actor value counted in fractions), "maxMagnitude" caps it (menu units), "maxDuration"
+	// caps the duration (seconds).
 	"effects": {
 		"RestoreHealth":      { "name": "Restore Health", "form": "Skyrim.esm|0x03EB15",   "av": "Health",  "detrimental": false, "recover": false },
 		"RestoreMagicka":     { "name": "Restore Magicka", "form": "Skyrim.esm|0x03EB17",  "av": "Magicka", "detrimental": false, "recover": false },
@@ -66,7 +71,18 @@
 		"WeaknessFrost":      { "name": "Weakness to Frost", "form": "Skyrim.esm|0x073F2E",  "av": "ResistFrost",  "detrimental": true },
 		"WeaknessShock":      { "name": "Weakness to Shock", "form": "Skyrim.esm|0x073F2F",  "av": "ResistShock",  "detrimental": true },
 		"WeaknessMagic":      { "name": "Weakness to Magic", "form": "Skyrim.esm|0x073F51",  "av": "ResistMagic",  "detrimental": true },
-		"WeaknessPoison":     { "name": "Weakness to Poison", "form": "Skyrim.esm|0x090042", "av": "PoisonResist", "detrimental": true }
+		"WeaknessPoison":     { "name": "Weakness to Poison", "form": "Skyrim.esm|0x090042", "av": "PoisonResist", "detrimental": true },
+
+		// Signature effects of AtelierAlchemy.esp, made by no ingredient (Titan's Draught,
+		// Dragonblood Tonic). Armor rating in points like Oakflesh; shout recovery in percent,
+		// stored as the fraction the Blessing of Talos uses (0.2 = 20% faster).
+		"FortifyArmorRating":   { "name": "Fortify Armor Rating", "form": "AtelierAlchemy.esp|0xC00", "base": { "magnitude": 4, "duration": 60 } },
+		"FortifyShoutRecovery": { "name": "Fortify Shout Recovery", "form": "AtelierAlchemy.esp|0xC01", "base": { "magnitude": 2, "duration": 60 },
+		                          "magnitudeScale": 0.01, "maxMagnitude": 50 },
+		// Shadow Draught, Ghostwalk Elixir. Potency lengthens these, like Invisibility (whose
+		// ingredients carry 4s); Ethereal is invulnerability, so it stops at 20s (the shout: 8-18s).
+		"Muffle":               { "name": "Muffle", "form": "AtelierAlchemy.esp|0xC02", "base": { "magnitude": 1, "duration": 10 } },
+		"Ethereal":             { "name": "Ethereal", "form": "AtelierAlchemy.esp|0xC03", "base": { "magnitude": 1, "duration": 2 }, "maxDuration": 20 }
 	},
 
 	// Which element an alchemical effect contributes to an ingredient. Every effect on

@@ -13,6 +13,8 @@
 // "ring": a Judgement Ring pattern from ring_patterns.json (or a list of areas, same format).
 // "potency": multiplies every effect tier's share of vanilla (1.5 = 120% / 150% / 165%), for
 // recipes whose effects should outclass simpler ones.
+// "minDuration": effects with a shorter base duration last this long (seconds) instead, still
+// priced at their vanilla duration, for signature brews that should outlast simple ones.
 // "value": potions and poisons are priced from their effects' costs like a vanilla
 // brew; "value" (x quality) is only their minimum. Materials use it as their value.
 // Discovery: "known" (from the start), "unlockSkill" (Alchemy level) and "unlocks" rules
@@ -2096,11 +2098,25 @@
 						},
 						{
 							"at": 7,
-							"effect": "Invisibility"
+							"effect": "FortifySneak"
 						},
 						{
 							"at": 11,
-							"effect": "Invisibility"
+							"effect": "FortifySneak"
+						}
+					]
+				},
+				{
+					"name": "Muffle",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 5,
+							"effect": "Muffle"
+						},
+						{
+							"at": 9,
+							"effect": "Muffle"
 						}
 					]
 				},
@@ -2113,22 +2129,22 @@
 							"effect": "FortifyLockpicking"
 						},
 						{
-							"at": 6,
-							"effect": "FortifyPickpocket"
+							"at": 7,
+							"effect": "FortifyLockpicking"
 						}
 					]
 				},
 				{
-					"name": "Deep Breath",
-					"element": "Lightning",
+					"name": "Light Fingers",
+					"element": "Fire",
 					"tiers": [
 						{
-							"at": 5,
-							"effect": "WaterBreathing"
+							"at": 4,
+							"effect": "FortifyPickpocket"
 						},
 						{
 							"at": 8,
-							"effect": "WaterBreathing"
+							"effect": "FortifyPickpocket"
 						}
 					]
 				}
@@ -2891,11 +2907,13 @@
 			"kind": "potion",
 			"level": 62,
 			"ring": "storm",
+			"potency": 1.25,
+			"minDuration": 180,
 			"unlockSkill": 62,
-			"description": "Said to be the drink of those who hunt dragons. It burns going down and leaves you unafraid of the fire.",
+			"description": "The drink of those who hunt dragons. It burns going down, leaves you unafraid of fire and frost, and the Voice returns to you sooner.",
 			"ingredients": [
 				{
-					"category": "Monster Parts",
+					"category": "Remains",
 					"count": 1
 				},
 				{
@@ -2930,44 +2948,48 @@
 					]
 				},
 				{
-					"name": "Heart",
+					"name": "Hearthblood",
 					"element": "Fire",
 					"tiers": [
 						{
 							"at": 3,
-							"effect": "FortifyHealth"
+							"effect": "ResistFrost"
 						},
 						{
-							"at": 8,
-							"effect": "FortifyHealth"
+							"at": 7,
+							"effect": "ResistFrost"
+						},
+						{
+							"at": 11,
+							"effect": "ResistFrost"
 						}
 					]
 				},
 				{
-					"name": "Fury",
+					"name": "Thu'um",
+					"element": "Wind",
+					"tiers": [
+						{
+							"at": 4,
+							"effect": "FortifyShoutRecovery"
+						},
+						{
+							"at": 9,
+							"effect": "FortifyShoutRecovery"
+						}
+					]
+				},
+				{
+					"name": "Heart",
 					"element": "Lightning",
 					"tiers": [
 						{
 							"at": 4,
-							"effect": "FortifyOneHanded"
+							"effect": "FortifyHealth"
 						},
 						{
 							"at": 8,
-							"effect": "FortifyOneHanded"
-						}
-					]
-				},
-				{
-					"name": "Breath",
-					"element": "Wind",
-					"tiers": [
-						{
-							"at": 5,
-							"effect": "RegenStamina"
-						},
-						{
-							"at": 9,
-							"effect": "RegenStamina"
+							"effect": "FortifyHealth"
 						}
 					]
 				}
@@ -2980,7 +3002,7 @@
 			"level": 65,
 			"ring": "heartbeat",
 			"unlockSkill": 65,
-			"description": "The drinker thins like mist. Thieves pay a fortune for a single vial.",
+			"description": "The drinker thins like mist and steps halfway out of the world: unseen, unheard, untouchable. Thieves pay a fortune for a single vial.",
 			"ingredients": [
 				{
 					"category": "Tincture",
@@ -3018,30 +3040,30 @@
 					]
 				},
 				{
+					"name": "Between Worlds",
+					"element": "Lightning",
+					"tiers": [
+						{
+							"at": 5,
+							"effect": "Ethereal"
+						},
+						{
+							"at": 10,
+							"effect": "Ethereal"
+						}
+					]
+				},
+				{
 					"name": "Silent Step",
 					"element": "Ice",
 					"tiers": [
 						{
 							"at": 3,
-							"effect": "FortifySneak"
+							"effect": "Muffle"
 						},
 						{
 							"at": 8,
-							"effect": "FortifySneak"
-						}
-					]
-				},
-				{
-					"name": "Light Fingers",
-					"element": "Lightning",
-					"tiers": [
-						{
-							"at": 4,
-							"effect": "FortifyPickpocket"
-						},
-						{
-							"at": 8,
-							"effect": "FortifyPickpocket"
+							"effect": "Muffle"
 						}
 					]
 				},
@@ -3067,15 +3089,17 @@
 			"kind": "potion",
 			"level": 70,
 			"ring": "finale",
+			"potency": 1.25,
+			"minDuration": 180,
 			"unlockSkill": 70,
-			"description": "A crystalline brew that makes every burden feel like a feather and every blow land like a hammer.",
+			"description": "Brewed around a giant's toe. Every burden feels like a feather, every blow lands like a hammer, and the skin turns hard as bark.",
 			"ingredients": [
 				{
 					"category": "Oil",
 					"count": 1
 				},
 				{
-					"category": "Monster Parts",
+					"item": "giants_toe",
 					"count": 1
 				},
 				{
@@ -3120,16 +3144,16 @@
 					]
 				},
 				{
-					"name": "Titan's Lungs",
+					"name": "Titan's Hide",
 					"element": "Fire",
 					"tiers": [
 						{
 							"at": 4,
-							"effect": "FortifyStamina"
+							"effect": "FortifyArmorRating"
 						},
 						{
 							"at": 9,
-							"effect": "FortifyStamina"
+							"effect": "FortifyArmorRating"
 						}
 					]
 				},

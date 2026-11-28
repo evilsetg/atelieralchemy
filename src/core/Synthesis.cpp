@@ -310,6 +310,7 @@ namespace atelier
 			if (best->vanillaScale > 0.0f && ref != a_input.references.end()) {
 				const auto& r = ref->second;
 				const char* durationSource = r.customDuration ? "base" : "vanilla";
+				const char* magnitudeSource = r.customMagnitude ? "base" : "vanilla";
 				const float scale = share * potency;
 				if (r.scalesDuration) {
 					// Fixed magnitude: tier, quality and traits all lengthen the effect.
@@ -319,10 +320,18 @@ namespace atelier
 				} else {
 					effect.magnitude = RoundMagnitude(r.magnitude * scale);
 					effect.duration = static_cast<int>(std::lround(r.duration * durMult));
-					effect.breakdown = std::format("vanilla {:.1f} x {} ({})", r.magnitude, shareText(), factors());
+					effect.breakdown = std::format("{} {:.1f} x {} ({})", magnitudeSource, r.magnitude, shareText(), factors());
+					if (r.maxMagnitude > 0.0f && effect.magnitude > r.maxMagnitude) {
+						effect.magnitude = r.maxMagnitude;
+						effect.breakdown += std::format(", capped at {:.0f}", r.maxMagnitude);
+					}
 					if (r.duration > 0.0f) {
 						effect.breakdown += std::format("\nduration: {} {:.0f}s x quality {:.2f}, traits {:+.0f}%", durationSource, r.duration, QualityDurationMult(outcome.quality), durationPct);
 					}
+				}
+				if (r.maxDuration > 0 && effect.duration > r.maxDuration) {
+					effect.duration = r.maxDuration;
+					effect.breakdown += std::format(", duration capped at {}s", r.maxDuration);
 				}
 			} else {
 				effect.magnitude = RoundMagnitude(best->magnitude * recipe.potency * potency * a_input.stats.magnitudeMult);

@@ -167,6 +167,17 @@ namespace game
 				sig.nameContains = Lower(Value<std::string>(def, "nameContains", ""));
 				sig.formRef = Value<std::string>(def, "form", "");
 				sig.duration = std::max(0, Value<int>(def, "duration", 0));
+				if (const auto base = def.find("base"); base != def.end() && base->is_object()) {
+					sig.baseMagnitude = std::max(0.0f, Value<float>(*base, "magnitude", 0.0f));
+					sig.baseDuration = std::max(0, Value<int>(*base, "duration", 0));
+				}
+				sig.magnitudeScale = Value<float>(def, "magnitudeScale", 1.0f);
+				if (sig.magnitudeScale <= 0.0f) {
+					Error(std::format("{}: effect '{}' needs a positive magnitudeScale", a_file, key));
+					sig.magnitudeScale = 1.0f;
+				}
+				sig.maxMagnitude = std::max(0.0f, Value<float>(def, "maxMagnitude", 0.0f));
+				sig.maxDuration = std::max(0, Value<int>(def, "maxDuration", 0));
 				for (const auto& word : StringList(def, "nameExcludes")) {
 					sig.nameExcludes.push_back(Lower(word));
 				}
@@ -307,6 +318,7 @@ namespace game
 			recipe.baseWeight = Value<float>(def, "weight", 0.5f);
 			recipe.templateRef = Value<std::string>(def, "template", "");
 			recipe.potency = std::max(Value<float>(def, "potency", 1.0f), 0.0f);
+			recipe.minDuration = std::max(0, Value<int>(def, "minDuration", 0));
 			if (const auto ring = def.find("ring"); ring != def.end()) {
 				_recipeRings[recipe.id] = *ring;
 			}
@@ -563,7 +575,14 @@ namespace game
 			}
 		};
 		for (auto& [key, info] : _effects) {
-			const auto flags = info.form->data.flags;
+			const auto  flags = info.form->data.flags;
+			const auto  sigIt = _signatures.find(key);
+			const auto* sig = sigIt != _signatures.end() ? &sigIt->second : nullptr;
+			if (sig) {
+				info.magnitudeScale = sig->magnitudeScale;
+				info.maxMagnitude = sig->maxMagnitude;
+				info.maxDuration = sig->maxDuration;
+			}
 			info.powerAffectsMagnitude = flags.all(RE::EffectSetting::EffectSettingData::Flag::kPowerAffectsMagnitude);
 			info.powerAffectsDuration = flags.all(RE::EffectSetting::EffectSettingData::Flag::kPowerAffectsDuration);
 
@@ -582,6 +601,20 @@ namespace game
 					}
 				}
 			}
+			if (counts.empty() && sig && sig->baseMagnitude > 0.0f) {
+				// Our own effects (AtelierAlchemy.esp): effects.json gives the values an
+				// ingredient would carry, so they scale with skill and perks like the rest.
+				info.baseMagnitude = sig->baseMagnitude;
+				info.baseDuration = sig->baseDuration;
+				info.vanillaDuration = info.baseDuration;
+				info.customBase = true;
+				info.baseSource = "effects.json";
+				logger::info("Effect '{}' base from effects.json: magnitude {}, duration {}s, magnitude x{} in game{}", key, info.baseMagnitude,
+					info.baseDuration, info.magnitudeScale,
+					(info.maxMagnitude > 0.0f ? std::format(", magnitude capped at {}", info.maxMagnitude) : std::string{}) +
+						(info.maxDuration > 0 ? std::format(", duration capped at {}s", info.maxDuration) : std::string{}));
+				continue;
+			}
 			if (counts.empty()) {
 				logger::warn("Effect '{}' has no vanilla base values; its recipe tiers use their own magnitude", key);
 				continue;
@@ -592,8 +625,8 @@ namespace game
 			info.baseMagnitude = mode->first.first;
 			info.baseDuration = mode->first.second;
 			info.vanillaDuration = info.baseDuration;
-			if (const auto sig = _signatures.find(key); sig != _signatures.end() && sig->second.duration > 0 && info.baseDuration > 0) {
-				info.baseDuration = sig->second.duration;
+			if (sig && sig->duration > 0 && info.baseDuration > 0) {
+				info.baseDuration = sig->duration;
 				logger::info("Effect '{}': base duration {}s replaced by {}s (effects.json); priced at the vanilla duration", key, info.vanillaDuration,
 					info.baseDuration);
 			}

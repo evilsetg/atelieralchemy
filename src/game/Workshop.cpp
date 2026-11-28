@@ -183,11 +183,19 @@ namespace game
 				ref.magnitude = info->baseMagnitude;
 				ref.duration = static_cast<float>(info->baseDuration);
 				ref.customDuration = info->baseDuration != info->vanillaDuration;
+				ref.customMagnitude = info->customBase;
+				ref.maxMagnitude = info->maxMagnitude;
+				ref.maxDuration = info->maxDuration;
 				if (info->powerAffectsMagnitude) {
 					ref.magnitude *= power;
 				} else if (info->powerAffectsDuration) {
 					ref.duration *= power;
 					ref.scalesDuration = true;
+				}
+				// Recipe "minDuration": signature brews outlast the simple ones.
+				if (!ref.scalesDuration && ref.duration > 0.0f && ref.duration < static_cast<float>(a_recipe.minDuration)) {
+					ref.duration = static_cast<float>(a_recipe.minDuration);
+					ref.customDuration = true;
 				}
 				refs.emplace(tier.effectKey, ref);
 			}
@@ -206,7 +214,13 @@ namespace game
 			for (const auto& tier : line.tiers) {
 				if (tier.kind == atelier::EffectTier::Kind::kEffect) {
 					if (const auto* info = Database::Get().FindEffect(tier.effectKey)) {
-						input.costs.emplace(tier.effectKey, info->CostInfo());
+						auto cost = info->CostInfo();
+						// Lengthened by the recipe's minDuration: still priced at the vanilla duration.
+						if (const auto ref = input.references.find(tier.effectKey); ref != input.references.end() && !ref->second.scalesDuration &&
+																						info->vanillaDuration > 0 && ref->second.duration > static_cast<float>(info->baseDuration)) {
+							cost.pricedDurationScale = static_cast<float>(info->vanillaDuration) / ref->second.duration;
+						}
+						input.costs.emplace(tier.effectKey, cost);
 					}
 				}
 			}

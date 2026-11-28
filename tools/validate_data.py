@@ -56,6 +56,13 @@ def main() -> int:
         form = effect.get("form")
         if form is not None and not re.fullmatch(r"[^|]+\.(esm|esp|esl)\|0x[0-9A-Fa-f]{1,8}", form):
             errors.append(f"effect {key}: form '{form}' must look like 'Skyrim.esm|0x03EB15'")
+        base = effect.get("base")
+        if base is not None and (not isinstance(base, dict) or base.get("magnitude", 0) <= 0 or base.get("duration", 0) < 0):
+            errors.append(f"effect {key}: base needs a positive magnitude and a duration >= 0")
+        if effect.get("magnitudeScale", 1.0) <= 0 or effect.get("maxMagnitude", 0) < 0:
+            errors.append(f"effect {key}: magnitudeScale must be positive and maxMagnitude >= 0")
+        if effect.get("maxDuration", 0) < 0:
+            errors.append(f"effect {key}: maxDuration must be >= 0")
 
     for trait in merged.get("traits", []):
         for element in trait.get("elements", {}):
@@ -96,6 +103,8 @@ def main() -> int:
         where = f"recipe {rid}"
         if recipe.get("potency", 1.0) <= 0:
             errors.append(f"{where}: potency must be positive")
+        if not isinstance(recipe.get("minDuration", 0), int) or recipe.get("minDuration", 0) < 0:
+            errors.append(f"{where}: minDuration must be a whole number of seconds >= 0")
         ring = recipe.get("ring")
         if isinstance(ring, str):
             if ring not in patterns:

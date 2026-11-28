@@ -20,6 +20,7 @@ It's safe to add to an existing save.
 - **Crafting chains:** 42 recipes, including 11 intermediate materials (extracts, tinctures, oils, essences, Philosopher's Salt, Quintessence…) that pass quality and traits up the chain. New recipes unlock with skill or through "ideas".
 - **The Judgement Ring:** stop the needle in each area to finish a synthesis. Hits and strikes raise quality, a Perfect gives an extra item, and a miss ends the ring early. Every recipe has its own ring pattern, drawn over a turning alchemical mandala. Easy and Auto modes and a Skip button are available.
 - **Balanced against vanilla:** effect strength is measured against what vanilla alchemy could brew for you right now. Higher quality and harder tiers take you beyond it.
+- **Signature brews:** high-level recipes like Titan's Draught and Dragonblood Tonic last longer and make effects vanilla alchemy can't: Fortify Armor Rating, faster shout recovery, Muffle and Ethereal.
 - **Rewarding batches:** a potion or poison synthesis makes two items, materials two or three. Perfect rings and some effect-line tiers add more.
 - **Perk support without patches:** perks are read straight from their records, so vanilla, Ordinator and other perk overhauls apply as at a vanilla lab. That includes Fortify Alchemy, and Ordinator's Double Toil and Trouble doubles your potion and poison batches.
 - **Real items:** products are real potions and poisons with real magic effects. They sell to merchants, grant Alchemy XP and are saved in the SKSE co-save.

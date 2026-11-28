@@ -12,6 +12,8 @@ name, effects, value, weight and model at runtime for every synthesized batch
   ALCH  0x800 .. 0x800+POTION_SLOTS-1    potions and poisons
   MISC  0xA00 .. 0xA00+MATERIAL_SLOTS-1  synthesized materials
   SNDR  0xB00 .. 0xB00+len(SOUNDS)-1     Judgement Ring cues, in SOUNDS order
+  MGEF  0xC00 .. 0xC00+len(EFFECTS)-1    effects vanilla alchemy lacks (effects.json "form")
+  KYWD  0xC40 .. 0xC40+len(EFFECTS)-1    their stacking keywords
 
 Usage: python3 tools/build_assets.py
 """
@@ -32,6 +34,8 @@ MATERIAL_SLOTS = 64
 POTION_BASE = 0x800
 MATERIAL_BASE = 0xA00
 SOUND_BASE = 0xB00
+EFFECT_BASE = 0xC00
+EFFECT_KEYWORD_BASE = 0xC40
 
 FORM_VERSION = 44  # Skyrim Special Edition
 MASTER_INDEX = 0x01  # our own records: one master (Skyrim.esm) precedes us
@@ -50,6 +54,49 @@ SNDR_TYPE_STANDARD = 0x1EEF540A
 SNCT_AUDIO_CATEGORY_UI = 0x00064451
 SOPM_MONO_PLAYER_1ST = 0x000B4058
 SOUND_FOLDER = "fx\\AtelierAlchemy"
+
+# Magic effects only these recipes make, set up like vanilla potion effects (copied from
+# Skyrim.esm AlchFortifyHealth: self, fire and forget, the potion sounds, MagicAlchBeneficial
+# so Benefactor applies). Like vanilla, each effect's own keyword is the Peak Value
+# Modifier's associated item, so drinking a second potion replaces the first instead of
+# stacking. Magnitudes are what the effect adds to the actor value; effects.json
+# "magnitudeScale" converts from the percentages the recipes work in. Duration-based
+# effects (potency lengthens them, like Invisibility) also carry MagicAlchDurationBased.
+KYWD_MAGIC_ALCH_BENEFICIAL = 0x000F8A4E
+KYWD_MAGIC_ALCH_DURATION_BASED = 0x000F8A4F
+MGEF_ARCHETYPE_PEAK_VALUE_MODIFIER = 34
+MGEF_ARCHETYPE_ETHEREALIZE = 41  # as VoiceMakeEthereal (Become Ethereal)
+MGEF_RECOVER = 0x00000002
+MGEF_NO_MAGNITUDE = 0x00000400
+MGEF_NO_AREA = 0x00000800
+MGEF_FX_PERSIST = 0x00001000
+MGEF_POWER_AFFECTS_MAGNITUDE = 0x00200000
+MGEF_POWER_AFFECTS_DURATION = 0x00400000
+MGEF_MENU_DISPLAY_OBJECT = 0x000435A5
+MGEF_HIT_SHADER = 0x0004E220           # the potion shader of AlchFortifyHealth
+MGEF_HIT_SHADER_ETHEREAL = 0x00064D67  # VoiceMakeEthereal's
+#   (editor id, name, description, archetype, actor value (-1 none), flags, base cost, hit shader)
+EFFECTS = [
+    ("AA_AlchFortifyArmorRating", "Fortify Armor Rating",
+     "Armor rating is increased by <mag> points for <dur> seconds.",
+     MGEF_ARCHETYPE_PEAK_VALUE_MODIFIER, 39,  # DamageResist
+     MGEF_RECOVER | MGEF_NO_AREA | MGEF_POWER_AFFECTS_MAGNITUDE, 0.25, MGEF_HIT_SHADER),
+    ("AA_AlchFortifyShoutRecovery", "Fortify Shout Recovery",
+     "Shouts recharge faster for <dur> seconds.",
+     MGEF_ARCHETYPE_PEAK_VALUE_MODIFIER, 86,  # ShoutRecoveryMult
+     MGEF_RECOVER | MGEF_NO_AREA | MGEF_POWER_AFFECTS_MAGNITUDE, 0.6, MGEF_HIT_SHADER),
+    # Like the Muffle spell (MuffleFFSelf): magnitude 1 silences movement completely.
+    ("AA_AlchMuffle", "Muffle",
+     "Your movements are silent for <dur> seconds.",
+     MGEF_ARCHETYPE_PEAK_VALUE_MODIFIER, 92,  # MovementNoiseMult
+     MGEF_RECOVER | MGEF_NO_AREA | MGEF_POWER_AFFECTS_DURATION, 3.0, MGEF_HIT_SHADER),
+    ("AA_AlchEthereal", "Ethereal",
+     "You can't be harmed, and can't attack, for <dur> seconds.",
+     MGEF_ARCHETYPE_ETHEREALIZE, -1,
+     MGEF_NO_MAGNITUDE | MGEF_NO_AREA | MGEF_FX_PERSIST | MGEF_POWER_AFFECTS_DURATION, 150.0, MGEF_HIT_SHADER_ETHEREAL),
+]
+# SNDD of AlchFortifyHealth: (type, descriptor) pairs - draw/sheathe, charge, ready, release.
+MGEF_SOUNDS = bytes.fromhex("0000000057e9030001000000226605000200000063f303000300000061f30300")
 
 
 def subrecord(tag: str, data: bytes) -> bytes:
@@ -123,17 +170,59 @@ def sndr(index: int, file_name: str) -> bytes:
     return record("SNDR", (MASTER_INDEX << 24) | local_id, body)
 
 
+def mgef(index: int, editor_id: str, name: str, description: str, archetype: int, actor_value: int, flags: int,
+         cost: float, hit_shader: int) -> bytes:
+    local_id = EFFECT_BASE + index
+    keyword = (MASTER_INDEX << 24) | (EFFECT_KEYWORD_BASE + index)
+    keywords = [keyword, KYWD_MAGIC_ALCH_BENEFICIAL]
+    if flags & MGEF_POWER_AFFECTS_DURATION:
+        keywords.append(KYWD_MAGIC_ALCH_DURATION_BASED)
+    data = [0] * 38  # 152 bytes, all 4-byte fields
+    data[0] = flags
+    data[1] = struct.unpack("<I", struct.pack("<f", cost))[0]
+    if archetype == MGEF_ARCHETYPE_PEAK_VALUE_MODIFIER:
+        data[2] = keyword  # associated item
+    data[3] = 0xFFFFFFFF  # magic skill: none
+    data[4] = 0xFFFFFFFF  # resist value: none
+    data[8] = hit_shader
+    data[16] = archetype
+    data[17] = actor_value & 0xFFFFFFFF
+    data[20] = 1  # casting type: fire and forget
+    data[22] = 0xFFFFFFFF  # second actor value: none
+    data[28] = struct.unpack("<I", struct.pack("<f", 1.0))[0]  # dual cast scale
+    body = b"".join(
+        [
+            subrecord("EDID", zstring(editor_id)),
+            subrecord("FULL", zstring(name)),
+            subrecord("MDOB", struct.pack("<I", MGEF_MENU_DISPLAY_OBJECT)),
+            subrecord("KSIZ", struct.pack("<I", len(keywords))),
+            subrecord("KWDA", struct.pack(f"<{len(keywords)}I", *keywords)),
+            subrecord("DATA", struct.pack("<38I", *data)),
+            subrecord("SNDD", MGEF_SOUNDS),
+            subrecord("DNAM", zstring(description)),
+        ]
+    )
+    return record("MGEF", (MASTER_INDEX << 24) | local_id, body)
+
+
+def kywd(index: int, editor_id: str) -> bytes:
+    body = subrecord("EDID", zstring(editor_id.replace("AA_Alch", "AA_MagicAlch")))
+    return record("KYWD", (MASTER_INDEX << 24) | (EFFECT_KEYWORD_BASE + index), body)
+
+
 def build_esp() -> bytes:
     potions = [alch(i) for i in range(POTION_SLOTS)]
     materials = [misc(i) for i in range(MATERIAL_SLOTS)]
     sounds = [sndr(i, name) for i, name in enumerate(SOUNDS)]
-    # Top level groups follow the engine's canonical order (MISC, ALCH, ..., SNDR).
-    groups = [group("MISC", materials), group("ALCH", potions), group("SNDR", sounds)]
-    num_records = len(potions) + len(materials) + len(sounds) + len(groups)
+    effects = [mgef(i, *effect) for i, effect in enumerate(EFFECTS)]
+    keywords = [kywd(i, effect[0]) for i, effect in enumerate(EFFECTS)]
+    # Top level groups follow the engine's canonical order (KYWD, MGEF, MISC, ALCH, ..., SNDR).
+    groups = [group("KYWD", keywords), group("MGEF", effects), group("MISC", materials), group("ALCH", potions), group("SNDR", sounds)]
+    num_records = len(potions) + len(materials) + len(sounds) + len(effects) + len(keywords) + len(groups)
 
     header_body = b"".join(
         [
-            subrecord("HEDR", struct.pack("<fiI", 1.70, num_records, SOUND_BASE + len(SOUNDS))),
+            subrecord("HEDR", struct.pack("<fiI", 1.70, num_records, EFFECT_KEYWORD_BASE + len(EFFECTS))),
             subrecord("CNAM", zstring("Atelier Alchemy")),
             subrecord("SNAM", zstring("Atelier-style synthesis and the Judgement Ring. Requires the AtelierAlchemy SKSE plugin.")),
             subrecord("MAST", zstring("Skyrim.esm")),

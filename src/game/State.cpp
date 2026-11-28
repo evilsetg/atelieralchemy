@@ -422,7 +422,7 @@ namespace game
 				entry = new RE::Effect();
 			}
 			entry->baseEffect = info->form;
-			entry->effectItem.magnitude = effect.magnitude;
+			entry->effectItem.magnitude = effect.magnitude * info->magnitudeScale;
 			entry->effectItem.duration = static_cast<std::uint32_t>(std::max(effect.duration, 0));
 			entry->effectItem.area = 0;
 			entry->cost = atelier::EffectCost(info->CostInfo(), effect.magnitude, effect.duration);

@@ -71,6 +71,15 @@ synthesis systems of the *Atelier* series. Every synthesis ends with a *Shadow H
   share applies to duration. Masterwork recipes multiply those shares: Elixir of Vitality and
   Panacea ×1.25, Grand Elixir ×1.5. Fortify Health, Magicka and Stamina last 300 s instead of
   vanilla's 60 s (set per effect with `"duration"` in `effects.json`), priced at vanilla length.
+- **Signature brews.** Titan's Draught and Dragonblood Tonic (×1.25, every effect lasts at
+  least 180 s, priced at vanilla length) make effects no ingredient has: **Fortify Armor
+  Rating** (points, like Oakflesh) and **Fortify Shout Recovery** (shouts recharge up to 50%
+  faster, stacking with the Blessing of Talos). Both are magic effects in `AtelierAlchemy.esp`
+  that scale with skill and perks like the vanilla ones. Repeat doses replace each other
+  rather than stacking, as with vanilla potions. Stealth is split the same way: Shadow
+  Draught is the burglar's brew (Sneak up to 110%, **Muffle**, Lockpicking, Pickpocket),
+  Ghostwalk Elixir makes you vanish (Invisibility, longer Muffle and **Ethereal**: no harm in,
+  no attacks out, at most 20 s). Better brews make both last longer, as with Invisibility.
 - **Batch sizes.** A potion or poison synthesis makes two items, as a reward for the extra
   work over a vanilla brew; materials come in batches of two or three. A Perfect ring, some effect-line tiers and "potions
   created" perks add more.

@@ -22,7 +22,10 @@ namespace atelier
 		float magnitude{ 0.0f };
 		float duration{ 0.0f };
 		bool  scalesDuration{ false };  // potency lengthens the effect instead (Invisibility, Paralysis...)
-		bool  customDuration{ false };  // duration set by effects.json rather than vanilla ("base" in breakdowns)
+		bool  customDuration{ false };  // duration set by effects.json or the recipe rather than vanilla ("base" in breakdowns)
+		bool  customMagnitude{ false };  // magnitude from effects.json: nothing in the game carries the effect
+		float maxMagnitude{ 0.0f };      // cap on the final magnitude, 0 = none
+		int   maxDuration{ 0 };          // cap on the final duration in seconds, 0 = none
 	};
 
 	// What a magic effect costs, as the game prices it: base cost x magnitude^1.1 x
